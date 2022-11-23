@@ -1,5 +1,18 @@
 import { Router } from "express";
-import {renderTask, createTask, renderTaskEdit, editTask, deleteTask, toggleTask} from '../controllers/task.controller'
+import {
+  renderTask,
+  createTask,
+  renderTaskEdit,
+  editTask,
+  deleteTask,
+  toggleTask,
+} from "../controllers/task.controller";
+import {
+  renderSignIn,
+  renderSignUp,
+  signInUser,
+  signUpUser,
+} from "../controllers/login.controller";
 
 const router = Router();
 
@@ -14,5 +27,13 @@ router.post("/task/:id/edit", editTask);
 router.get("/task/:id/delete", deleteTask);
 
 router.get("/task/:id/toggledone", toggleTask);
+
+router.get("/signup", renderSignUp);
+
+router.post("/signup", signUpUser);
+
+router.get("/signin", renderSignIn);
+
+router.post("/signin", signInUser);
 
 export default router;

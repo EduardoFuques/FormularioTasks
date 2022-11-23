@@ -3,6 +3,7 @@ import { create } from "express-handlebars";
 import indexRoutes from "./routes/index.routes";
 import path from "path";
 import morgan from "morgan";
+import bcrypt from "bcrypt";
 
 const app = express();
 
