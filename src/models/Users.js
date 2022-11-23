@@ -31,6 +31,7 @@ userSchema.pre("save", function (next) {
   }
 });
 
+
 export const isCorrectPassword = (userSchema.methods.isCorrectPassword =
   function (password, callback) {
     bcrypt.compare(password, this.password, function (err, same) {
