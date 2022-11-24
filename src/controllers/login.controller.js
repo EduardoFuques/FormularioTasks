@@ -29,7 +29,7 @@ export const signInUser = (req, res) => {
         }else if(!user){
             res.status(500).send('El usuario no existe')
         }else{
-            isCorrectPassword(password, (err, result) =>{
+            isCorrectPassword(password, user, (err, result) =>{
                 if(err){
                     res.status(500).send('Error al autenticar')
                 }else if(result){

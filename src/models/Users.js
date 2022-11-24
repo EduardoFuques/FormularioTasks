@@ -32,8 +32,8 @@ userSchema.pre("save", function (next) {
 });
 
 export const isCorrectPassword = (userSchema.methods.isCorrectPassword =
-  function (password, callback) {
-    bcrypt.compare(password, this.password, function (err, same) {
+  function (password, consulta, callback) {
+    bcrypt.compare(password, consulta.password, function (err, same) {
       if (err) {
         callback(err);
       } else {
@@ -45,22 +45,4 @@ export const isCorrectPassword = (userSchema.methods.isCorrectPassword =
 const User = model("User", userSchema);
 export default User;
 
-const user = 'Eduardo'
-const password = 'Eduardo1'
-User.findOne({ user: user }, (err, user) => {
-  if (err) {
-    console.log("Error al autenticar al usuario");
-  } else if (!user) {
-    console.log("El usuario no existe");
-  } else {
-    isCorrectPassword(password, (err, result) => {
-      if (err) {
-        console.log("Error al autenticar");
-      } else if (result) {
-        console.log("Usuario autenticado");
-      } else {
-        console.log("Usuario o contraseña incorrecta");
-      }
-    });
-  }
-});
+
