@@ -1,23 +1,30 @@
-<div class="card card-body p-4 rounded-0 bg-dark text-white">
-  
-  <h3>Añade una tarea</h3>
-  <form action="/task/add" method="POST">
+<div class="container">
+  <div class="row">
+    <div class="col-md-9 offset-md-2">
+          <div class="card text-bg-success mb-3" style="max-width: 32rem;">
+            <div class="card-header"> <h3>Añadir un registro</h3></div>
+            <div class="card-body">
+              <form action="/task/add" method="POST">
 
-    <div>
-      <label for="title">Escribe un título:</label>
-      <input type="text" name="title" placeholder="Title" id="title" class="form-control rounded-0 bg-dark text-white"/>
-    </div>
-    <div>
-      <label for="description">Escribe la descripción</label>
-      <textarea
-        name="description"
-        placeholder="Descripción"
-        id="description"
-        class="form-control rounded-0 bg-dark text-white"
-      ></textarea>
-    </div>
+              <div>
+                <label for="title">Escribe un título:</label>
+                <input type="text" name="title" placeholder="Titulo" id="title" class="form-control rounded-0 bg-light text-dark"/>
+              </div>
+              <div>
+                <label for="description">Escribe la descripción</label>
+                <textarea
+                  name="description"
+                  placeholder="Descripción"
+                  id="description"
+                  class="form-control rounded-0 bg-light text-dark"
+                ></textarea>
+              </div>
 
-    <button class="btn btn-primary btn-sm mt-2">Add</button>
+              <button class="btn btn-dark btn-sm mt-2">Enviar formulario</button>
 
-  </form>
+            </form>
+            </div>
+          </div>
+     </div>
+  </div>
 </div>
