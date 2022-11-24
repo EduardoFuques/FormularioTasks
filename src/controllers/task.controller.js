@@ -10,7 +10,7 @@ export const createTask = async (req, res) => {
   try {
     const task = Task(req.body);
     const taskSaved = await task.save();
-    res.redirect("/");
+    res.redirect("/task");
   } catch (error) {
     console.log(error);
   }
@@ -29,13 +29,13 @@ export const renderTaskEdit = async (req, res) => {
 export const editTask = async (req, res) => {
   const { id } = req.params;
   await Task.findByIdAndUpdate(id, req.body);
-  res.redirect("/");
+  res.redirect("/task");
 };
 
 export const deleteTask = async (req, res) => {
   const { id } = req.params;
   await Task.findByIdAndDelete(id);
-  res.redirect("/");
+  res.redirect("/task");
 };
 
 export const toggleTask = async (req, res) => {
@@ -43,5 +43,5 @@ export const toggleTask = async (req, res) => {
   const task = await Task.findById(id);
   task.done = !task.done;
   await task.save();
-  res.redirect("/");
+  res.redirect("/task");
 };
