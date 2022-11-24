@@ -16,7 +16,7 @@ import {
 
 const router = Router();
 
-router.get("/", renderTask);
+router.get("/task", renderTask);
 
 router.post("/task/add", createTask);
 
@@ -32,8 +32,8 @@ router.get("/signup", renderSignUp);
 
 router.post("/signup", signUpUser);
 
-router.get("/signin", renderSignIn);
+router.get("/", renderSignIn);
 
-router.post("/signin", signInUser);
+router.post("/", signInUser);
 
 export default router;

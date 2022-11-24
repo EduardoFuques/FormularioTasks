@@ -1,5 +1,6 @@
 import User from "../models/Users";
 import { isCorrectPassword } from "../models/Users";
+import { setTimeout } from "timers/promises";
 
 export const renderSignUp = async (req, res) => {
   res.render("login");
@@ -9,7 +10,7 @@ export const signUpUser = async (req, res) => {
   try {
     const user = User(req.body);
     const userSaved = await user.save();
-    res.redirect("/");
+    res.redirect("/task");
   } catch (error) {
     console.log(error);
   }
@@ -22,7 +23,6 @@ export const renderSignIn = async (req, res) => {
 export const signInUser = (req, res) => {
     try {
       const {user, password} = req.body;
-      console.log(User.findOne({user: user}))
       User.findOne({user: user}, (err, user)  =>{
         if(err){
             res.status(500).send('Error al autenticar al usuario')
@@ -33,7 +33,8 @@ export const signInUser = (req, res) => {
                 if(err){
                     res.status(500).send('Error al autenticar')
                 }else if(result){
-                    res.status(200).send('Usuario autenticado')
+                  res.redirect("/task");
+
                 }else{
                     res.status(500).send('Usuario o contraseña incorrecta')
                 }
