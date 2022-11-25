@@ -1,29 +1,44 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-5 offset-md-3">
-      <div class="card card-body bg-dark rounded-0 p-4 text-white">
-        <h1>Registro de usuario</h1>
-            <div class="alert alert-primary" role="alert">
-            A simple primary alert—check it out!
-          </div>
-            <form "/signup" method="post" >
-              <div class="mb-3">
-                <input
-                type="text"
-                name="user"
-                placeholder="Usuario"
+<div class="container-md">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="alert alert-success" role="alert">
+        Si aun no te registraste al sistema iniciar aqui !
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center align-items-center"><div class="col-md-6">
+    <div class="card card-body bg-success rounded-2 p-4 text-white position-relative">
+      <h1>Registro al RePA</h1>
+      <form "/signup" method="post" >
+        <div class="mb-3">
+          <input type="text" name="nombre" placeholder="Nombres" class="form-control rounded-0 bg-white text-dark" required>
+        </div>
+        <div class="mb-3">
+          <input type="text" name="apellido" placeholder="Apellido" class="form-control rounded-0 bg-white text-dark" required>
+        </div>
+        <div class="mb-3">
+          <input type="text" name="dni" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 bg-white text-dark" required>
+        </div>
+        <div class="mb-3">
+          <input type="email" name="email" placeholder="Correo electrónico" class="form-control rounded-0 bg-white text-dark" required>
+        </div>
+        <div class="mb-3">
+          <input type="password" name="Contraseña" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark" required>
+        </div>
+        <div class="mb-3">
+          <input type="password" name="Repetir contraseña" placeholder="Cargar contraseña nuevamente" class="form-control rounded-0 bg-white text-dark" required>
+        </div>
+          <button class="btn btn-dark">Registrarse</button>
+       </form>
+  </div>
+  <pre>
 
-                class="form-control rounded-0 bg-dark text-white"
-              />
-              </div>
-            <div class="mb-3">
+  </pre>
+  <div class="alert alert-primary d-flex align-items-center" role="alert">
+    <div class="row">
+      <div class="col-12">
+        Ya estas Registrado? <a href="./signin.hbs"> :: Ingresar al RePA ::</a>
+      </div>
+  </div>
 
-    <input type="text" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-dark text-white">
-
-   </div>
-    
-    <button class="btn btn-primary">Registrarse</button>
-  </form>
 </div>
-</div>
-
