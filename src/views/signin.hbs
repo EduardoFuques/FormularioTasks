@@ -1,24 +1,36 @@
-<div class="container">
-  <div class="row"><div class="col-md-5 offset-md-3">
-    <div class="card card-body bg-dark rounded-0 p-4 text-white">
-      <h1>Ingreso de usuario</h1>
+<div class="container-md">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-6">
+      <div class="alert alert-warning" role="alert">
+        Acceso a personas YA REGISTRADAS en REPA!
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center align-items-center"><div class="col-md-6">
+    <div class="card card-body bg-success rounded-2 p-4 text-white position-relative">
+      <h1>Ingreso a RePA</h1>
       <form "/signin" method="post" >
         <div class="mb-3">
-          <input
-          type="text"
-          name="user"
-          placeholder="Usuario"
-
-          class="form-control rounded-0 bg-dark text-white"
-        />
+          <input type="text" name="usuario" placeholder="Usuario (DNI sin puntos)" class="form-control rounded-0 bg-white text-dark">
         </div>
         <div class="mb-3">
 
-          <input type="text" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-dark text-white">
+          <input type="text" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark">
 
         </div>
     
-          <button class="btn btn-primary">Ingresar</button>
+          <button class="btn btn-dark">Ingresar</button>
        </form>
   </div>
+  <pre>
+
+</pre>
+<div class="alert alert-primary d-flex align-items-center" role="alert">
+  <div class="row">
+    <div class="col-12">
+      Aun no estas Registrado? <a href="./signup.hbs"> :: Registrarse al RePA ::</a>
+    </div>
+  </div>
+</div>
+
 </div>
