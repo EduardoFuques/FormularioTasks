@@ -11,22 +11,22 @@
       <h1>Registro al RePA</h1>
       <form "/signup" method="post" >
         <div class="mb-3">
-          <input type="text" name="nombre" placeholder="Nombres" class="form-control rounded-0 bg-white text-dark" required>
+          <input type="text" name="nombre" placeholder="Nombres" class="form-control rounded-0 bg-white text-dark" value="{{user.nombre}}" required>
         </div>
         <div class="mb-3">
-          <input type="text" name="apellido" placeholder="Apellido" class="form-control rounded-0 bg-white text-dark" required>
+          <input type="text" name="apellido" placeholder="Apellido" class="form-control rounded-0 bg-white text-dark" value="{{user.apellido}}" required>
         </div>
         <div class="mb-3">
-          <input type="text" name="dni" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 bg-white text-dark" required>
+          <input type="text" name="usuario" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 bg-white text-dark" value="{{user.usuario}}" required>
         </div>
         <div class="mb-3">
-          <input type="email" name="email" placeholder="Correo electrónico" class="form-control rounded-0 bg-white text-dark" required>
+          <input type="email" name="email" placeholder="Correo electrónico" class="form-control rounded-0 bg-white text-dark" value="{{user.email}}" required>
         </div>
         <div class="mb-3">
-          <input type="password" name="Contraseña" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark" required>
+          <input type="password" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark" value="{{user.pass}}" required>
         </div>
         <div class="mb-3">
-          <input type="password" name="Repetir contraseña" placeholder="Cargar contraseña nuevamente" class="form-control rounded-0 bg-white text-dark" required>
+          <input type="password" name="confirm_password" placeholder="Cargar contraseña nuevamente" class="form-control rounded-0 bg-white text-dark" value="{{user.pass}}" required>
         </div>
           <button class="btn btn-dark">Registrarse</button>
        </form>
@@ -37,7 +37,7 @@
   <div class="alert alert-primary d-flex align-items-center" role="alert">
     <div class="row">
       <div class="col-12">
-        Ya estas Registrado? <a href="./signin.hbs"> :: Ingresar al RePA ::</a>
+        Ya estas Registrado? <a href="/"> :: Ingresar al RePA ::</a>
       </div>
   </div>
 

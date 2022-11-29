@@ -12,7 +12,14 @@
 
     {{> navbar}}
 
-    {{{ body }}}
+
+    <main class="container p-5">
+        {{> messages}}
+        {{> errors}}
+        {{{ body }}}
+    </main>
+    
+
 
     {{> footer }}
 

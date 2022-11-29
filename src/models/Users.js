@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 const saltRounds = 10;
 
 const userSchema = new Schema({
-  user: {
+  usuario: {
     type: String,
     required: true,
     unique: true,
