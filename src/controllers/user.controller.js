@@ -1,5 +1,6 @@
 import User from "../models/Usuarios";
 import { isCorrectPassword } from "../models/Usuarios";
+import passport from "../config/passport";
 
 export const renderSignUp = async (req, res) => {
   res.render("login");
@@ -72,6 +73,18 @@ export const signInUser = (req, res) => {
   }
 };
 
-export const logOut = async (req, res) => {
-  res.send("logout");
+export const autenticacion = passport.authenticate('login', {
+  failureRedirect: '/',
+  successRedirect: '/task',
+  failureFlash: true
+})
+
+export const logOut = function(req, res, next) {
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+  });
 };
+
+
+

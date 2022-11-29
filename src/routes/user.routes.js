@@ -6,6 +6,7 @@ import {
   signInUser,
   signUpUser,
   logOut,
+  autenticacion,
 } from "../controllers/user.controller";
 
 const router = Router();
@@ -16,7 +17,7 @@ router.post("/signup", signUpUser);
 
 router.get("/", renderSignIn);
 
-router.post("/", signInUser);
+router.post("/", autenticacion);
 
 router.get("/logout", logOut)
 
