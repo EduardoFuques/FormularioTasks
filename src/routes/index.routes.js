@@ -7,19 +7,20 @@ import {
   deleteTask,
   toggleTask,
 } from "../controllers/task.controller";
+import helpers from "../helpers/auth";
 
 const router = Router();
 
-router.get("/task", renderTask);
+router.get("/task", helpers.isAuthenticated, renderTask);
 
-router.post("/task/add", createTask);
+router.post("/task/add", helpers.isAuthenticated, createTask);
 
-router.get("/task/:id/edit", renderTaskEdit);
+router.get("/task/:id/edit", helpers.isAuthenticated, renderTaskEdit);
 
-router.post("/task/:id/edit", editTask);
+router.post("/task/:id/edit", helpers.isAuthenticated, editTask);
 
-router.get("/task/:id/delete", deleteTask);
+router.get("/task/:id/delete", helpers.isAuthenticated, deleteTask);
 
-router.get("/task/:id/toggledone", toggleTask);
+router.get("/task/:id/toggledone", helpers.isAuthenticated, toggleTask);
 
 export default router;

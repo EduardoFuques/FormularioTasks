@@ -3,11 +3,11 @@ import { Router } from "express";
 import {
   renderSignIn,
   renderSignUp,
-  signInUser,
   signUpUser,
   logOut,
   autenticacion,
 } from "../controllers/user.controller";
+import helpers from "../helpers/auth";
 
 const router = Router();
 
@@ -19,6 +19,6 @@ router.get("/", renderSignIn);
 
 router.post("/", autenticacion);
 
-router.get("/logout", logOut)
+router.get("/logout", helpers.isAuthenticated, logOut)
 
 export default router;
