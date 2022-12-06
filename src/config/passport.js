@@ -12,12 +12,15 @@ passport.use(
       passwordField: "password",
     },
     async (usuario, password, done) => {
+      console.log("checkpoint1")
       const user = await User.findOne({ usuario });
       if (!user) {
         return done(null, false, { message: "No existe el usuario" });
       } else {
+        console.log("checkpoint2")
         const match = await user.matchPassword(password);
         if (match) {
+          console.log("checkpoint3")
           return done(null, user);
         } else {
           return done(null, false, { message: "Contraseña incorrecta" });
