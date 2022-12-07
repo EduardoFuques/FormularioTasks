@@ -16,6 +16,15 @@
         <div class="mb-3">
           <input type="text" name="apellido" placeholder="Apellido" class="form-control rounded-0 bg-white text-dark" value="{{user.apellido}}" required>
         </div>
+        <div class="dropdown mb-3">
+            <select name="opcion" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" value="{{user.opcion}}">
+                <option selected disabled>Tipo de documento</option>
+                <option class="dropdown-item" value="DNI">Documento Nacional de Identidad</option>
+                <option value="Cedula">Cédula Policia Federal</option>
+                <option value="LC">Libreta Cívica</option>
+                <option value="LE">Libreta de Enrolamiento</option>
+            </select>
+        </div>
         <div class="mb-3">
           <input type="text" name="usuario" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 bg-white text-dark" value="{{user.usuario}}" required>
         </div>
@@ -23,10 +32,10 @@
           <input type="email" name="email" placeholder="Correo electrónico" class="form-control rounded-0 bg-white text-dark" value="{{user.email}}" required>
         </div>
         <div class="mb-3">
-          <input type="password" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark" value="{{user.pass}}" required>
+          <input type="password" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark" required>
         </div>
         <div class="mb-3">
-          <input type="password" name="confirm_password" placeholder="Cargar contraseña nuevamente" class="form-control rounded-0 bg-white text-dark" value="{{user.pass}}" required>
+          <input type="password" name="confirm_password" placeholder="Cargar contraseña nuevamente" class="form-control rounded-0 bg-white text-dark" required>
         </div>
           <button class="btn btn-dark">Registrarse</button>
        </form>
