@@ -13,8 +13,8 @@
             <div class="card-header"> <h3>Registro al RePA</h3></div>
           </div>
       </div>
-    <form "/signup" method="post" >
-    </div>
+  </div>
+    <form "/signup" method="post">
     <div class="row g-3">
       <div class="col-sm-5">
         <input type="text" name="nombre" placeholder="Nombres" class="form-control rounded-0 bg-white text-dark" value="{{user.nombre}}" required>
@@ -23,7 +23,7 @@
         <input type="text" name="apellido" placeholder="Apellido" class="form-control rounded-0 bg-white text-dark" value="{{user.apellido}}" required>
     </div>
     <div class="row g-3">
-      <div class="col-sm-5">
+      <div class="col-sm-3">
         <select name="opcion" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" value="{{user.opcion}}">
           <option selected disabled>Tipo de documento</option>
           <option class="dropdown-item" value="DNI">Documento Nacional de Identidad</option>
@@ -32,8 +32,11 @@
           <option value="LE">Libreta de Enrolamiento</option>
         </select>
       </div>
-      <div class="col-sm">
+      <div class="col-sm-3">
         <input type="text" name="usuario" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 bg-white text-dark" value="{{user.usuario}}" required>
+      </div>
+      <div class="col-sm-6">
+        <input type="email" name="email" placeholder="Correo electrónico" class="form-control rounded-0 bg-white text-dark" value="{{user.email}}" required>
       </div>
     </div>
     <div class="row g-3">
@@ -45,12 +48,7 @@
       </div>
     </div>
     <pre></pre>
-    <button type="button" class="btn btn-success"
-      data-bs-toggle="tooltip" data-bs-placement="top"
-      data-bs-custom-class="custom-tooltip"
-      data-bs-title="Por favor chequee la información antes de enviar el formulario.">
-      Registrarse
-    </button>
+    <button class="btn btn-dark">Registrarse</button>
     </form>
-  
+  </div>
 </div>
