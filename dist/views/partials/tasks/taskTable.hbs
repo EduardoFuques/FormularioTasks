@@ -1,0 +1,44 @@
+<div class="container-lg"  >
+    <div class="row">
+        <div class="col-md">
+            {{#if tasks}}
+            <table class="table table-bordered border-success table-hover table-success">
+                <thead>
+                    <tr>
+                        <th>N.</th>
+                        <th>Titulo</th>
+                        <th>Descripcion</th>
+                        <th>Operaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each tasks}}
+                        <tr>
+                            <td>{{@index}}</td>
+                            <td>{{title}}</td>
+                            <td>{{description}}</td>
+                            <td>
+                                {{#if done}}
+                                    <a href="/task/{{_id}}/toggledone" class="btn btn-dark">Deshacer</a>
+                                {{else}}
+                                    <a href="/task/{{_id}}/toggledone" class="btn btn-success">Hecho</a>
+                                {{/if}}
+                                <a href="/task/{{_id}}/delete" class="btn btn-danger">Borrar</a>
+                                <a href="/task/{{_id}}/edit" class="btn btn-success">Actualizar</a>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+                    {{else}}
+                <div class="h-100-d-flex align-items-center justify-content-center">
+                    <div class="text-center text-white">
+                        <h1>No hay notas</h1>
+                        <img src="/icons/dog.svg" class="w-75">
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+
+</div>
