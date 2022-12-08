@@ -8,11 +8,11 @@
     </div>
   </div>
   <div class="row g-3">
-      <div class="col-sm-12">
-          <div class="card text-bg-dark mb-3 align-items-center">
-            <div class="card-header"> <h3>Registro al RePA</h3></div>
-          </div>
+    <div class="col-sm-12">
+      <div class="card text-bg-dark mb-3 align-items-center">
+        <div class="card-header"> <h3>Registro al RePA</h3></div>
       </div>
+
   </div>
     <form "/signup" method="post">
     <div class="row g-3">
@@ -42,10 +42,17 @@
     <div class="row g-3">
       <div class="col-sm-5">
         <input type="password" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark" required>
+
       </div>
-      <div class="col-sm">
-        <input type="password" name="confirm_password" placeholder="Cargar contraseña nuevamente" class="form-control rounded-0 bg-white text-dark" required>
+      <div class="row g-3">
+        <div class="col-sm-5">
+          <input type="password" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark" required>
+        </div>
+        <div class="col-sm">
+          <input type="password" name="confirm_password" placeholder="Cargar contraseña nuevamente" class="form-control rounded-0 bg-white text-dark" required>
+        </div>
       </div>
+
     </div>
     <pre></pre>
     <button class="btn btn-dark">Registrarse</button>
