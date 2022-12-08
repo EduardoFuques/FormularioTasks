@@ -3,10 +3,10 @@ import { Schema, model } from "mongoose";
 const formSchema = new Schema(
   {
     idUser: { type: String },
-    apellido: { ref: "Usuario", type: Schema.Types.String, },
-    nombre: { ref: "Usuario", type: Schema.Types.String,},
+    apellido: { ref: "Usuario", type: Schema.Types.String },
+    nombre: { ref: "Usuario", type: Schema.Types.String},
     tipoDoc: { ref: "Usuario", type: Schema.Types.String },
-    documento: { ref: "Usuario", type: Schema.Types.String },
+    usuario: { ref: "Usuario", type: Schema.Types.Number },
     cuil: { type: Number },
     sitAnses: { type: String },
     sitAfip: { type: String },
@@ -21,10 +21,11 @@ const formSchema = new Schema(
         depto: { type: String },
         localidad: { type: String },
         cp: { type: String },
+        departamento: { type: String },
+        distrito: { type: String },
       },
     ],
-    departamento: { type: String },
-    distrito: { type: String },
+    
     telefono: [
       {
         fijo: { type: Number },
@@ -33,9 +34,9 @@ const formSchema = new Schema(
       },
     ],
     email: { ref: "Usuario", type: Schema.Types.String },
-    medios: [{ ref: "Medio", type: Schema.Types.String }],
-    areaDes: [{ ref: "AreaDesempeño", type: Schema.Types.String }],
-    areaComp: [{ ref: "AreaComplementaria", type: Schema.Types.String }],
+    medios: [{ type: String }],
+    areaDes: [{ type: String }],
+    areaComp: [{ type: String }],
   },
   {
     timestamps: true,
