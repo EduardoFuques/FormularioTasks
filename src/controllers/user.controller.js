@@ -62,6 +62,9 @@ export const signUpUser = async (req, res) => {
 };
 
 export const renderSignIn = (req, res) => {
+  if (req.isAuthenticated()) {
+    res.redirect("/form");
+  }
   res.render("signin");
 };
 
