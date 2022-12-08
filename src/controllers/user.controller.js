@@ -79,7 +79,7 @@ export const signInUser = (req, res) => {
           if (err) {
             res.status(500).send("Error al autenticar");
           } else if (result) {
-            res.redirect("/task");
+            res.redirect("/form");
           } else {
             res.status(500).send("Usuario o contraseña incorrecta");
           }
@@ -94,9 +94,10 @@ export const signInUser = (req, res) => {
 
 export const autenticacion = passport.authenticate("login", {
   failureRedirect: "/",
-  successRedirect: "/task",
+  successRedirect: "/form",
   failureFlash: true,
 });
+
 
 export const logOut = function (req, res, next) {
   req.logout(function (err) {

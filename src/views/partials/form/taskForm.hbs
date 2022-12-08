@@ -10,29 +10,30 @@
   
     <div class="row g-3">
       <div class="col-sm-5">
-      <input type="text" name="apellido" placeholder="Apellido" id="apellido" class="form-control"/>
+      <input type="text" name="apellido" placeholder="Apellido" id="apellido" value={{datos.apellido}} class="form-control" disabled/>
     </div>
       <div class="col-sm">
-      <input type="text" name="nombres" placeholder="Nombres" id="nombres" class="form-control"/>
+      <input type="text" name="nombres" placeholder="Nombres" id="nombres" value={{datos.nombre}} class="form-control" disabled/>
     </div>
     <div class="row g-3">
       <div class="col-sm-5">
-        <select class="form-select" aria-label="Default select example" style="height: 38px">
+        {{!-- <select class="form-select" aria-label="Default select example" style="height: 38px">
             <option selected>Tipo de documento</option>
-            <option value="1">DNI</option>
+            <option value="DNI">DNI</option>
             <option value="2">Cedula Policia Federal</option>
             <option value="3">Libreta Civica</option>
             <option value="4">Libreta de enrolamiento</option>
-        </select>
+        </select> --}}
+        <input type="text" name="tipoDoc" id="tipoDoc" value={{datos.tipoDoc}} class="form-control" disabled>
       </div>
       <div class="col-sm">
-        <input type="text" name="nro-doc" placeholder="Número de documento" id="nro-dni" class="form-control"/>
+        <input type="text" name="nro-doc" placeholder="Número de documento" id="nro-dni" value={{datos.usuario}} class="form-control" disabled/>
       </div>
     </div>
 
     <div class="row g-3">
       <div class="col-sm-6">
-          <input type="email" class="form-control" id="email" placeholder="email: nombre@ejemplo.com">
+          <input type="email" class="form-control" id="email" value={{datos.email}} placeholder="email: nombre@ejemplo.com" disabled>
       </div>
       <div class="col-sm">
           <input type="cuil" class="form-control" id="cuil" placeholder="Número cuit/cuil">
