@@ -1,4 +1,5 @@
-<div class="container-md">
+<div class="container-fluid">
+  <pre></pre>
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="alert alert-success" role="alert">
@@ -6,48 +7,50 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-center align-items-center"><div class="col-md-6">
-    <div class="card card-body bg-success rounded-2 p-4 text-white position-relative">
-      <h1>Registro al RePA</h1>
-      <form "/signup" method="post" >
-        <div class="mb-3">
-          <input type="text" name="nombre" placeholder="Nombres" class="form-control rounded-0 bg-white text-dark" value="{{user.nombre}}" required>
-        </div>
-        <div class="mb-3">
-          <input type="text" name="apellido" placeholder="Apellido" class="form-control rounded-0 bg-white text-dark" value="{{user.apellido}}" required>
-        </div>
-        <div class="dropdown mb-3">
-            <select name="opcion" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" value="{{user.opcion}}">
-                <option selected disabled>Tipo de documento</option>
-                <option class="dropdown-item" value="DNI">Documento Nacional de Identidad</option>
-                <option value="Cedula">Cédula Policia Federal</option>
-                <option value="LC">Libreta Cívica</option>
-                <option value="LE">Libreta de Enrolamiento</option>
-            </select>
-        </div>
-        <div class="mb-3">
-          <input type="text" name="usuario" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 bg-white text-dark" value="{{user.usuario}}" required>
-        </div>
-        <div class="mb-3">
-          <input type="email" name="email" placeholder="Correo electrónico" class="form-control rounded-0 bg-white text-dark" value="{{user.email}}" required>
-        </div>
-        <div class="mb-3">
-          <input type="password" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark" required>
-        </div>
-        <div class="mb-3">
-          <input type="password" name="confirm_password" placeholder="Cargar contraseña nuevamente" class="form-control rounded-0 bg-white text-dark" required>
-        </div>
-          <button class="btn btn-dark">Registrarse</button>
-       </form>
-  </div>
-  <pre>
-
-  </pre>
-  <div class="alert alert-primary d-flex align-items-center" role="alert">
-    <div class="row">
-      <div class="col-12">
-        Ya estas Registrado? <a href="/"> :: Ingresar al RePA ::</a>
+  <div class="row g-3">
+      <div class="col-sm-12">
+          <div class="card text-bg-dark mb-3 align-items-center">
+            <div class="card-header"> <h3>Registro al RePA</h3></div>
+          </div>
       </div>
-  </div>
-
+    <form "/signup" method="post" >
+    </div>
+    <div class="row g-3">
+      <div class="col-sm-5">
+        <input type="text" name="nombre" placeholder="Nombres" class="form-control rounded-0 bg-white text-dark" value="{{user.nombre}}" required>
+    </div>
+      <div class="col-sm">
+        <input type="text" name="apellido" placeholder="Apellido" class="form-control rounded-0 bg-white text-dark" value="{{user.apellido}}" required>
+    </div>
+    <div class="row g-3">
+      <div class="col-sm-5">
+        <select name="opcion" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" value="{{user.opcion}}">
+          <option selected disabled>Tipo de documento</option>
+          <option class="dropdown-item" value="DNI">Documento Nacional de Identidad</option>
+          <option value="Cedula">Cédula Policia Federal</option>
+          <option value="LC">Libreta Cívica</option>
+          <option value="LE">Libreta de Enrolamiento</option>
+        </select>
+      </div>
+      <div class="col-sm">
+        <input type="text" name="usuario" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 bg-white text-dark" value="{{user.usuario}}" required>
+      </div>
+    </div>
+    <div class="row g-3">
+      <div class="col-sm-5">
+        <input type="password" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark" required>
+      </div>
+      <div class="col-sm">
+        <input type="password" name="confirm_password" placeholder="Cargar contraseña nuevamente" class="form-control rounded-0 bg-white text-dark" required>
+      </div>
+    </div>
+    <pre></pre>
+    <button type="button" class="btn btn-success"
+      data-bs-toggle="tooltip" data-bs-placement="top"
+      data-bs-custom-class="custom-tooltip"
+      data-bs-title="Por favor chequee la información antes de enviar el formulario.">
+      Registrarse
+    </button>
+    </form>
+  
 </div>
