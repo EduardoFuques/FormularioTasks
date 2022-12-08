@@ -1,36 +1,49 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 
-const saltRounds = 10;
-
-const userSchema = new Schema({
-  usuario: {
-    type: String,
-    required: true,
-    unique: true,
+const userSchema = new Schema(
+  {
+    tipoDoc: {
+      type: String,
+      required: true,
+    },
+    usuario: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    nombre: {
+      type: String,
+      required: true,
+    },
+    apellido: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    rol: {
+      type: String,
+      required: true,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  nombre: {
-    type: String,
-    required: true,
-  },
-  apellido: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-});
+  {
+    timestamps: true,
+    versionKey: false,
+  }
+);
 
 userSchema.pre("save", function (next) {
   if (this.isNew || this.isModified("password")) {
     const document = this;
+    const saltRounds = bcrypt.genSaltSync(10);
     bcrypt.hash(document.password, saltRounds, (err, hashedPassword) => {
       if (err) {
         next(err);

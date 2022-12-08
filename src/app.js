@@ -1,12 +1,14 @@
 import express from "express";
 import { create } from "express-handlebars";
 import indexRoutes from "./routes/index.routes";
+import formRoutes from "./routes/form.routes";
 import userRoutes from "./routes/user.routes";
 import path from "path";
 import morgan from "morgan";
 import flash from "connect-flash";
 import session from "express-session";
 import passport from "./config/passport";
+import { SESSION_SECRET } from "./config";
 
 //inicializacion
 const app = express();
@@ -29,7 +31,7 @@ app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
-    secret: "secret",
+    secret: SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
   })
@@ -49,6 +51,7 @@ app.use((req, res, next) => {
 
 //routes
 app.use(indexRoutes);
+app.use(formRoutes);
 app.use(userRoutes);
 
 //static files
