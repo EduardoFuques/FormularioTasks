@@ -8,4 +8,7 @@ node_modules
 # Carpeta construida
 dist
 
-#A ver si funciona
+# Trash
+trash
+src2
+src1
