@@ -17,9 +17,7 @@ router.post("/signup", signUpUser);
 
 router.get("/", renderSignIn);
 
-router.post("/", autenticacion, function(req, res) {
-  //console.log(req);
-});
+router.post("/", autenticacion);
 
 router.get("/logout", helpers.isAuthenticated, logOut)
 
