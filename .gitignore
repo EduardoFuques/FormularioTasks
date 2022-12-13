@@ -6,7 +6,8 @@ node_modules
 .env
 
 # Carpeta construida
-
+dist
+dist
 
 # Trash
 trash

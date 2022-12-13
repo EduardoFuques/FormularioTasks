@@ -1,5 +1,5 @@
 export const departamentos = [
-  "25de Mayo",
+  "25 de Mayo",
   "Apóstoles",
   "Cainguás",
   "Candelaria",
@@ -10,6 +10,7 @@ export const departamentos = [
   "Guaraní",
   "Iguazú",
   "Libertador General San Martín",
+  "Leandro N. Alem",
   "Montecarlo",
   "Oberá",
   "San Ignacio",
@@ -97,3 +98,13 @@ export const municipios = [
 ];
 
 export const distritos = ["NORTE", "PARANÁ", "SUR", "URUGUAY"];
+
+export const sitAfip = [
+  "Exento",
+  "No Inscripto",
+  "Monotributista",
+  "Responsable Inscripto",
+];
+
+export const estCivil = ["Soltero", "Casado", "Divorciado"];
+

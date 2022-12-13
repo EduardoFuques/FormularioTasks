@@ -8,15 +8,15 @@ const formSchema = new Schema(
     tipoDoc: { ref: "Usuario", type: Schema.Types.String },
     usuario: { ref: "Usuario", type: Schema.Types.Number },
     cuil: { type: Number },
-    sitAnses: { type: String },
+    sexo: { type: String },
     sitAfip: { type: String },
     sitIaavim: { type: Boolean },
-    perJuridica: { type: String },
+    perJuridica: { type: Boolean },
     codigoRepa: { type: String },
     domicilio: [
       {
         calle: { type: String },
-        numero: { type: String },
+        numero: { type: Number },
         piso: { type: String },
         depto: { type: String },
         localidad: { type: String },

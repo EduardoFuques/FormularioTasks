@@ -1,135 +1,914 @@
 <div class="container-fluid">
-    <pre></pre>
-    <div class="row g-3">
-      <div class="col-sm-12">
-          <div class="card text-bg-dark mb-3 align-items-center">
-            <div class="card-header"> <h3>Datos Personales</h3></div>
-          </div>
+  <pre></pre>
+  {{!-- Header datos personales --}}
+  <div class="row g-3">
+    <div class="col-sm-12">
+      <div class="card text-bg-dark mb-3 align-items-center">
+        <div class="card-header"> <h3>Datos Personales</h3></div>
       </div>
     </div>
-  
-    <div class="row g-3">
-      <div class="col-sm-5">
+  </div>
+  {{!-- Fila 1 - Apellido y nombre --}}
+  <div class="row g-3">
+    {{!-- Apellido --}}
+    <div class="col-sm-6">
       <input type="text" name="apellido" placeholder="Apellido" id="apellido" value={{datos.apellido}} class="form-control" disabled/>
     </div>
-      <div class="col-sm">
+    {{!-- Nombre --}}
+    <div class="col-sm">
       <input type="text" name="nombres" placeholder="Nombres" id="nombres" value={{datos.nombre}} class="form-control" disabled/>
     </div>
-    <div class="row g-3">
-      <div class="col-sm-5">
-        {{!-- <select class="form-select" aria-label="Default select example" style="height: 38px">
-            <option selected>Tipo de documento</option>
-            <option value="DNI">DNI</option>
-            <option value="2">Cedula Policia Federal</option>
-            <option value="3">Libreta Civica</option>
-            <option value="4">Libreta de enrolamiento</option>
-        </select> --}}
-        <input type="text" name="tipoDoc" id="tipoDoc" value={{datos.tipoDoc}} class="form-control" disabled>
-      </div>
-      <div class="col-sm">
-        <input type="text" name="nro-doc" placeholder="Número de documento" id="nro-dni" value={{datos.usuario}} class="form-control" disabled/>
+  </div>
+  {{!-- Fila 2 - tipo y numero documento --}}
+  <div class="row g-3">
+    {{!-- Tipo doc --}}
+    <div class="col-sm-6">
+      <input type="text" name="tipoDoc" id="tipoDoc" value={{datos.tipoDoc}} class="form-control" disabled>
+    </div>
+    {{!-- Numero doc --}}
+    <div class="col-sm">
+      <input type="text" name="nro-doc" placeholder="Número de documento" id="nro-dni" value={{datos.usuario}} class="form-control" disabled/>
+    </div>
+  </div>
+  {{!-- Fila 3 - email, cuil, sexo --}}
+  <div class="row g-3">
+    {{!-- email --}}
+    <div class="col-sm-6">
+      <input type="email" class="form-control" id="email" value={{datos.email}} placeholder="email: nombre@ejemplo.com" disabled>
+    </div>
+    {{!-- cuil --}}
+    <div class="col-sm  was-validated">
+      <input type="text" class="form-control" id="cuil" placeholder="Número cuit/cuil" required>
+    </div>
+    {{!-- sexo --}}
+    <div class="col-sm-3  was-validated">
+      {{!-- <input type="text" class="form-control" id="sexo" placeholder="sexo" aria-label="sexo"> --}}
+      <select id="slctSexo" class="form-select" required>
+        <option value="" disabled hidden selected>Sexo</option>
+      </select>
+    </div>
+  </div>
+  {{!-- Fila 4 - Personeria juridica, afip, iaavim, repa--}}
+  <div class="row g-3"> 
+    {{!-- Personería Jurídica --}}
+    <div class="col-sm  was-validated">
+      {{!-- <input type="text" class="form-control" id="PerJuridica" placeholder="Personería Jurídica"> --}}
+      <select id="slctPerJur" class="form-select" required>
+        <option value="" disabled hidden selected>Personería Jurídica</option>
+        <option value=True>Si</option>
+        <option value=False>No</option>
+      </select>
+    </div>
+    {{!-- Situación AFIP --}}
+    <div class="col-sm  was-validated">
+      {{!-- <input type="text" class="form-control" id="sitAfip" placeholder="Situación AFIP" aria-label="sitAfip"> --}}
+      <select id="slctSitAfip" class="form-select" required>
+        <option value="" disabled hidden selected>Situación AFIP</option>
+      </select>
+    </div>
+    {{!-- Código REPA --}}
+    <div class="col-sm">
+      <input type="text" class="form-control" id="codRepa" placeholder="Código REPA" aria-label="codRepa" disabled>
+    </div>
+    {{!-- Situación Iaavim --}}
+    <div class="col-sm">
+      <input type="text" class="form-control" id="sitIaavim" placeholder="Situación IAAViM" aria-label="sitIaavim" disabled>
+    </div>
+  </div>
+  {{!-- Fila 5 - Telefonos --}}
+  <div class="row g-3">
+    {{!-- Telefono fijo --}}
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="telFijo" placeholder="Teléfono Fijo" aria-label="Phone">
+    </div>
+    {{!-- Movil principal --}}
+    <div class="col-sm-4  was-validated">
+      <input type="text" class="form-control" id="movilPpal" placeholder="Móvil" aria-label="Movile" required>
+    </div>
+    {{!-- Movil Alternativo --}}
+    <div class="col-sm">
+      <input type="text" class="form-control" id="movilAlt" placeholder="Móvil Alternativo" aria-label="SecondPhone">
+    </div>
+  </div>
+  {{!-- Fila 6 - Localidad, Departamento, Distrito CP--}}
+  <div class="row g-3">
+    {{!-- Municipio --}}
+    <div class="col-sm-3  was-validated">
+      {{!-- <input type="text" class="form-control" id="distrito" placeholder="Distrito" aria-label="District"> --}}
+      <select id="slctMunicipios" class="slctMunicipios form-select" required>
+        <option value="" disabled hidden selected>Localidad</option>
+      </select>
+    </div>
+    {{!-- Departamento --}}
+    <div class="col-sm-3">
+      {{!-- <input type="text" class="form-control" id="departamentoID" placeholder="Departamento" aria-label="State" disabled> --}}
+      {{!-- <select id="slctDepartamentos">
+        <option value="" disabled hidden selected>Departamento</option>
+      </select> --}}
+      {{!-- <input type="text" class="result"> --}}
+      <div class="slctDepartamentos"></div>
+    </div>
+    {{!-- Distrito --}}
+    <div class="col-sm-3">
+      {{!-- <input type="text" class="form-control" id="distrito" placeholder="Distrito" aria-label="District" disabled> --}}
+      {{!-- <select id="slctDistritos">
+        <option value="" disabled hidden selected>Distrito</option>
+      </select> --}}
+      <div class="slctDistritos"></div>
+    </div>
+    {{!-- Codigo postal --}}
+    <div class="col-sm  was-validated">
+      <input type="text" class="form-control" id="cp" placeholder="C.P." aria-label="Zip" required>
+    </div>
+  </div>
+  {{!-- Fila 7 - Calle, piso, número, depto --}}
+  <div class="row g-3">
+    {{!-- calle --}}
+    <div class="col-sm-5 was-validated">
+      <input type="text" class="form-control" id="calle" placeholder="Calle" aria-label="Street" required>
+    </div>
+    {{!-- número --}}
+    <div class="col-sm was-validated">
+      <input type="text" class="form-control" id="numero" placeholder="Número" aria-label="Number" required>
+    </div>
+    {{!-- piso --}}
+    <div class="col-sm">
+      <input type="text" class="form-control" id="piso" placeholder="Piso" aria-label="Floor">
+    </div>
+    {{!-- Depto --}}
+    <div class="col-sm">
+      <input type="text" class="form-control" id="dpto" placeholder="Dpto" aria-label="Depto">
+    </div>
+  </div>
+  {{!-- Header Medios --}}
+  <div class="row g-3">
+    <div class="col-sm-12">
+      <div class="card text-bg-dark mb-3 align-items-center">
+        <div class="card-header"> <h3>Medios, Areas de Desempeño y complementarias</h3></div>
       </div>
     </div>
-
-    <div class="row g-3">
-      <div class="col-sm-6">
-          <input type="email" class="form-control" id="email" value={{datos.email}} placeholder="email: nombre@ejemplo.com" disabled>
-      </div>
-      <div class="col-sm">
-          <input type="cuil" class="form-control" id="cuil" placeholder="Número cuit/cuil">
-      </div>
-      <div class="col-sm">
-          <input type="cuil" class="form-control" id="PerJuridica" placeholder="Personería Jurídica">
+  </div>
+  {{!-- Fila 8  - Selección de medios--}}
+  <div class="row g-3">
+    {{!-- Medios --}}
+    <div class="col-sm-4 was-validated">
+      {{!-- <input type="text" class="form-control" id="medios" placeholder="Medios" aria-label="Medios"> --}}
+      <select id="slctMedios" class="form-select" multiple size="5" required>
+        <option value="" disabled hidden selected>Medios</option>
+      </select>
+    </div>
+    {{!-- Area de desempeño --}}
+    <div class="col-sm-4 was-validated">
+      {{!-- <input type="text" class="form-control" id="areaDes" placeholder="Areas de desempeño" aria-label="areasDes"> --}}
+      <select id="slctAreaDes" class="form-select" multiple size="5" required>
+        <option value="" disabled hidden selected>Areas de desempeño</option>
+      </select>
+    </div>
+    {{!-- Area complementaria --}}
+    <div class="col-sm was-validated">
+      {{!-- <input type="text" class="form-control" id="areaCompl" placeholder="Areas Complementarias" aria-label="areasComp"> --}}
+      <select id="slctAreaComp" class="form-select" multiple size="5" required>
+        <option value="" disabled hidden selected>Areas Complementarias</option>
+      </select>
+    </div>
+  </div>
+  {{!-- Header carga CV --}}
+  <div class="row g-3">
+    <div class="col-sm-12">
+      <div class="card text-bg-dark mb-3 align-items-center">
+        <div class="card-header"> <h3>Carga de Curriculum Vitae</h3></div>
       </div>
     </div>
-
-    <div class="row g-3">
-      <div class="col-sm-3">
-        <input type="text" class="form-control" id="sitAnses" placeholder="Situación ANSES" aria-label="sitAnses">
-      </div>
-      <div class="col-sm">
-        <input type="text" class="form-control" id="sitAfip" placeholder="Situación AFIP" aria-label="sitAfip">
-      </div>
-      <div class="col-sm">
-        <input type="text" class="form-control" id="sitIaavim" placeholder="Situación IAAViM" aria-label="sitIaavim">
-      </div>
-      <div class="col-sm">
-        <input type="text" class="form-control" id="codRepa" placeholder="Código REPA" aria-label="codRepa">
-      </div>
-      <div class="row g-3">
-      <div class="col-sm-5">
-        <input type="text" class="form-control" id="telFijo" placeholder="Teléfono Fijo" aria-label="Phone">
-      </div>
-      <div class="col-sm">
-        <input type="text" class="form-control" id="movilPpal" placeholder="Móvil" aria-label="Movile">
-      </div>
-      <div class="col-sm">
-        <input type="text" class="form-control" id="movilAlt" placeholder="Móvil Alternativo" aria-label="SecondPhone">
-      </div>
+  </div>
+  {{!-- Fila 9 - Carga CV--}}
+  <div class="row g-3">
+    <div class="col-sm-12 was-validated">
+      <input class="form-control" type="file" id="formFile" required>
     </div>
-    </div>
-    <div class="row g-3">
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="localidad" placeholder="Localidad" aria-label="City">
-      </div>
-      <div class="col-sm-3">
-        <input type="text" class="form-control" id="departamento" placeholder="Departamento" aria-label="State">
-      </div>
-      <div class="col-sm-3">
-        <input type="text" class="form-control" id="distrito" placeholder="Distrito" aria-label="District">
-      </div>
-      <div class="col-sm">
-        <input type="text" class="form-control" id="cp" placeholder="C.P." aria-label="Zip">
-      </div>
-    </div>
-    <div class="row g-3">
-      <div class="col-sm-5">
-        <input type="text" class="form-control" id="calle" placeholder="Calle" aria-label="Street">
-      </div>
-      <div class="col-sm">
-        <input type="text" class="form-control" id="numero" placeholder="Número" aria-label="Number">
-      </div>
-      <div class="col-sm">
-        <input type="text" class="form-control" id="piso" placeholder="Piso" aria-label="Floor">
-      </div>
-      <div class="col-sm">
-        <input type="text" class="form-control" id="dpto" placeholder="Dpto" aria-label="Depto">
-      </div>
-    </div>
-    <div class="row g-3">
-      <div class="col-sm-12">
-          <div class="card text-bg-dark mb-3 align-items-center">
-            <div class="card-header"> <h3>Medios, Areas de Desempeño y complementarias</h3></div>
-          </div>
-      </div>
-    </div>
-    <div class="row g-3">
-      <div class="col-sm-5">
-        <input type="text" class="form-control" id="medios" placeholder="Medios" aria-label="Medios">
-      </div>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="areaDes" placeholder="Areas de desempeño" aria-label="areasDes">
-      </div>
-      <div class="col-sm">
-        <input type="text" class="form-control" id="areaCompl" placeholder="Areas Complementarias" aria-label="areasComp">
-      </div>
-    </div>
-    <div class="row g-3">
-      <div class="col-sm-12">
-          <div class="card text-bg-dark mb-3 align-items-center">
-            <div class="card-header"> <h3>Carga de Curriculum Vitae</h3></div>
-          </div>
-      </div>
-      <div class="row g-3">
-      <div class="col-sm-12">
-           <input class="form-control" type="file" id="formFile">
-      </div>
-    </div>
-        <button type="button" class="btn btn-success"
-          data-bs-toggle="tooltip" data-bs-placement="top"
-          data-bs-custom-class="custom-tooltip"
-          data-bs-title="Por favor chequee la información antes de enviar el formulario.">
-          Enviar Formulario
-        </button>
-    <pre></pre>
+  </div>
+  {{!-- Boton enviar formulario --}}
+  <button type="button" class="btn btn-success"
+    data-bs-toggle="tooltip" data-bs-placement="top"
+    data-bs-custom-class="custom-tooltip"
+    data-bs-title="Por favor chequee la información antes de enviar el formulario.">
+    Enviar Formulario
+  </button>
+  <pre></pre> 
 </div>
+
+<script>
+  opcAFIP = [
+    "Exento",
+    "No Inscripto",
+    "Monotributista",
+    "Responsable Inscripto",
+  ];
+  opcAFIP.forEach(function(situacion){
+    let newOption = document.createElement("option");
+    newOption.text = situacion;
+    newOption.value = situacion;
+    slctSitAfip.appendChild(newOption)
+  })
+  
+  areaComp = [    
+    "Proveedor/a de software y/o hardwareLocutor/a con experiencia en audiovisuales",
+    "Fotografía",
+    "Desarrollador/a de vídeo juegos",
+    "Bailarín/a con experiencia en audiovisuales",
+    "Actor/actriz con experiencia en audiovisuales",
+    "Músico/a con experiencia en audiovisuales",
+    "Locutor/a con experiencia en audiovisuales",
+    "Otra Area Complementaria"
+  ]
+  areaComp.forEach(function(situacion){
+    let newOption = document.createElement("option");
+    newOption.text = situacion;
+    newOption.value = situacion;
+    slctAreaComp.appendChild(newOption)
+  })
+  
+  areaDes = [
+      "Productor/a",
+    "Director/a",
+    "Director/a de Casting",
+    "Director/a de Sonido",
+    "Posproductor/a de Imagen",
+    "Posproductor/a de Sonido",
+    "Escenógrafo/a",
+    "Fotógrafo/a de Filmación",
+    "Maquillador/a",
+    "Vestuarista",
+    "Gaffer",
+    "Doblajista",
+    "Continuista / Script",
+    "Grip",
+    "Microfonista",
+    "Montajista",
+    "Productor/a Ejecutivo/a",
+    "Jefe/a de Locaciones",
+    "Realizador/a integral audiovisual",
+    "Documentalista",
+    "Iluminador/a",
+    "Distribuidor/a",
+    "Exhibidor/a",
+    "Capacitador/a o Formador/a",
+    "audiovisual",
+    "Investigador/a",
+    "Guionista",
+    "Colorista",
+    "Director/a de Fotografía",
+    "Comunicador/a especializado/a",
+    "Ilustrador/a",
+    "Efectos especiales",
+    "Animación",
+    "Abogada/o especializado/a en medios audiovisuales",
+    "Asistente de Dirección",
+    "Camarógrafo/a",
+    "Director/a de Arte"
+    ]
+  areaDes.forEach(function(situacion){
+    let newOption = document.createElement("option");
+    newOption.text = situacion;
+    newOption.value = situacion;
+    slctAreaDes.appendChild(newOption)
+  })
+  
+  medios = [
+    "TV",
+    "Web",
+    "Cine"
+  ]
+  medios.forEach(function(situacion){
+    let newOption = document.createElement("option");
+    newOption.text = situacion;
+    newOption.value = situacion;
+    slctMedios.appendChild(newOption)
+  })
+  
+  domicilios =[  {
+    "localidad": "9 de Julio",  
+    "opciones": {
+    "Departamento": "Eldorado",
+    "Distrito": "NORTE",
+    "indice": 0
+    }
+  },
+  {
+    "localidad": "25 de Mayo",  
+    "opciones": {
+    "Departamento": "25 de Mayo",
+    "Distrito": "URUGUAY",
+    "indice": 1
+    }
+  },
+  {
+    "localidad": "Alba Posse",  
+    "opciones": {
+    "Departamento": "25 de Mayo",
+    "Distrito": "URUGUAY",
+    "indice": 2
+    }
+  },
+  {
+    "localidad": "Almafuerte",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 3
+    }
+  },
+  {
+    "localidad": "Ameghino",  
+    "opciones": {
+    "Departamento": "San Javier",
+    "Distrito": "URUGUAY",
+    "indice": 4
+    }
+  },
+  {
+    "localidad": "Apóstoles",  
+    "opciones": {
+    "Departamento": "Apóstoles",
+    "Distrito": "SUR",
+    "indice": 5
+    }
+  },
+  {
+    "localidad": "Aristóbulo del Valle",  
+    "opciones": {
+    "Departamento": "Cainguás",
+    "Distrito": "URUGUAY",
+    "indice": 6
+    }
+  },
+  {
+    "localidad": "Arroyo del Medio",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 7
+    }
+  },
+  {
+    "localidad": "Azara",  
+    "opciones": {
+    "Departamento": "Apóstoles",
+    "Distrito": "SUR",
+    "indice": 8
+    }
+  },
+  {
+    "localidad": "Bernardo de Irigoyen",  
+    "opciones": {
+    "Departamento": "General Manuel Belgrano",
+    "Distrito": "NORTE",
+    "indice": 9
+    }
+  },
+  {
+    "localidad": "Bonpland",  
+    "opciones": {
+    "Departamento": "Candelaria",
+    "Distrito": "SUR",
+    "indice": 10
+    }
+  },
+  {
+    "localidad": "Caa Yarí",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 11
+    }
+  },
+  {
+    "localidad": "Campo Grande",  
+    "opciones": {
+    "Departamento": "Cainguás",
+    "Distrito": "URUGUAY",
+    "indice": 12
+    }
+  },
+  {
+    "localidad": "Campo Ramón",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 13
+    }
+  },
+  {
+    "localidad": "Campo Viera",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 14
+    }
+  },
+  {
+    "localidad": "Candelaria",  
+    "opciones": {
+    "Departamento": "Candelaria",
+    "Distrito": "SUR",
+    "indice": 15
+    }
+  },
+  {
+    "localidad": "Capioví",  
+    "opciones": {
+    "Departamento": "Libertador General San Martín",
+    "Distrito": "PARANÁ",
+    "indice": 16
+    }
+  },
+  {
+    "localidad": "Caraguatay",  
+    "opciones": {
+    "Departamento": "Montecarlo",
+    "Distrito": "PARANÁ",
+    "indice": 17
+    }
+  },
+  {
+    "localidad": "Cerro Azul",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 18
+    }
+  },
+  {
+    "localidad": "Cerro Corá",  
+    "opciones": {
+    "Departamento": "Candelaria",
+    "Distrito": "SUR",
+    "indice": 19
+    }
+  },
+  {
+    "localidad": "Colonia Alberdi",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 20
+    }
+  },
+  {
+    "localidad": "Colonia Aurora",  
+    "opciones": {
+    "Departamento": "25 de Mayo",
+    "Distrito": "URUGUAY",
+    "indice": 21
+    }
+  },
+  {
+    "localidad": "Colonia Delicia",  
+    "opciones": {
+    "Departamento": "Eldorado",
+    "Distrito": "NORTE",
+    "indice": 22
+    }
+  },
+  {
+    "localidad": "Colonia Polana",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 23
+    }
+  },
+  {
+    "localidad": "Colonia Victoria",  
+    "opciones": {
+    "Departamento": "Eldorado",
+    "Distrito": "NORTE",
+    "indice": 24
+    }
+  },
+  {
+    "localidad": "Colonia Wanda",  
+    "opciones": {
+    "Departamento": "Iguazú",
+    "Distrito": "NORTE",
+    "indice": 25
+    }
+  },
+  {
+    "localidad": "Comandante A. Guacurary",  
+    "opciones": {
+    "Departamento": "General Manuel Belgrano",
+    "Distrito": "NORTE",
+    "indice": 26
+    }
+  },
+  {
+    "localidad": "Concepción de la Sierra",  
+    "opciones": {
+    "Departamento": "Concepción",
+    "Distrito": "",
+    "indice": 27
+    }
+  },
+  {
+    "localidad": "Corpus",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 28
+    }
+  },
+  {
+    "localidad": "Dos Arroyos",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 29
+    }
+  },
+  {
+    "localidad": "Dos de Mayo",  
+    "opciones": {
+    "Departamento": "Cainguás",
+    "Distrito": "URUGUAY",
+    "indice": 30
+    }
+  },
+  {
+    "localidad": "El Alcázar",  
+    "opciones": {
+    "Departamento": "Libertador General San Martín",
+    "Distrito": "PARANÁ",
+    "indice": 31
+    }
+  },
+  {
+    "localidad": "El Soberbio",  
+    "opciones": {
+    "Departamento": "Guaraní",
+    "Distrito": "URUGUAY",
+    "indice": 32
+    }
+  },
+  {
+    "localidad": "Eldorado",  
+    "opciones": {
+    "Departamento": "Eldorado",
+    "Distrito": "NORTE",
+    "indice": 33
+    }
+  },
+  {
+    "localidad": "Fachinal",  
+    "opciones": {
+    "Departamento": "Capital",
+    "Distrito": "SUR",
+    "indice": 34
+    }
+  },
+  {
+    "localidad": "Garuhapé",  
+    "opciones": {
+    "Departamento": "Libertador General San Martín",
+    "Distrito": "PARANÁ",
+    "indice": 35
+    }
+  },
+  {
+    "localidad": "Garupá",  
+    "opciones": {
+    "Departamento": "Capital",
+    "Distrito": "SUR",
+    "indice": 36
+    }
+  },
+  {
+    "localidad": "General J. J. Urquiza",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 37
+    }
+  },
+  {
+    "localidad": "Gobernador López",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 38
+    }
+  },
+  {
+    "localidad": "Gobernador Roca",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 39
+    }
+  },
+  {
+    "localidad": "Gral. Alvear",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 40
+    }
+  },
+  {
+    "localidad": "Guaraní",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 41
+    }
+  },
+  {
+    "localidad": "Hipólito Irigoyen",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 42
+    }
+  },
+  {
+    "localidad": "Iguazú",  
+    "opciones": {
+    "Departamento": "Iguazú",
+    "Distrito": "NORTE",
+    "indice": 43
+    }
+  },
+  {
+    "localidad": "Itacaruaré",  
+    "opciones": {
+    "Departamento": "San Javier",
+    "Distrito": "URUGUAY",
+    "indice": 44
+    }
+  },
+  {
+    "localidad": "Jardín América",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 45
+    }
+  },
+  {
+    "localidad": "Leandro N. Alem",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 46
+    }
+  },
+  {
+    "localidad": "Leoni",  
+    "opciones": {
+    "Departamento": "Libertador General San Martín",
+    "Distrito": "PARANÁ",
+    "indice": 47
+    }
+  },
+  {
+    "localidad": "Libertad",  
+    "opciones": {
+    "Departamento": "Iguazú",
+    "Distrito": "NORTE",
+    "indice": 48
+    }
+  },
+  {
+    "localidad": "Loreto",  
+    "opciones": {
+    "Departamento": "Candelaria",
+    "Distrito": "SUR",
+    "indice": 49
+    }
+  },
+  {
+    "localidad": "Los Helechos",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 50
+    }
+  },
+  {
+    "localidad": "Mártires",  
+    "opciones": {
+    "Departamento": "Candelaria",
+    "Distrito": "SUR",
+    "indice": 51
+    }
+  },
+  {
+    "localidad": "Mojón Grande",  
+    "opciones": {
+    "Departamento": "San Javier",
+    "Distrito": "URUGUAY",
+    "indice": 52
+    }
+  },
+  {
+    "localidad": "Montecarlo",  
+    "opciones": {
+    "Departamento": "Montecarlo",
+    "Distrito": "PARANÁ",
+    "indice": 53
+    }
+  },
+  {
+    "localidad": "Oberá",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 54
+    }
+  },
+  {
+    "localidad": "Olegario V. Andrade",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 55
+    }
+  },
+  {
+    "localidad": "Panambí",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 56
+    }
+  },
+  {
+    "localidad": "Posadas",  
+    "opciones": {
+    "Departamento": "Capital",
+    "Distrito": "SUR",
+    "indice": 57
+    }
+  },
+  {
+    "localidad": "Profundidad",  
+    "opciones": {
+    "Departamento": "Candelaria",
+    "Distrito": "SUR",
+    "indice": 58
+    }
+  },
+  {
+    "localidad": "Puerto Esperanza",  
+    "opciones": {
+    "Departamento": "Iguazú",
+    "Distrito": "NORTE",
+    "indice": 59
+    }
+  },
+  {
+    "localidad": "Puerto Piray",  
+    "opciones": {
+    "Departamento": "Montecarlo",
+    "Distrito": "PARANÁ",
+    "indice": 60
+    }
+  },
+  {
+    "localidad": "Puerto Rico",  
+    "opciones": {
+    "Departamento": "Libertador General San Martín",
+    "Distrito": "PARANÁ",
+    "indice": 61
+    }
+  },
+  {
+    "localidad": "Ruiz de Montoya",  
+    "opciones": {
+    "Departamento": "Libertador General San Martín",
+    "Distrito": "PARANÁ",
+    "indice": 62
+    }
+  },
+  {
+    "localidad": "San Antonio",  
+    "opciones": {
+    "Departamento": "General Manuel Belgrano",
+    "Distrito": "NORTE",
+    "indice": 63
+    }
+  },
+  {
+    "localidad": "San Ignacio",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 64
+    }
+  },
+  {
+    "localidad": "San Javier",  
+    "opciones": {
+    "Departamento": "San Javier",
+    "Distrito": "URUGUAY",
+    "indice": 65
+    }
+  },
+  {
+    "localidad": "San José",  
+    "opciones": {
+    "Departamento": "Apóstoles",
+    "Distrito": "SUR",
+    "indice": 66
+    }
+  },
+  {
+    "localidad": "San Martín",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 67
+    }
+  },
+  {
+    "localidad": "San Pedro",  
+    "opciones": {
+    "Departamento": "San Pedro",
+    "Distrito": "NORTE",
+    "indice": 68
+    }
+  },
+  {
+    "localidad": "San Vicente",  
+    "opciones": {
+    "Departamento": "Guaraní",
+    "Distrito": "URUGUAY",
+    "indice": 69
+    }
+  },
+  {
+    "localidad": "Santa Ana",  
+    "opciones": {
+    "Departamento": "Candelaria",
+    "Distrito": "SUR",
+    "indice": 70
+    }
+  },
+  {
+    "localidad": "Santa María",  
+    "opciones": {
+    "Departamento": "Concepción",
+    "Distrito": "SUR",
+    "indice": 71
+    }
+  },
+  {
+    "localidad": "Santiago de Liniers",  
+    "opciones": {
+    "Departamento": "Eldorado",
+    "Distrito": "NORTE",
+    "indice": 72
+    }
+  },
+  {
+    "localidad": "Santo Pipo",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 73
+    }
+  },
+  {
+    "localidad": "Tres Capones",  
+    "opciones": {
+    "Departamento": "Apóstoles",
+    "Distrito": "SUR",
+    "indice": 74
+    }
+  }]
+  domicilios.forEach(function(situacion){
+    let newOption = document.createElement("option");
+    newOption.text = situacion.localidad;
+    newOption.value = situacion.opciones.indice
+    slctMunicipios.appendChild(newOption)
+  })  
+
+  sexos = [
+  "Masculino",
+  "Femenino",
+  "Otro"]
+  sexos.forEach(function(situacion){
+    let newOption = document.createElement("option");
+    newOption.text = situacion;
+    newOption.value = situacion;
+    slctSexo.appendChild(newOption)
+  })
+
+  const selectElement = document.querySelector('.slctMunicipios');
+  selectElement.addEventListener('change', (event) => {
+    const slctdepartamento = document.querySelector('.slctDepartamentos');
+    const slctdistrito = document.querySelector('.slctDistritos')
+    const indice = event.target.value;
+    slctdepartamento.textContent = `Departamento: ${domicilios[indice].opciones.Departamento}`;
+    slctdistrito.textContent = `Distrito: ${domicilios[indice].opciones.Distrito}`;
+  });
+</script>
