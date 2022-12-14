@@ -1,6 +1,5 @@
 import express from "express";
 import { create } from "express-handlebars";
-import indexRoutes from "./routes/index.routes";
 import formRoutes from "./routes/form.routes";
 import userRoutes from "./routes/user.routes";
 import path from "path";
@@ -50,7 +49,6 @@ app.use((req, res, next) => {
 });
 
 //routes
-app.use(indexRoutes);
 app.use(formRoutes);
 app.use(userRoutes);
 

@@ -1,5 +1,4 @@
 import Form from "../models/Formulario";
-import * as domicilio from "../libs/domicilios"
 
 export const renderForm = async (req, res) => {
   try {
