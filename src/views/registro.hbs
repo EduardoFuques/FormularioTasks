@@ -1,0 +1,59 @@
+<div class="container-fluid">
+  <pre></pre>
+{{!-- Banner superior --}}
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="alert alert-success" role="alert">
+        Si aun no te registraste al sistema iniciar aqui !
+      </div>
+    </div>
+  </div>
+{{!-- Header --}}
+  <div class="row g-3 mb-4">
+    <div class="col-sm-12">
+      <div class="card text-bg-dark mb-3 align-items-center">
+        <div class="card-header"> <h3>Registro al RePA</h3></div>
+      </div>
+    </div>
+  </div>
+  <form "/signup" method="post">
+{{!-- Fila 1 - Nombre y Apellido --}}
+    <div class="row g-3 mb-4">
+      <div class="col-sm">
+        <input type="text" name="nombre" placeholder="Nombres" class="form-control rounded-0 bg-white text-dark" value="{{user.nombre}}" required>
+      </div>
+      <div class="col-sm">
+        <input type="text" name="apellido" placeholder="Apellido" class="form-control rounded-0 bg-white text-dark" value="{{user.apellido}}" required>
+      </div>
+    </div>
+{{!-- Fila 2 - Tipo doc, doc, email --}}
+    <div class="row g-3 mb-4">
+      <div class="col-sm-3">
+        <select name="opcion" class="form-select dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" value="{{user.opcion}}">
+          <option selected disabled hidden>Tipo de documento</option>
+          <option class="dropdown-item" value="DNI">Documento Nacional de Identidad</option>
+          <option value="Cedula">Cédula Policia Federal</option>
+          <option value="LC">Libreta Cívica</option>
+          <option value="LE">Libreta de Enrolamiento</option>
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <input type="text" name="usuario" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 bg-white text-dark" value="{{user.usuario}}" required>
+      </div>
+      <div class="col-sm">
+        <input type="email" name="email" placeholder="Correo electrónico" class="form-control rounded-0 bg-white text-dark" value="{{user.email}}" required>
+      </div>
+    </div>
+{{!-- Fila 3 - contraseña --}}
+    <div class="row g-3 mb-4">
+      <div class="col-sm">
+        <input type="password" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark" required>
+      </div>
+      <div class="col-sm">
+        <input type="password" name="confirm_password" placeholder="Cargar contraseña nuevamente" class="form-control rounded-0 bg-white text-dark" required>
+      </div>
+    </div>
+    <pre></pre>
+    <button class="btn btn-dark">Registrarse</button>
+  </form>
+</div>

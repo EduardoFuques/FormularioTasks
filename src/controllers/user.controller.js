@@ -3,7 +3,7 @@ import { isCorrectPassword } from "../models/Usuarios";
 import passport from "../config/passport";
 
 export const renderSignUp = async (req, res) => {
-  res.render("login");
+  res.render("registro");
 };
 
 export const signUpUser = async (req, res) => {
@@ -38,7 +38,7 @@ export const signUpUser = async (req, res) => {
       errors.push({ text: "La contraseña debe tener al menos 4 caracteres" });
     }
     if (errors.length > 0) {
-      res.render("login", {
+      res.render("registro", {
         errors,
         user: user,
       });
@@ -65,7 +65,7 @@ export const renderSignIn = (req, res) => {
   if (req.isAuthenticated()) {
     res.redirect("/form");
   }
-  res.render("signin");
+  res.render("ingreso");
 };
 
 export const signInUser = (req, res) => {
