@@ -1,230 +1,235 @@
 <div class="container-fluid">
   <pre></pre>
-  {{!-- Header datos personales --}}
-  <div class="row g-3">
-    <div class="col-sm-12">
-      <div class="card text-bg-dark mb-3 align-items-center">
-        <div class="card-header"> <h3>Datos Personales</h3></div>
+  <form "/form" method="post">
+        {{!-- Header datos personales --}}
+    <div class="row g-3">
+      <div class="col-sm-12">
+        <div class="card text-bg-dark mb-3 align-items-center">
+          <div class="card-header"> <h3>Datos Personales</h3></div>
+        </div>
       </div>
     </div>
-  </div>
-  {{!-- Fila 1 - Apellido y nombre --}}
-  <div class="row g-3 mb-4">
-    {{!-- Apellido --}}
-    <div class="col-sm-6 form-floating">
-      <input type="text" name="apellido" placeholder="Apellido" id="apellido" value={{datos.apellido}} class="form-control" disabled/>
-      <label for="floatingInput">Apellido</label>
-    </div>
-    {{!-- Nombre --}}
-    <div class="col-sm form-floating">
-      <input type="text" name="nombres" placeholder="Nombres" id="nombres" value={{datos.nombre}} class="form-control" disabled/>
-      <label for="floatingInput">Nombres</label>
-    </div>
-  </div>
-  {{!-- Fila 2 - tipo y numero documento --}}
-  <div class="row g-3 mb-4">
-    {{!-- Tipo doc --}}
-    <div class="col-sm-6 form-floating">
-      <input type="text" name="tipoDoc" id="tipoDoc" value={{datos.tipoDoc}} class="form-control" disabled>
-      <label for="floatingInput">Tipo de documento</label>
-    </div>
-    {{!-- Numero doc --}}
-    <div class="col-sm form-floating">
-      <input type="text" name="nro-doc" placeholder="Número de documento" id="nro-dni" value={{datos.usuario}} class="form-control" disabled/>
-      <label for="floatingInput">Número de documento</label>
-    </div>
-  </div>
-  {{!-- Fila 3 - email, cuil, sexo --}}
-  <div class="row g-3 mb-4">
-    {{!-- email --}}
-    <div class="col-sm-6 form-floating">
-      <input type="email" class="form-control" id="email" value={{datos.email}} placeholder="email: nombre@ejemplo.com" disabled>
-      <label for="floatingInput">email</label>
-    </div>
-    {{!-- cuil --}}
-    <div class="col-sm  was-validated form-floating">
-      <input type="text" class="form-control item" id="cuil" placeholder="Número cuit/cuil" required>
-      <label for="floatingInput">Número cuit/cuil</label>
-    </div>
-    {{!-- sexo --}}
-    <div class="col-sm-3  was-validated form-floating">
-      {{!-- <input type="text" class="form-control" id="sexo" placeholder="sexo" aria-label="sexo"> --}}
-      <select id="slctSexo" class="form-select" required>
-        <option value="" disabled hidden selected>Seleccione</option>
-      </select>
-      <label for="floatingSelect">Sexo</label>
-    </div>
-  </div>
-  {{!-- Fila 4 - Personeria juridica, afip, iaavim, repa--}}
-  <div class="row g-3 mb-4"> 
-    {{!-- Personería Jurídica --}}
-    <div class="col-sm  was-validated form-floating">
-      {{!-- <input type="text" class="form-control" id="PerJuridica" placeholder="Personería Jurídica"> --}}
-      <select id="slctPerJur" class="form-select" required>
-        <option value="" disabled hidden selected>Seleccione</option>
-        <option value=True>Si</option>
-        <option value=False>No</option>
-      </select>
-      <label for="floatingSelect">Personería Jurídica</label>
-    </div>
-    {{!-- Situación AFIP --}}
-    <div class="col-sm  was-validated form-floating">
-      {{!-- <input type="text" class="form-control" id="sitAfip" placeholder="Situación AFIP" aria-label="sitAfip"> --}}
-      <select id="slctSitAfip" class="form-select" required>
-        <option value="" disabled hidden selected>Seleccione</option>
-      </select>
-      <label for="floatingSelect">Situación AFIP</label>
-    </div>
-    {{!-- Código REPA --}}
-    <div class="col-sm form-floating">
-      <input type="text" class="form-control" id="codRepa" placeholder="Código REPA" aria-label="codRepa" disabled>
-      <label for="floatingInput">Código REPA</label>
-    </div>
-    {{!-- Situación Iaavim --}}
-    <div class="col-sm form-floating">
-      <input type="text" class="form-control" id="sitIaavim" placeholder="Situación IAAViM" aria-label="sitIaavim" disabled>
-      <label for="floatingInput">Situación IAAViM</label>
-    </div>
-  </div>
-  {{!-- Fila 5 - Telefonos --}}
-  <div class="row g-3 mb-4">
-    {{!-- Telefono fijo --}}
-    <div class="col-sm-4 form-floating">
-      <input type="text" class="form-control" id="telFijo" placeholder="Teléfono Fijo" aria-label="Phone">
-      <label for="floatingInput">Teléfono Fijo</label>
-    </div>
-    {{!-- Movil principal --}}
-    <div class="col-sm-4  was-validated form-floating">
-      <input type="text" class="form-control" id="movilPpal" placeholder="Móvil" aria-label="Movile" required>
-      <label for="floatingInput">Teléfono Móvil</label>
-    </div>
-    {{!-- Movil Alternativo --}}
-    <div class="col-sm form-floating">
-      <input type="text" class="form-control" id="movilAlt" placeholder="Móvil Alternativo" aria-label="SecondPhone">
-      <label for="floatingInput">Móvil Alternativo</label>
-    </div>
-  </div>
-  {{!-- Fila 6 - Localidad, Departamento, Distrito CP--}}
-  <div class="row g-3 mb-4">
-    {{!-- Municipio --}}
-    <div class="col-sm-3  was-validated form-floating">
-      {{!-- <input type="text" class="form-control" id="distrito" placeholder="Distrito" aria-label="District"> --}}
-      <select id="slctMunicipios" class="slctMunicipios form-select" required>
-        <option value="" disabled hidden selected>Seleccione</option>
-      </select>
-      <label for="floatingSelect">Localidad</label>
-    </div>
-    {{!-- Departamento --}}
-    <div class="col-sm-3 form-floating">
-      {{!-- <input type="text" class="form-control" id="departamentoID" placeholder="Departamento" aria-label="State" disabled> --}}
-      {{!-- <select id="slctDepartamentos">
-        <option value="" disabled hidden selected>Departamento</option>
-      </select> --}}
-      {{!-- <input type="text" class="result"> --}}
-      <div class="slctDepartamentos form-control"></div>
-      <label for="floatingInput">Departamento</label>
-    </div>
-    {{!-- Distrito --}}
-    <div class="col-sm-3 form-floating">
-      {{!-- <input type="text" class="form-control" id="distrito" placeholder="Distrito" aria-label="District" disabled> --}}
-      {{!-- <select id="slctDistritos">
-        <option value="" disabled hidden selected>Distrito</option>
-      </select> --}}
-      <div class="slctDistritos form-control"></div>
-      <label for="floatingInput">Distrito</label>
-    </div>
-    {{!-- Codigo postal --}}
-    <div class="col-sm  was-validated form-floating">
-      <input type="text" class="form-control" id="cp" placeholder="C.P." data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" aria-label="Zip" required>
-      <label for="floatingInput">Código postal</label>
-    </div>
-  </div>
-  {{!-- Fila 7 - Calle, piso, número, depto --}}
-  <div class="row g-3 mb-4">
-    {{!-- calle --}}
-    <div class="col-sm-5 was-validated form-floating">
-      <input type="text" class="form-control" id="calle" placeholder="Calle" aria-label="Street" required>
-      <label for="floatingInput">Calle</label>
-    </div>
-    {{!-- número --}}
-    <div class="col-sm was-validated form-floating">
-      <input type="text" class="form-control" id="numero" placeholder="Número" aria-label="Number" required>
-      <label for="floatingInput">Número</label>
-    </div>
-    {{!-- piso --}}
-    <div class="col-sm form-floating">
-      <input type="text" class="form-control" id="piso" placeholder="Piso" aria-label="Floor">
-      <label for="floatingInput">Piso</label>
-    </div>
-    {{!-- Depto --}}
-    <div class="col-sm form-floating">
-      <input type="text" class="form-control" id="dpto" placeholder="Dpto" aria-label="Depto">
-      <label for="floatingInput">Dpto</label>
-    </div>
-  </div>
-  <pre>
-    
-  </pre>
-  {{!-- Header Medios --}}
-  <div class="row g-3 mb-3">
-    <div class="col-sm-12">
-      <div class="card text-bg-dark mb-3 align-items-center">
-        <div class="card-header"> <h3>Medios, Areas de Desempeño y complementarias</h3></div>
+    {{!-- Fila 1 - Apellido y nombre --}}
+    <div class="row g-3 mb-4">
+      {{!-- Apellido --}}
+      <div class="col-sm-6 form-floating">
+        <input type="text" name="apellido" placeholder="Apellido" id="apellido" value={{datos.apellido}} class="form-control" disabled/>
+        <label for="floatingInput">Apellido</label>
+      </div>
+      {{!-- Nombre --}}
+      <div class="col-sm form-floating">
+        <input type="text" name="nombres" placeholder="Nombres" id="nombres" value={{datos.nombre}} class="form-control" disabled/>
+        <label for="floatingInput">Nombres</label>
       </div>
     </div>
-  </div>
-  {{!-- Fila 8  - Selección de medios--}}
-  <div class="row g-3 mb-4">
-    {{!-- Medios --}}
-    <div class="col-sm-4 was-validated">
-      <small class="text-muted">Medios</small>
-      {{!-- <input type="text" class="form-control" id="medios" placeholder="Medios" aria-label="Medios"> --}}
-      <select id="slctMedios" class="form-select" multiple size="5" required>
-        <option value="" disabled hidden>Medios</option>
-      </select>
+    {{!-- Fila 2 - tipo y numero documento --}}
+    <div class="row g-3 mb-4">
+      {{!-- Tipo doc --}}
+      <div class="col-sm-6 form-floating">
+        <input type="text" name="tipoDoc" id="tipoDoc" value={{datos.tipoDoc}} class="form-control" disabled>
+        <label for="floatingInput">Tipo de documento</label>
+      </div>
+      {{!-- Numero doc --}}
+      <div class="col-sm form-floating">
+        <input type="text" name="nro-doc" placeholder="Número de documento" id="nro-dni" value={{datos.usuario}} class="form-control" disabled/>
+        <label for="floatingInput">Número de documento</label>
+      </div>
+    </div>
+    {{!-- Fila 3 - email, cuil, sexo --}}
+    <div class="row g-3 mb-4">
+      {{!-- email --}}
+      <div class="col-sm-6 form-floating">
+        <input name="email" type="email" class="form-control" id="email" value={{datos.email}} placeholder="email: nombre@ejemplo.com" disabled>
+        <label for="floatingInput">email</label>
+      </div>
+      {{!-- cuil --}}
+      <div class="col-sm  was-validated form-floating">
+        <input name="cuil" type="text" class="form-control item" id="cuil" placeholder="Número cuit/cuil" required>
+        <label for="floatingInput">Número cuit/cuil</label>
+      </div>
+      {{!-- sexo --}}
+      <div class="col-sm-3  was-validated form-floating">
+        {{!-- <input type="text" class="form-control" id="sexo" placeholder="sexo" aria-label="sexo"> --}}
+        <select name="sexo" id="slctSexo" class="form-select" required>
+          <option value="" disabled hidden selected>Seleccione</option>
+        </select>
+        <label for="floatingSelect">Género</label>
+      </div>
+    </div>
+    {{!-- Fila 4 - Personeria juridica, afip, iaavim, repa--}}
+    <div class="row g-3 mb-4"> 
+      {{!-- Personería Jurídica --}}
+      <div class="col-sm  was-validated form-floating">
+        {{!-- <input type="text" class="form-control" id="PerJuridica" placeholder="Personería Jurídica"> --}}
+        <select name="perJuridica" id="slctPerJur" class="form-select" required>
+          <option value="" disabled hidden selected>Seleccione</option>
+          <option value=True>Si</option>
+          <option value=False>No</option>
+        </select>
+        <label for="floatingSelect">Personería Jurídica</label>
+      </div>
+      {{!-- Situación AFIP --}}
+      <div class="col-sm  was-validated form-floating">
+        {{!-- <input type="text" class="form-control" id="sitAfip" placeholder="Situación AFIP" aria-label="sitAfip"> --}}
+        <select id="slctSitAfip" class="form-select" required>
+          <option value="" disabled hidden selected>Seleccione</option>
+        </select>
+        <label for="floatingSelect">Situación AFIP</label>
+      </div>
+      {{!-- Código REPA --}}
+      <div class="col-sm form-floating">
+        <input type="text" class="form-control" id="codRepa" placeholder="Código REPA" aria-label="codRepa" disabled>
+        <label for="floatingInput">Código REPA</label>
+      </div>
+      {{!-- Situación Iaavim --}}
+      <div class="col-sm form-floating">
+        <input type="text" class="form-control" id="sitIaavim" placeholder="Situación IAAViM" aria-label="sitIaavim" disabled>
+        <label for="floatingInput">Situación IAAViM</label>
+      </div>
+    </div>
+    {{!-- Fila 5 - Telefonos --}}
+    <div class="row g-3 mb-4">
+      {{!-- Telefono fijo --}}
+      <div class="col-sm-4 form-floating">
+        <input name="telFijo" type="text" class="form-control" id="telFijo" placeholder="Teléfono Fijo" aria-label="Phone">
+        <label for="floatingInput">Teléfono Fijo</label>
+      </div>
+      {{!-- Movil principal --}}
+      <div class="col-sm-4  was-validated form-floating">
+        <input name="movilPpal" type="text" class="form-control" id="movilPpal" placeholder="Móvil" aria-label="Movile" required>
+        <label for="floatingInput">Teléfono Móvil</label>
+      </div>
+      {{!-- Movil Alternativo --}}
+      <div class="col-sm form-floating">
+        <input name="movilAlt" type="text" class="form-control" id="movilAlt" placeholder="Móvil Alternativo" aria-label="SecondPhone">
+        <label for="floatingInput">Móvil Alternativo</label>
+      </div>
+    </div>
+    {{!-- Fila 6 - Localidad, Departamento, Distrito CP--}}
+    <div class="row g-3 mb-4">
+      {{!-- Municipio --}}
+      <div class="col-sm-3  was-validated form-floating">
+        {{!-- <input type="text" class="form-control" id="distrito" placeholder="Distrito" aria-label="District"> --}}
+        <select name="localidad" id="slctMunicipios" class="slctMunicipios form-select" required>
+          <option value="" disabled hidden selected>Seleccione</option>
+        </select>
+        <label for="floatingSelect">Localidad</label>
+      </div>
+      {{!-- Departamento --}}
+      <div class="col-sm-3 form-floating">
+        {{!-- <input type="text" class="form-control" id="departamentoID" placeholder="Departamento" aria-label="State" disabled> --}}
+        {{!-- <select id="slctDepartamentos">
+          <option value="" disabled hidden selected>Departamento</option>
+        </select> --}}
+        {{!-- <input type="text" class="result"> --}}
+        <div class="slctDepartamentos form-control"></div>
+        <label for="floatingInput">Departamento</label>
+      </div>
+      {{!-- Distrito --}}
+      <div class="col-sm-3 form-floating">
+        {{!-- <input type="text" class="form-control" id="distrito" placeholder="Distrito" aria-label="District" disabled> --}}
+        {{!-- <select id="slctDistritos">
+          <option value="" disabled hidden selected>Distrito</option>
+        </select> --}}
+        <div class="slctDistritos form-control"></div>
+        <label for="floatingInput">Distrito</label>
+      </div>
+      {{!-- Codigo postal --}}
+      <div class="col-sm  was-validated form-floating">
+        <input name="cp" type="text" class="form-control" id="cp" placeholder="C.P." data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" aria-label="Zip" required>
+        <label for="floatingInput">Código postal</label>
+      </div>
+    </div>
+    {{!-- Fila 7 - Calle, piso, número, depto --}}
+    <div class="row g-3 mb-4">
+      {{!-- calle --}}
+      <div class="col-sm-5 was-validated form-floating">
+        <input name="calle" type="text" class="form-control" id="calle" placeholder="Calle" aria-label="Street" required>
+        <label for="floatingInput">Calle</label>
+      </div>
+      {{!-- número --}}
+      <div class="col-sm was-validated form-floating">
+        <input name="numero" type="text" class="form-control" id="numero" placeholder="Número" aria-label="Number" required>
+        <label for="floatingInput">Número</label>
+      </div>
+      {{!-- piso --}}
+      <div class="col-sm form-floating">
+        <input name="piso" type="text" class="form-control" id="piso" placeholder="Piso" aria-label="Floor">
+        <label for="floatingInput">Piso</label>
+      </div>
+      {{!-- Depto --}}
+      <div class="col-sm form-floating">
+        <input name="dpto" type="text" class="form-control" id="dpto" placeholder="Dpto" aria-label="Depto">
+        <label for="floatingInput">Dpto</label>
+      </div>
+    </div>
+    <pre>
       
-    </div>
-    {{!-- Area de desempeño --}}
-    <div class="col-sm-4 was-validated">
-      <small class="text-muted">Areas de desempeño</small>
-      {{!-- <input type="text" class="form-control" id="areaDes" placeholder="Areas de desempeño" aria-label="areasDes"> --}}
-      <select id="slctAreaDes" class="form-select" multiple size="5" required>
-        <option value="" disabled hidden>Areas de desempeño</option>
-      </select>
-    </div>
-    {{!-- Area complementaria --}}
-    <div class="col-sm was-validated">
-      <small class="text-muted">Areas Complementarias</small>
-      {{!-- <input type="text" class="form-control" id="areaCompl" placeholder="Areas Complementarias" aria-label="areasComp"> --}}
-      <select id="slctAreaComp" class="form-select" multiple size="5" required>
-        <option value="" disabled hidden>Areas Complementarias</option>
-      </select>
-    </div>
-  </div>
-  <pre></pre>
-  {{!-- Header carga CV --}}
-  <div class="row g-3">
-    <div class="col-sm-12">
-      <div class="card text-bg-dark mb-3 align-items-center">
-        <div class="card-header"> <h3>Carga de Curriculum Vitae</h3></div>
+    </pre>
+    {{!-- Header Medios --}}
+    <div class="row g-3 mb-3">
+      <div class="col-sm-12">
+        <div class="card text-bg-dark mb-3 align-items-center">
+          <div class="card-header"> <h3>Medios, Areas de Desempeño y complementarias</h3></div>
+        </div>
       </div>
     </div>
-  </div>
-  {{!-- Fila 9 - Carga CV--}}
-  <div class="row g-3 mb-4">
-    <div class="col-sm-12 was-validated">
-      <small class="text-muted">Currículum Vitae</small>
-      <input class="form-control" type="file" id="formFile" required>
+    {{!-- Fila 8  - Selección de medios--}}
+    <div class="row g-3 mb-4">
+      {{!-- Medios --}}
+      <div class="col-sm-4 was-validated">
+        <small class="text-muted">Medios</small>
+        {{!-- <input type="text" class="form-control" id="medios" placeholder="Medios" aria-label="Medios"> --}}
+        <select name="medios" id="slctMedios" class="form-select" multiple size="5" required>
+          <option value="" disabled hidden>Medios</option>
+        </select>
+      </div>
+      {{!-- Area de desempeño --}}
+      <div class="col-sm-4 was-validated">
+        <small class="text-muted">Areas de desempeño</small>
+        {{!-- <input type="text" class="form-control" id="areaDes" placeholder="Areas de desempeño" aria-label="areasDes"> --}}
+        <select name="areaDes" id="slctAreaDes" class="form-select" multiple size="5" required>
+          <option value="" disabled hidden>Areas de desempeño</option>
+        </select>
+      </div>
+      {{!-- Area complementaria --}}
+      <div class="col-sm was-validated">
+        <small class="text-muted">Areas Complementarias</small>
+        {{!-- <input type="text" class="form-control" id="areaCompl" placeholder="Areas Complementarias" aria-label="areasComp"> --}}
+        <select name="areaComp" id="slctAreaComp" class="form-select" multiple size="5" required>
+          <option value="" disabled hidden>Areas Complementarias</option>
+        </select>
+      </div>
     </div>
-  </div>
-  {{!-- Boton enviar formulario --}}
-  <button type="button" class="btn btn-success"
-    data-bs-toggle="tooltip" data-bs-placement="top"
-    data-bs-custom-class="custom-tooltip"
-    data-bs-title="Por favor chequee la información antes de enviar el formulario.">
-    Enviar Formulario
-  </button>
+    <pre>
+
+    </pre>
+    {{!-- Header carga CV --}}
+    <div class="row g-3">
+      <div class="col-sm-12">
+        <div class="card text-bg-dark mb-3 align-items-center">
+          <div class="card-header"> <h3>Carga de Curriculum Vitae</h3></div>
+        </div>
+      </div>
+    </div>
+    {{!-- Fila 9 - Carga CV--}}
+    <div class="row g-3 mb-4">
+      <div class="col-sm-12 was-validated">
+        <small class="text-muted">Currículum Vitae</small>
+        <input name="cv" class="form-control" type="file" id="formFile" required>
+      </div>
+    </div>
+    {{!-- Boton enviar formulario --}}
+    <button class="btn btn-success"
+      data-bs-toggle="tooltip" data-bs-placement="top"
+      data-bs-custom-class="custom-tooltip"
+      data-bs-title="Por favor chequee la información antes de enviar el formulario."> 
+      Enviar Formulario
+    </button>
+    {{!-- <button class="btn btn-dark">Registrarse</button> --}}
+  </form>
   <pre></pre> 
+
 </div>
 
 <script>
