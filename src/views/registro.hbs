@@ -20,10 +20,10 @@
 {{!-- Fila 1 - Nombre y Apellido --}}
     <div class="row g-3 mb-4">
       <div class="col-sm">
-        <input type="text" name="nombre" placeholder="Nombres" class="form-control rounded-0 bg-white text-dark" value="{{user.nombre}}" required>
+        <input type="text" name="nombre" placeholder="Nombres" class="form-control rounded-0 bg-white text-dark" value="{{user.nombre}}" onkeyup="this.value=NombreMayus(this.value)" required>
       </div>
       <div class="col-sm">
-        <input type="text" name="apellido" placeholder="Apellido" class="form-control rounded-0 bg-white text-dark" value="{{user.apellido}}" required>
+        <input type="text" name="apellido" placeholder="Apellido" class="form-control rounded-0 bg-white text-dark" value="{{user.apellido}}" onkeyup="this.value=NombreMayus(this.value)" required>
       </div>
     </div>
 {{!-- Fila 2 - Tipo doc, doc, email --}}
@@ -38,7 +38,7 @@
         </select>
       </div>
       <div class="col-sm-3">
-        <input type="text" name="usuario" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 bg-white text-dark" value="{{user.usuario}}" required>
+        <input type="text" name="usuario" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 bg-white text-dark" value="{{user.usuario}}" onkeyup="this.value=Numeros(this.value)" required>
       </div>
       <div class="col-sm">
         <input type="email" name="email" placeholder="Correo electrónico" class="form-control rounded-0 bg-white text-dark" value="{{user.email}}" required>
@@ -57,3 +57,31 @@
     <button class="btn btn-dark">Registrarse</button>
   </form>
 </div>
+
+<script>
+  function NombreMayus(string){//solo letras y numeros
+    var out = '';
+    //Se añaden las letras validas
+    var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ';//Caracteres validos
+	
+    for (var i=0; i<string.length; i++)
+       if (filtro.indexOf(string.charAt(i)) != -1) 
+	     out += (string.charAt(i)).toUpperCase();
+
+    return out;
+  }
+
+  function Numeros(string){//Solo numeros
+    var out = '';
+    var filtro = '1234567890';//Caracteres validos
+	
+    //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
+    for (var i=0; i<string.length; i++)
+       if (filtro.indexOf(string.charAt(i)) != -1) 
+             //Se añaden a la salida los caracteres validos
+	     out += string.charAt(i);
+	
+    //Retornar valor filtrado
+    return out;
+  }
+</script>
