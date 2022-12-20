@@ -8,9 +8,14 @@ import flash from "connect-flash";
 import session from "express-session";
 import passport from "./config/passport";
 import { SESSION_SECRET } from "./config";
+// import { PDFDocument } from "pdfkit";
+// import { blobStream } from "blob-stream";
 
+  
 //inicializacion
 const app = express();
+// const doc = new PDFDocument;
+// const stream = doc.pipe(blobStream());
 
 //settings
 app.set("views", path.join(__dirname, "views"));
