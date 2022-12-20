@@ -1,0 +1,1 @@
+export const waldo = "Hello World";
