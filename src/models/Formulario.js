@@ -2,12 +2,11 @@ import { Schema, model } from "mongoose";
 
 const formSchema = new Schema(
   {
-    idUser: { type: String },
     apellido: { ref: "Usuario", type: Schema.Types.String },
     nombre: { ref: "Usuario", type: Schema.Types.String},
     tipoDoc: { ref: "Usuario", type: Schema.Types.String },
     usuario: { ref: "Usuario", type: Schema.Types.Number },
-    cuil: { type: Number },
+    cuil: { type: String },
     sexo: { type: String },
     sitAfip: { type: String },
     sitIaavim: { type: Boolean },
@@ -16,7 +15,7 @@ const formSchema = new Schema(
     domicilio: [
       {
         calle: { type: String },
-        numero: { type: Number },
+        numero: { type: String },
         piso: { type: String },
         depto: { type: String },
         localidad: { type: String },
@@ -28,15 +27,16 @@ const formSchema = new Schema(
     
     telefono: [
       {
-        fijo: { type: Number },
-        movil: { type: Number },
-        alternativo: { type: Number },
+        fijo: { type: String },
+        movil: { type: String },
+        alternativo: { type: String },
       },
     ],
     email: { ref: "Usuario", type: Schema.Types.String },
     medios: [{ type: String }],
     areaDes: [{ type: String }],
     areaComp: [{ type: String }],
+    cv: {type: String}
   },
   {
     timestamps: true,

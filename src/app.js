@@ -8,9 +8,14 @@ import flash from "connect-flash";
 import session from "express-session";
 import passport from "./config/passport";
 import { SESSION_SECRET } from "./config";
+// import { PDFDocument } from "pdfkit";
+// import { blobStream } from "blob-stream";
 
+  
 //inicializacion
 const app = express();
+// const doc = new PDFDocument;
+// const stream = doc.pipe(blobStream());
 
 //settings
 app.set("views", path.join(__dirname, "views"));
@@ -25,6 +30,7 @@ const exphbs = create({
 app.engine(".hbs", exphbs.engine);
 app.set("view engine", ".hbs");
 
+
 //midlewares
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
@@ -37,7 +43,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
+app.use(flash()); 
 
 //global variables
 app.use((req, res, next) => {
