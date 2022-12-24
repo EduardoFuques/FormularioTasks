@@ -9,9 +9,9 @@ const formSchema = new Schema(
     cuil: { type: String },
     sexo: { type: String },
     sitAfip: { type: String },
+    codigoRepa: { ref: "Usuario", type: Schema.Types.String },
     sitIaavim: { type: Boolean },
     perJuridica: { type: Boolean },
-    codigoRepa: { type: String },
     domicilio: [
       {
         calle: { type: String },

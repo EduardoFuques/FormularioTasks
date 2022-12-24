@@ -33,6 +33,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    codigoRepa: { type: String },
   },
   {
     timestamps: true,

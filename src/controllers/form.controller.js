@@ -3,12 +3,11 @@ import Form from "../models/Formulario";
 export const renderForm = async (req, res) => {
   try {
     const userID = req.session.passport.user;
-    const { tipoDoc, usuario, nombre, apellido, email } = req.user;
+    const { tipoDoc, usuario, nombre, apellido, email, codigoRepa } = req.user;
     const usuarioEncontrado = await Form.findOne({ usuario }).lean();
     if (!usuarioEncontrado) {
-      const datos = { userID, tipoDoc, usuario, nombre, apellido, email };
+      const datos = { userID, tipoDoc, usuario, nombre, apellido, email, codigoRepa };
       res.render("index", { datos: datos });
-      console.log("no hay usuario");
     } else {
       const datos = usuarioEncontrado;
       const medios = []
@@ -60,10 +59,9 @@ export const captureForm = async (req, res) => {
       medios,
       areaDes,
       areaComp,
-      cv,
     } = req.body;
     const { tipoDoc, usuario, nombre, apellido, email } = req.user;
-    const codigoRepa = "AA11";
+    
     const newForm = new Form({
       tipoDoc,
       usuario,
@@ -73,9 +71,8 @@ export const captureForm = async (req, res) => {
       cuil, //ok
       sexo, //ok
       sitAfip, //ok
-      sitIaavim: false,
+      sitIaavim: true,
       perJuridica, //ok
-      codigoRepa: "AA11",
       domicilio: {
         calle: calle, //ok
         numero: numero, //ok

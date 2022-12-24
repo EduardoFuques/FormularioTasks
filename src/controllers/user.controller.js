@@ -1,10 +1,25 @@
 import User from "../models/Usuarios";
 import { isCorrectPassword } from "../models/Usuarios";
 import passport from "../config/passport";
+import { getNextSequenceValue } from "../models/Contador";
 
 export const renderSignUp = async (req, res) => {
   res.render("registro");
 };
+
+async function codRepa() {
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const seq = await getNextSequenceValue('codigoRepa');
+  const letter1Index = Math.floor(seq / 26000);
+  const letter1 = letters[letter1Index];
+  const letter2Index = Math.floor(seq / 100) % 26;
+  const letter2 = letters[letter2Index];
+  const number1 = Math.floor(seq / 10) % 10;
+  const number2 = seq % 10;
+  const codigoRepa = `${letter1}${letter2}${number1}${number2}`;
+  return codigoRepa
+}
+
 
 export const signUpUser = async (req, res) => {
   try {
@@ -18,6 +33,7 @@ export const signUpUser = async (req, res) => {
       password,
       confirm_password,
     } = req.body;
+    const codigoRepa = await codRepa()
     const user = { opcion, nombre, apellido, usuario, email };
     const rol = "normal";
     const emailUser = await User.findOne({ email: email });
@@ -52,6 +68,7 @@ export const signUpUser = async (req, res) => {
         apellido,
         email,
         rol,
+        codigoRepa,
       });
       await newUser.save();
       res.redirect("/");

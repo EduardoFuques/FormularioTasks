@@ -91,4 +91,11 @@
     //Retornar valor filtrado
     return out;
   }
+
+  document.body.onload = function() {
+    setearOpciones();
+  }
+  function setearOpciones() {
+    document.getElementById("slctDoc").value = `{{user.opcion}}`;
+  }
 </script>

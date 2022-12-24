@@ -10,7 +10,7 @@ import passport from "./config/passport";
 import { SESSION_SECRET } from "./config";
 // import { PDFDocument } from "pdfkit";
 // import { blobStream } from "blob-stream";
-
+import { getNextSequenceValue } from "./models/Contador";
   
 //inicializacion
 const app = express();
@@ -62,3 +62,4 @@ app.use(userRoutes);
 app.use(express.static(path.join(__dirname, "public")));
 
 export default app;
+
