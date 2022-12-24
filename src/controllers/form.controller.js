@@ -10,3 +10,13 @@ export const renderForm = async (req, res) => {
     console.log(error.message);
   }
 };
+
+export const captureForm = async (req, res) => {
+  try {
+    const body = req.body;
+    console.log(body)
+    res.send("OK")
+  } catch (error) {
+    console.log(error.message);
+  }
+};
