@@ -1,6 +1,7 @@
+{{!-- <script type="text/javascript" src="variables.js"></script> --}}
 <div class="container-fluid">
   <pre></pre>
-  <form "/form" method="post" enctype="multipart/form-data">
+  <form action="/edit" method="post" enctype="multipart/form-data">
         {{!-- Header datos personales --}}
     <div class="row g-3">
       <div class="col-sm-12">
@@ -44,7 +45,7 @@
       </div>
       {{!-- cuil --}}
       <div class="col-sm  was-validated form-floating">
-        <input name="cuil" type="text" class="form-control item" id="cuil" placeholder="Número cuit/cuil" onkeyup="NumeroCuil(event, this)" maxlength="13" pattern="\d{2}-\d{8}-\d{1}" required >
+        <input name="cuil" type="text" class="form-control item" id="cuil" placeholder="Número cuit/cuil" value={{datos.cuil}} onkeyup="NumeroCuil(event, this)" maxlength="13" pattern="\d{2}-\d{8}-\d{1}" required >
         <label for="floatingInput">Número cuit/cuil</label>
       </div>
 
@@ -79,12 +80,12 @@
       </div>
       {{!-- Código REPA --}}
       <div class="col-sm form-floating">
-        <input type="text" class="form-control" id="codRepa" placeholder="Código REPA" aria-label="codRepa" disabled>
+        <input type="text" class="form-control" id="codRepa" value={{datos.codigoRepa}} placeholder="Código REPA" aria-label="codRepa" disabled>
         <label for="floatingInput">Código REPA</label>
       </div>
       {{!-- Situación Iaavim --}}
       <div class="col-sm form-floating">
-        <input type="text" class="form-control" id="sitIaavim" placeholder="Situación IAAViM" aria-label="sitIaavim" disabled>
+        <input type="text" class="form-control" id="sitIaavim" value={{datos.sitIaavim}} placeholder="Situación IAAViM" aria-label="sitIaavim" disabled>
         <label for="floatingInput">Situación IAAViM</label>
       </div>
     </div>
@@ -92,17 +93,17 @@
     <div class="row g-3 mb-4">
       {{!-- Telefono fijo --}}
       <div class="col-sm-4 form-floating">
-        <input name="telFijo" type="text" class="form-control" id="telFijo" placeholder="Teléfono Fijo" aria-label="Phone" onkeyup="this.value=NumerosTelefono(this.value)">
+        <input name="telFijo" type="text" class="form-control" id="telFijo" placeholder="Teléfono Fijo" aria-label="Phone" onkeyup="this.value=NumerosTelefono(this.value)" value={{telefono.fijo}}>
         <label for="floatingInput">Teléfono Fijo</label>
       </div>
       {{!-- Movil principal --}}
       <div class="col-sm-4  was-validated form-floating">
-        <input name="movilPpal" type="text" class="form-control" id="movilPpal" placeholder="Móvil" aria-label="Mobile" onkeyup="this.value=NumerosTelefono(this.value)" required>
+        <input name="movilPpal" type="text" class="form-control" id="movilPpal" placeholder="Móvil" aria-label="Mobile" value={{telefono.movil}} onkeyup="this.value=NumerosTelefono(this.value)" required>
         <label for="floatingInput">Teléfono Móvil</label>
       </div>
       {{!-- Movil Alternativo --}}
       <div class="col-sm form-floating">
-        <input name="movilAlt" type="text" class="form-control" id="movilAlt" placeholder="Móvil Alternativo" aria-label="SecondPhone" onkeyup="this.value=NumerosTelefono(this.value)">
+        <input name="movilAlt" type="text" class="form-control" id="movilAlt" placeholder="Móvil Alternativo" aria-label="SecondPhone" onkeyup="this.value=NumerosTelefono(this.value)" value={{telefono.alternativo}} >
         <label for="floatingInput">Móvil Alternativo</label>
       </div>
     </div>
@@ -137,7 +138,7 @@
       </div>
       {{!-- Codigo postal --}}
       <div class="col-sm  was-validated form-floating">
-        <input name="cp" type="text" class="form-control" minlength="4" id="cp" placeholder="C.P." aria-label="Zip" onkeyup="this.value=NumCP(this.value)" required>
+        <input name="cp" type="text" class="form-control" minlength="4" value={{domicilio.cp}} id="cp" placeholder="C.P." aria-label="Zip" onkeyup="this.value=NumCP(this.value)" required>
         <label for="floatingInput">Código postal</label>
       </div>
     </div>
@@ -146,21 +147,24 @@
       {{!-- calle --}}
       <div class="col-sm-5 was-validated form-floating">
         <input name="calle" type="text" class="form-control" id="calle" placeholder="Calle" aria-label="Street" required>
+        {{!-- <div name="calle" class="form-control" id="calle">{{calle}}</div> --}}
+        {{!-- <span name="calle" class="form-control" id="calle">{{calle}}</span> --}}
+       
         <label for="floatingInput">Calle</label>
       </div>
       {{!-- número --}}
       <div class="col-sm was-validated form-floating">
-        <input name="numero" type="text" class="form-control" id="numero" placeholder="Número" aria-label="Number" onkeyup="this.value=NumerosTelefono(this.value)" required>
+        <input name="numero" type="text" class="form-control" id="numero" value={{domicilio.numero}} placeholder="Número" aria-label="Number" onkeyup="this.value=NumerosTelefono(this.value)" required>
         <label for="floatingInput">Número</label>
       </div>
       {{!-- piso --}}
       <div class="col-sm form-floating">
-        <input name="piso" type="text" class="form-control" id="piso" placeholder="Piso" aria-label="Floor">
+        <input name="piso" type="text" class="form-control" id="piso" placeholder="Piso" aria-label="Floor" value={{domicilio.piso}}>
         <label for="floatingInput">Piso</label>
       </div>
       {{!-- Depto --}}
       <div class="col-sm form-floating">
-        <input name="dpto" type="text" class="form-control" id="dpto" placeholder="Dpto" aria-label="Depto">
+        <input name="dpto" type="text" class="form-control" id="dpto" placeholder="Dpto" aria-label="Depto" value={{domicilio.depto}}>
         <label for="floatingInput">Dpto</label>
       </div>
     </div>
@@ -1171,6 +1175,42 @@ function NumeroCuil(event, el){//Validar nombre
     }
   });
 
+  document.body.onload = function() {
+    setearOpciones();
+  }
+  function setearOpciones() {
+    document.getElementById("calle").value = `{{calle}}`;
+    document.getElementById("slctSexo").value = `{{datos.sexo}}`;
+    document.getElementById("slctPerJur").value = `{{datos.perJuridica}}`;
+    document.getElementById("slctSitAfip").value = `{{datos.sitAfip}}`
+    document.getElementById("slctMunicipios").value = `{{domicilio.localidad}}`
+    const slctdepartamento = document.querySelector('.slctDepartamentos');
+    const slctdistrito = document.querySelector('.slctDistritos')
+    const indice = `{{domicilio.localidad}}`;
+    slctdepartamento.textContent = `${domicilios[indice].opciones.Departamento}`;
+    slctdistrito.textContent = `${domicilios[indice].opciones.Distrito}`;
+    const selectorMedios = document.getElementById("slctMedios")
+    let medioscontrols =`{{medios}}`
+    let medioscontrola = medioscontrols.split(",")
+    let medioscontrol = medioscontrola.map(str => parseInt(str));
+    for (let i = 0; i < medioscontrol.length; i++) {
+      selectorMedios.options[(medioscontrol[i]+1)].selected = true
+    }
+    const selectorAreaDes = document.getElementById("slctAreaDes")
+    let areadescontrols =`{{areaDesem}}`
+    let areadesscontrola = areadescontrols.split(",")
+    let areadescontrol = areadesscontrola.map(str => parseInt(str));
+    for (let i = 0; i < areadescontrol.length; i++) {
+      selectorAreaDes.options[(areadescontrol[i]+1)].selected = true
+    }
+    const selectorAreaComp = document.getElementById("slctAreaComp")
+    let areacompcontrols =`{{areaCompl}}`
+    let areacompcontrola = areacompcontrols.split(",")
+    let areacompcontrol = areacompcontrola.map(str => parseInt(str));
+    for (let i = 0; i < areacompcontrol.length; i++) {
+      selectorAreaComp.options[(areacompcontrol[i]+1)].selected = true
+    }
+  }
   function validarCV() {
   // Obtener nombre de archivo
     let archivo = document.getElementById('cvFile').value,
@@ -1183,5 +1223,5 @@ function NumeroCuil(event, el){//Validar nombre
       document.getElementById('cvFile').value = ""
     }
   }
-
+  
 </script>
