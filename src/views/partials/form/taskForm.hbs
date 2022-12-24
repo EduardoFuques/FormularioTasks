@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <pre></pre>
-  <form "/form" method="post">
+  <form "/form" method="post" enctype="multipart/form-data">
         {{!-- Header datos personales --}}
     <div class="row g-3">
       <div class="col-sm-12">
@@ -182,7 +182,7 @@
         <small class="text-muted">Medios</small>
         {{!-- <input type="text" class="form-control" id="medios" placeholder="Medios" aria-label="Medios"> --}}
         <select name="medios" id="slctMedios" class="form-select" multiple size="5" required>
-          <option value="" disabled hidden>Medios</option>
+          <option disabled hidden>Medios</option>
         </select>
       </div>
       {{!-- Area de desempeño --}}
@@ -223,7 +223,7 @@
     <div class="row g-3 mb-4">
       <div class="col-sm-12 was-validated">
         <small class="text-muted">Currículum Vitae</small>
-        <input name="cv" class="form-control" type="file" id="formFile" required>
+        <input name="cvFile" class="form-control" type="file" id="cvFile" accept=".pdf,.doc,.docx,.odt)" required onchange="validarCV()">
       </div>
     </div>
     {{!-- Boton enviar formulario --}}
@@ -235,8 +235,9 @@
     </button>
     {{!-- <button class="btn btn-dark">Registrarse</button> --}}
   </form>
-  <pre></pre> 
+  <pre>
 
+  </pre> 
 </div>
 
 <script>
@@ -254,77 +255,217 @@
   })
   
   areaComp = [    
-    "Proveedor/a de software y/o hardwareLocutor/a con experiencia en audiovisuales",
-    "Fotografía",
-    "Desarrollador/a de vídeo juegos",
-    "Bailarín/a con experiencia en audiovisuales",
-    "Actor/actriz con experiencia en audiovisuales",
-    "Músico/a con experiencia en audiovisuales",
-    "Locutor/a con experiencia en audiovisuales",
-    "Otra Area Complementaria"
+    {
+    "medio": "Proveedor/a de software y/o hardware",
+    "indice": 0
+    },
+    {
+    "medio": "Fotografía",
+    "indice": 1
+    },
+    {
+    "medio": "Desarrollador/a de vídeo juegos",
+    "indice": 2
+    },
+    {
+    "medio": "Bailarín/a con experiencia en audiovisuales",
+    "indice": 3
+    },
+    {
+    "medio": "Actor/actriz con experiencia en audiovisuales",
+    "indice": 4
+    },
+    {
+    "medio": "Músico/a con experiencia en audiovisuales",
+    "indice": 5
+    },
+    {
+    "medio": "Locutor/a con experiencia en audiovisuales",
+    "indice": 6
+    },
+    {
+    "medio": "Otra Area Complementaria",
+    "indice": 7
+    }
   ]
   areaComp.forEach(function(situacion){
     let newOption = document.createElement("option");
-    newOption.text = situacion;
-    newOption.value = situacion;
+    newOption.text = situacion.medio;
+    newOption.value = situacion.indice;
     slctAreaComp.appendChild(newOption)
   })
   
   areaDes = [
-    "Productor/a",
-    "Director/a",
-    "Director/a de Casting",
-    "Director/a de Sonido",
-    "Posproductor/a de Imagen",
-    "Posproductor/a de Sonido",
-    "Escenógrafo/a",
-    "Fotógrafo/a de Filmación",
-    "Maquillador/a",
-    "Vestuarista",
-    "Gaffer",
-    "Doblajista",
-    "Continuista / Script",
-    "Grip",
-    "Microfonista",
-    "Montajista",
-    "Productor/a Ejecutivo/a",
-    "Jefe/a de Locaciones",
-    "Realizador/a integral audiovisual",
-    "Documentalista",
-    "Iluminador/a",
-    "Distribuidor/a",
-    "Exhibidor/a",
-    "Capacitador/a o Formador/a",
-    "audiovisual",
-    "Investigador/a",
-    "Guionista",
-    "Colorista",
-    "Director/a de Fotografía",
-    "Comunicador/a especializado/a",
-    "Ilustrador/a",
-    "Efectos especiales",
-    "Animación",
-    "Abogada/o especializado/a en medios audiovisuales",
-    "Asistente de Dirección",
-    "Camarógrafo/a",
-    "Director/a de Arte"
+{
+    "medio": "Productor/a",
+    indice: 0
+},
+{
+    "medio": "Director/a",
+    indice: 1
+},
+{
+    "medio": "Director/a de Casting",
+    indice: 2
+},
+{
+    "medio": "Director/a de Sonido",
+    indice: 3
+},
+{
+    "medio": "Posproductor/a de Imagen",
+    indice: 4
+},
+{
+    "medio": "Posproductor/a de Sonido",
+    indice: 5
+},
+{
+    "medio": "Escenógrafo/a",
+    indice: 6
+},
+{
+    "medio": "Fotógrafo/a de Filmación",
+    indice: 7
+},
+{
+    "medio": "Maquillador/a",
+    indice: 8
+},
+{
+    "medio": "Vestuarista",
+    indice: 9
+},
+{
+    "medio": "Gaffer",
+    indice: 10
+},
+{
+    "medio": "Doblajista",
+    indice: 11
+},
+{
+    "medio": "Continuista / Script",
+    indice: 12
+},
+{
+    "medio": "Grip",
+    indice: 13
+},
+{
+    "medio": "Microfonista",
+    indice: 14
+},
+{
+    "medio": "Montajista",
+    indice: 15
+},
+{
+    "medio": "Productor/a Ejecutivo/a",
+    indice: 16
+},
+{
+    "medio": "Jefe/a de Locaciones",
+    indice: 17
+},
+{
+    "medio": "Realizador/a integral audiovisual",
+    indice: 18
+},
+{
+    "medio": "Documentalista",
+    indice: 19
+},
+{
+    "medio": "Iluminador/a",
+    indice: 20
+},
+{
+    "medio": "Distribuidor/a",
+    indice: 21
+},
+{
+    "medio": "Exhibidor/a",
+    indice: 22
+},
+{
+    "medio": "Capacitador/a o Formador/a",
+    indice: 23
+},
+{
+    "medio": "audiovisual",
+    indice: 24
+},
+{
+    "medio": "Investigador/a",
+    indice: 25
+},
+{
+    "medio": "Guionista",
+    indice: 26
+},
+{
+    "medio": "Colorista",
+    indice: 27
+},
+{
+    "medio": "Director/a de Fotografía",
+    indice: 28
+},
+{
+    "medio": "Comunicador/a especializado/a",
+    indice: 29
+},
+{
+    "medio": "Ilustrador/a",
+    indice: 30
+},
+{
+    "medio": "Efectos especiales",
+    indice: 31
+},
+{
+    "medio": "Animación",
+    indice: 32
+},
+{
+    "medio": "Abogada/o especializado/a en medios audiovisuales",
+    indice: 33
+},
+{
+    "medio": "Asistente de Dirección",
+    indice: 34
+},
+{
+    "medio": "Camarógrafo/a",
+    indice: 35
+},
+{
+    "medio": "Director/a de Arte",
+    indice: 36
+},
     ]
   areaDes.forEach(function(situacion){
     let newOption = document.createElement("option");
-    newOption.text = situacion;
-    newOption.value = situacion;
+    newOption.text = situacion.medio;
+    newOption.value = situacion.indice;
     slctAreaDes.appendChild(newOption)
   })
   
-  medios = [
-    "TV",
-    "Web",
-    "Cine"
-  ]
+  medios = [{
+    "medio": "TV",
+    "indice": 0
+  },{
+    "medio": "Web",
+    "indice": 1
+  },{
+    "medio": "Cine",
+    "indice": 2
+  }]
   medios.forEach(function(situacion){
     let newOption = document.createElement("option");
-    newOption.text = situacion;
-    newOption.value = situacion;
+    newOption.text = situacion.medio;
+    newOption.value = situacion.indice;
     slctMedios.appendChild(newOption)
   })
   
@@ -1030,5 +1171,17 @@ function NumeroCuil(event, el){//Validar nombre
     }
   });
 
+  function validarCV() {
+  // Obtener nombre de archivo
+    let archivo = document.getElementById('cvFile').value,
+  // Obtener extensión del archivo
+    extension = archivo.substring(archivo.lastIndexOf('.'),archivo.length);
+  // Si la extensión obtenida no está incluida en la lista de valores
+  // del atributo "accept", mostrar un error.
+    if(document.getElementById('cvFile').getAttribute('accept').split(',').indexOf(extension) < 0) {
+      alert('Archivo inválido. No se permite la extensión ' + extension);
+      document.getElementById('cvFile').value = ""
+    }
+  }
 
 </script>

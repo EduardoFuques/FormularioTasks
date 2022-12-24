@@ -1,1 +1,0 @@
-export const calle2 = "callecita de tucuman"

@@ -25,6 +25,7 @@ const exphbs = create({
 app.engine(".hbs", exphbs.engine);
 app.set("view engine", ".hbs");
 
+
 //midlewares
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
@@ -37,7 +38,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
+app.use(flash()); 
 
 //global variables
 app.use((req, res, next) => {

@@ -19,38 +19,45 @@
   <form "/signup" method="post">
 {{!-- Fila 1 - Nombre y Apellido --}}
     <div class="row g-3 mb-4">
-      <div class="col-sm">
+      <div class="col-sm was-validated form-floating">
         <input type="text" name="nombre" placeholder="Nombres" class="form-control rounded-0 bg-white text-dark" value="{{user.nombre}}" onkeyup="this.value=NombreMayus(this.value)" required>
+        <label for="floatingInput">Nombres</label>
       </div>
-      <div class="col-sm">
+      <div class="col-sm was-validated form-floating">
         <input type="text" name="apellido" placeholder="Apellido" class="form-control rounded-0 bg-white text-dark" value="{{user.apellido}}" onkeyup="this.value=NombreMayus(this.value)" required>
+        <label for="floatingInput">Apellido</label>
       </div>
     </div>
 {{!-- Fila 2 - Tipo doc, doc, email --}}
-    <div class="row g-3 mb-4">
-      <div class="col-sm-3">
-        <select name="opcion" class="form-select dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" value="{{user.opcion}}">
-          <option selected disabled hidden>Tipo de documento</option>
-          <option class="dropdown-item" value="DNI">Documento Nacional de Identidad</option>
+    <div class="row g-3 mb-4 ">
+      <div class="col-sm-3 was-validated form-floating">
+        <select name="opcion" id="slctDoc" class="form-select" required>
+          <option value="" selected disabled hidden>Seleccione</option>
+          <option value="DNI">Documento Nacional de Identidad</option>
           <option value="Cedula">Cédula Policia Federal</option>
           <option value="LC">Libreta Cívica</option>
           <option value="LE">Libreta de Enrolamiento</option>
         </select>
+        <label for="floatingSelect">Tipo de documento</label>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-3 was-validated form-floating">
         <input type="text" name="usuario" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 bg-white text-dark" value="{{user.usuario}}" onkeyup="this.value=Numeros(this.value)" required>
+        <label for="floatingInput">Número de DNI</label>
       </div>
-      <div class="col-sm">
+      <div class="col-sm was-validated form-floating">
         <input type="email" name="email" placeholder="Correo electrónico" class="form-control rounded-0 bg-white text-dark" value="{{user.email}}" required>
+        <label for="floatingInput">Correo electrónico</label>
       </div>
     </div>
 {{!-- Fila 3 - contraseña --}}
     <div class="row g-3 mb-4">
-      <div class="col-sm">
-        <input type="password" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark" required>
+      <div class="col-sm was-validated form-floating">
+        <input type="password" name="password" placeholder="Contraseña" minlength="4" class="form-control rounded-0 bg-white text-dark" required>
+        <label for="floatingInput">Contraseña</label>
       </div>
-      <div class="col-sm">
-        <input type="password" name="confirm_password" placeholder="Cargar contraseña nuevamente" class="form-control rounded-0 bg-white text-dark" required>
+      <div class="col-sm was-validated form-floating">
+        <input type="password" name="confirm_password" placeholder="Cargar contraseña nuevamente" minlength="4" class="form-control rounded-0 bg-white text-dark" required>
+        <label for="floatingInput">Cargar contraseña nuevamente</label>
       </div>
     </div>
     <pre></pre>
