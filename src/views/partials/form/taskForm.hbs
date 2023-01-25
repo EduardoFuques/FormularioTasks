@@ -39,18 +39,16 @@
     <div class="row g-3 mb-4">
       {{!-- email --}}
       <div class="col-sm-6 form-floating">
-        <input name="email" type="email" class="form-control" id="email" value={{datos.email}} placeholder="email: nombre@ejemplo.com" disabled>
-        <label for="floatingInput">email</label>
+        <input name="email" type="email" class="form-control" id="email" value={{datos.email}} placeholder="e-mail: nombre@ejemplo.com" disabled>
+        <label for="floatingInput">e-mail</label>
       </div>
       {{!-- cuil --}}
       <div class="col-sm  was-validated form-floating">
         <input name="cuil" type="text" class="form-control item" id="cuil" placeholder="Número cuit/cuil" onkeyup="NumeroCuil(event, this)" maxlength="13" pattern="\d{2}-\d{8}-\d{1}" required >
         <label for="floatingInput">Número cuit/cuil</label>
       </div>
-
       {{!-- sexo --}}
       <div class="col-sm-3  was-validated form-floating">
-        {{!-- <input type="text" class="form-control" id="sexo" placeholder="sexo" aria-label="sexo"> --}}
         <select name="sexo" id="slctSexo" class="form-select" required>
           <option value="" disabled hidden selected>Seleccione</option>
         </select>
@@ -61,7 +59,6 @@
     <div class="row g-3 mb-4"> 
       {{!-- Personería Jurídica --}}
       <div class="col-sm  was-validated form-floating">
-        {{!-- <input type="text" class="form-control" id="PerJuridica" placeholder="Personería Jurídica"> --}}
         <select name="perJuridica" id="slctPerJur" class="form-select" required>
           <option value="" disabled hidden selected>Seleccione</option>
           <option value=true>Si</option>
@@ -71,7 +68,6 @@
       </div>
       {{!-- Situación AFIP --}}
       <div class="col-sm  was-validated form-floating">
-        {{!-- <input type="text" class="form-control" id="sitAfip" placeholder="Situación AFIP" aria-label="sitAfip"> --}}
         <select name="sitAfip" id="slctSitAfip" class="form-select" required>
           <option value="" disabled hidden selected>Seleccione</option>
         </select>
@@ -110,7 +106,6 @@
     <div class="row g-3 mb-4">
       {{!-- Municipio --}}
       <div class="col-sm-3  was-validated form-floating">
-        {{!-- <input type="text" class="form-control" id="distrito" placeholder="Distrito" aria-label="District"> --}}
         <select name="localidad" id="slctMunicipios" class="slctMunicipios form-select" required>
           <option value="" disabled hidden selected>Seleccione</option>
         </select>
@@ -118,20 +113,11 @@
       </div>
       {{!-- Departamento --}}
       <div class="col-sm-3 form-floating">
-        {{!-- <input type="text" class="form-control" id="departamentoID" placeholder="Departamento" aria-label="State" disabled> --}}
-        {{!-- <select id="slctDepartamentos">
-          <option value="" disabled hidden selected>Departamento</option>
-        </select> --}}
-        {{!-- <input type="text" class="result"> --}}
         <div class="slctDepartamentos form-control"></div>
         <label for="floatingInput">Departamento</label>
       </div>
       {{!-- Distrito --}}
       <div class="col-sm-3 form-floating">
-        {{!-- <input type="text" class="form-control" id="distrito" placeholder="Distrito" aria-label="District" disabled> --}}
-        {{!-- <select id="slctDistritos">
-          <option value="" disabled hidden selected>Distrito</option>
-        </select> --}}
         <div class="slctDistritos form-control"></div>
         <label for="floatingInput">Distrito</label>
       </div>
@@ -171,37 +157,38 @@
     <div class="row g-3 mb-3">
       <div class="col-sm-12">
         <div class="card text-bg-dark mb-3 align-items-center">
-          <div class="card-header"> <h3>Medios, Areas de Desempeño y complementarias</h3></div>
+          <div class="card-header"> <h3>Medios, Áreas de Desempeño y complementarias</h3></div>
         </div>
       </div>
     </div>
     {{!-- Fila 8  - Selección de medios--}}
     <div class="row g-3 mb-4">
       {{!-- Medios --}}
-      <div class="col-sm-4 was-validated">
+      <div class="col-sm was-validated">
         <small class="text-muted">Medios</small>
-        {{!-- <input type="text" class="form-control" id="medios" placeholder="Medios" aria-label="Medios"> --}}
-        <select name="medios" id="slctMedios" class="form-select" multiple size="5" required>
+        <select name="medios" id="slctMedios" class="form-select" multiple size="3" required>
           <option disabled hidden>Medios</option>
         </select>
       </div>
+    </div>
+    <div class="row g-3 mb-4">
       {{!-- Area de desempeño --}}
-      <div class="col-sm-4 was-validated">
-        <small class="text-muted">Areas de desempeño</small>
-        {{!-- <input type="text" class="form-control" id="areaDes" placeholder="Areas de desempeño" aria-label="areasDes"> --}}
-        <select name="areaDes" id="slctAreaDes" class="form-select" multiple size="5" required>
-          <option value="" disabled hidden>Areas de desempeño</option>
+      <div class="col-sm was-validated">
+        <small class="text-muted">Áreas de desempeño</small>
+        <select name="areaDes" id="slctAreaDes" class="form-select" multiple size="8" required>
+          <option value="" disabled hidden>Áreas de desempeño</option>
         </select>
         <small class="invalid-feedback">
           Seleccione un máximo de 3 opciones
         </small>
       </div>
+    </div>
+    <div class="row g-3 mb-4">
       {{!-- Area complementaria --}}
       <div class="col-sm was-validated">
-        <small class="text-muted">Areas Complementarias</small>
-        {{!-- <input type="text" class="form-control" id="areaCompl" placeholder="Areas Complementarias" aria-label="areasComp"> --}}
-        <select name="areaComp" id="slctAreaComp" class="form-select" multiple size="5" required>
-          <option value="" disabled hidden>Areas Complementarias</option>
+        <small class="text-muted">Áreas Complementarias</small>
+        <select name="areaComp" id="slctAreaComp" class="form-select" multiple size="8" required>
+          <option value="" disabled hidden>Áreas Complementarias</option>
         </select>
         <small class="invalid-feedback">
           Seleccione un máximo de 3 opciones
@@ -215,7 +202,7 @@
     <div class="row g-3">
       <div class="col-sm-12">
         <div class="card text-bg-dark mb-3 align-items-center">
-          <div class="card-header"> <h3>Carga de Curriculum Vitae</h3></div>
+          <div class="card-header"> <h3>Carga de Currículum Vitae y DNI</h3></div>
         </div>
       </div>
     </div>
@@ -223,7 +210,13 @@
     <div class="row g-3 mb-4">
       <div class="col-sm-12 was-validated">
         <small class="text-muted">Currículum Vitae</small>
-        <input name="cvFile" class="form-control" type="file" id="cvFile" accept=".pdf,.doc,.docx,.odt)" required onchange="validarCV()">
+        <input name="cvFile" class="form-control" type="file" id="cvFile" accept=".pdf,.doc,.docx,.odt" required onchange="validarCV()">
+      </div>
+    </div>
+    <div class="row g-3 mb-4">
+      <div class="col-sm-12 was-validated">
+        <small class="text-muted">DNI frente y dorso</small>
+        <input name="dniFile" class="form-control" type="file" id="dniFile" accept=".pdf" required onchange="validarDNI()">
       </div>
     </div>
     {{!-- Boton enviar formulario --}}
@@ -233,7 +226,6 @@
       data-bs-title="Por favor chequee la información antes de enviar el formulario."> 
       Enviar Formulario
     </button>
-    {{!-- <button class="btn btn-dark">Registrarse</button> --}}
   </form>
   <pre>
 
@@ -1181,6 +1173,18 @@ function NumeroCuil(event, el){//Validar nombre
     if(document.getElementById('cvFile').getAttribute('accept').split(',').indexOf(extension) < 0) {
       alert('Archivo inválido. No se permite la extensión ' + extension);
       document.getElementById('cvFile').value = ""
+    }
+  }
+  function validarDNI() {
+  // Obtener nombre de archivo
+    let archivo = document.getElementById('dniFile').value,
+  // Obtener extensión del archivo
+    extension = archivo.substring(archivo.lastIndexOf('.'),archivo.length);
+  // Si la extensión obtenida no está incluida en la lista de valores
+  // del atributo "accept", mostrar un error.
+    if(document.getElementById('dniFile').getAttribute('accept').split(',').indexOf(extension) < 0) {
+      alert('Archivo inválido. No se permite la extensión ' + extension);
+      document.getElementById('dniFile').value = ""
     }
   }
 
