@@ -1,9 +1,8 @@
 <nav class="navbar navbar-dark bg-success">
   <div class="container-fluid">
 
-    <a class="navbar-brand" href="https://www.iaavim.misiones.gob.ar/"><img
+    <a class="navbar-brand" href="https://www.iaavim.gob.ar/"><img
         src="https://iaavim.unam.edu.ar/images/imagenes/nuevo_logo_blanco_gg.png"
-
         alt="Logo"
         width="556"
         height="80"
@@ -60,41 +59,16 @@
               >Registrarse</a>
             </li>
           {{/unless}}
-          {{!-- {{#if user}}
+          {{#if user}}
             <li class="nav-item">
-              <a class="nav-link" href="#">Descargar formulario de registro</a>
+              <a class="nav-link" href="/pdf">Descargar formulario de registro</a>
             </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Formulario
-              </a>
-              <ul class="dropdown-menu dropdown-menu-">
-                <li><a class="dropdown-item" href="task/:id/toggledone">Editar
-                    formulario</a></li>
-                <li><a class="dropdown-item" href="task/:id/delete">Borrar
-                    formulario</a></li>
-                <li><a class="dropdown-item" href="task/:id/edit">Actualizar
-                    formulario</a></li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li><a
-                    class="dropdown-item"
-                    href="https://iaavim.unam.edu.ar"
-                  >Conocer mas del IAAviM</a></li>
-              </ul>
-            </li>
-          {{/if}} --}}
+
+          {{/if}}
           <li>
             <hr class="" />
           </li>
-          <li><a class="dropdown-item" href="https://iaavim.unam.edu.ar">Conocer
+          <li><a class="dropdown-item" href="https://www.iaavim.gob.ar">Conocer
               mas del IAAviM</a></li>
           {{#if user}}
             <li>

@@ -1,4 +1,14 @@
 import Form from "../models/Formulario";
+import os from "os";
+import { PDFDocument } from "pdf-lib";
+import fs from "fs";
+import path from "path";
+import {
+  areasCompOpc,
+  areaDesOpc,
+  mediosopc,
+  domiciliosOpc,
+} from "../helpers/arrays";
 
 export const renderForm = async (req, res) => {
   try {
@@ -6,13 +16,21 @@ export const renderForm = async (req, res) => {
     const { tipoDoc, usuario, nombre, apellido, email, codigoRepa } = req.user;
     const usuarioEncontrado = await Form.findOne({ usuario }).lean();
     if (!usuarioEncontrado) {
-      const datos = { userID, tipoDoc, usuario, nombre, apellido, email, codigoRepa };
+      const datos = {
+        userID,
+        tipoDoc,
+        usuario,
+        nombre,
+        apellido,
+        email,
+        codigoRepa,
+      };
       res.render("index", { datos: datos });
     } else {
       const datos = usuarioEncontrado;
-      const medios = []
-      const areaDesem = []
-      const areaCompl = []
+      const medios = [];
+      const areaDesem = [];
+      const areaCompl = [];
       for (let i = 0; i < datos.medios.length; i++) {
         medios.push(datos.medios[i]);
       }
@@ -31,10 +49,9 @@ export const renderForm = async (req, res) => {
         telefono: datos.telefono[0],
         medios: medios,
         areaDesem: areaDesem,
-        areaCompl: areaCompl
+        areaCompl: areaCompl,
       });
     }
-
   } catch (error) {
     console.log(error.message);
   }
@@ -61,7 +78,7 @@ export const captureForm = async (req, res) => {
       areaComp,
     } = req.body;
     const { tipoDoc, usuario, nombre, apellido, email } = req.user;
-    
+
     const newForm = new Form({
       tipoDoc,
       usuario,
@@ -91,7 +108,6 @@ export const captureForm = async (req, res) => {
       medios, //ok
       areaDes, //ok
       areaComp, //ok
-      
     });
     await newForm.save();
     //console.log(newForm)
@@ -128,7 +144,7 @@ export const captureEditForm = async (req, res) => {
       cuil, //ok
       sexo, //ok
       sitAfip, //ok
-      perJuridica, 
+      perJuridica,
       domicilio: {
         calle: calle, //ok
         numero: numero, //ok
@@ -147,16 +163,169 @@ export const captureEditForm = async (req, res) => {
       medios, //ok
       areaDes, //ok
       areaComp, //ok
-      
     };
-    await Form.updateOne({usuario: usuario}, {$set: editForm}, (error) => {
+    await Form.updateOne({ usuario: usuario }, { $set: editForm }, (error) => {
       if (error) {
         console.log(error);
         res.send(error);
       } else {
         res.render("pantalla-ok");
       }
-    });    
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const renderPDF = async (req, res) => {
+  try {
+    //   Recuperar datos del usuario
+    const userID = req.session.passport.user;
+    const { tipoDoc, usuario, nombre, apellido, email, codigoRepa } = req.user;
+    const usuarioEncontrado = await Form.findOne({ usuario }).lean();
+    let tempFilePath = null; // Inicializar la variable tempFilePath con null
+    if (!usuarioEncontrado) {
+      const datos = {
+        userID,
+        tipoDoc,
+        usuario,
+        nombre,
+        apellido,
+        email,
+        codigoRepa,
+      };
+      res.render("index", { datos: datos });
+    } else {
+      const datos = usuarioEncontrado;
+      const mediosi = [];
+      const areaDesemi = [];
+      const areaCompli = [];
+      for (let i = 0; i < datos.medios.length; i++) {
+        mediosi.push(datos.medios[i]);
+      }
+      for (let i = 0; i < datos.areaDes.length; i++) {
+        areaDesemi.push(datos.areaDes[i]);
+      }
+      for (let i = 0; i < datos.areaComp.length; i++) {
+        areaCompli.push(datos.areaComp[i]);
+      }
+      const medios = mediosi.map((indice) => mediosopc[indice].medio);
+      const areaDesem = areaDesemi.map((indice) => areaDesOpc[indice].medio);
+      const areaCompl = areaCompli.map((indice) => areasCompOpc[indice].medio);
+
+      const calle = datos.domicilio[0].calle.toString();
+      const telefono = datos.telefono[0];
+      const domicilio = datos.domicilio[0];
+
+      // Obtener el índice de la localidad del objeto domicilio
+      const indiceLocalidad = domicilio.localidad;
+      // Buscar el objeto de la localidad en el array domiciliosOpc
+      const indiceLocalidadNumero = parseInt(indiceLocalidad, 10);
+      const localidadOpc = domiciliosOpc.find(
+        (opc) => opc.opciones.indice === indiceLocalidadNumero
+      );
+      // Obtener el nombre de la localidad
+      const nombreLocalidad = localidadOpc ? localidadOpc.localidad : "";
+
+      const doc = async () => {
+        try {
+          // Cargar el archivo PDF
+          const pdfData = fs.readFileSync("formulario2.pdf");
+          const pdfDoc = await PDFDocument.load(pdfData);
+          const form = pdfDoc.getForm();
+          const nombresField = form.getField("Nombres");
+          const apellidoField = form.getField("Apellido");
+          const tipoDocField = form.getField("TipoDoc");
+          const numDocField = form.getField("NumDoc");
+          const cuilField = form.getField("Cuil");
+          const perJurField = form.getField("PerJur");
+          const sitAfipField = form.getField("SitAfip");
+          const codRepaField = form.getField("CodRepa");
+          const fijoField = form.getField("Fijo");
+          const movilField = form.getField("Movil");
+          const movilAltField = form.getField("MovilAlt");
+          const emailField = form.getField("email");
+          const sexoField = form.getField("sexo");
+          const departamentoField = form.getField("Departamento");
+          const cpField = form.getField("CP");
+          const distritoField = form.getField("Distrito");
+          const localidadField = form.getField("Localidad");
+          const calleField = form.getField("Calle");
+          const numeroField = form.getField("Numero");
+          const pisoField = form.getField("Piso");
+          const deptoField = form.getField("Depto");
+          const areaComp1Field = form.getField("AreaComp1");
+          const areaComp2Field = form.getField("AreaComp2");
+          const areaDes3Field = form.getField("AreaDes3");
+          const areaComp3Field = form.getField("AreaComp3");
+          const medio1Field = form.getField("Medio1");
+          const medio2Field = form.getField("Medio2");
+          const medio3Field = form.getField("Medio3");
+          const areaDes2Field = form.getField("AreaDes2");
+          const areaDes1Field = form.getField("AreaDes1");
+          nombresField.setText(datos.nombre.toString());
+          apellidoField.setText(datos.apellido.toString());
+          tipoDocField.setText(datos.tipoDoc.toString());
+          numDocField.setText(datos.usuario.toString());
+          cuilField.setText(datos.cuil.toString());
+          perJurField.setText(datos.perJuridica ? "Sí" : "No");
+          sitAfipField.setText(datos.sitAfip.toString());
+          codRepaField.setText(datos.codigoRepa.toString());
+          fijoField.setText(telefono.fijo.toString());
+          movilField.setText(telefono.movil.toString());
+          movilAltField.setText(telefono.alternativo.toString());
+          emailField.setText(datos.email.toString());
+          sexoField.setText(datos.sexo.toString());
+          cpField.setText(domicilio.cp.toString());
+          departamentoField.setText(localidadOpc.opciones.Departamento);
+          distritoField.setText(localidadOpc.opciones.Distrito);
+          calleField.setText(calle.toString());
+          numeroField.setText(domicilio.numero.toString());
+          pisoField.setText(domicilio.piso.toString());
+          deptoField.setText(domicilio.depto.toString());
+          areaComp1Field.setText(areaCompl[0] ?? "");
+          areaComp2Field.setText(areaCompl[1] ?? "");
+          areaComp3Field.setText(areaCompl[2] ?? "");
+          medio1Field.setText(medios[0] ?? "");
+          medio2Field.setText(medios[1] ?? "");
+          medio3Field.setText(medios[2] ?? "");
+          areaDes1Field.setText(areaDesem[0] ?? " ");
+          areaDes2Field.setText(areaDesem[1] ?? " ");
+          areaDes3Field.setText(areaDesem[2] ?? " ");
+          localidadField.setText(nombreLocalidad);
+
+          form.flatten();
+
+          // Generar el PDF y guardarlo en un archivo temporal
+          const codigoRepa = datos.codigoRepa;
+          const tempFilePath = path.join(
+            __dirname,
+            "..",
+            "tmp",
+            `formulario-${codigoRepa}-REPA.pdf`
+          );
+          const pdfBytes = await pdfDoc.save();
+          fs.writeFileSync(tempFilePath, pdfBytes);
+
+          // Enviar el archivo al cliente
+          const file = fs.createReadStream(tempFilePath);
+          res.setHeader("Content-Type", "application/pdf");
+          res.setHeader(
+            "Content-Disposition",
+            "attachment; filename=formulario-REPA.pdf"
+          );
+          file.pipe(res);
+
+          // Retornar el archivo temporal
+          return tempFilePath;
+        } catch (error) {
+          console.error("Error al generar el PDF:", error);
+          res.status(500).send("Ocurrió un error al generar el PDF");
+        }
+      };
+
+      doc(req, res);
+    }
   } catch (error) {
     console.log(error.message);
   }
