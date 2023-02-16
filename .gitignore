@@ -13,6 +13,7 @@ dist
 trash
 src2
 src1
+src/tmp
 
 # Files
 src/files
