@@ -7,15 +7,11 @@ import morgan from "morgan";
 import flash from "connect-flash";
 import session from "express-session";
 import passport from "./config/passport";
-import { SESSION_MAX_AGE, SESSION_SECRET } from "./config";
-// import { PDFDocument } from "pdfkit";
-// import { blobStream } from "blob-stream";
-import { getNextSequenceValue } from "./models/Contador";
+import { SESSION_SECRET } from "./config";
+
   
 //inicializacion
 const app = express();
-// const doc = new PDFDocument;
-// const stream = doc.pipe(blobStream());
 
 //settings
 app.set("views", path.join(__dirname, "views"));
