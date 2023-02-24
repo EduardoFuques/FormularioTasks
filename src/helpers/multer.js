@@ -1,6 +1,7 @@
 import multer from "multer";
 import path from "path";
 import { FILE_SIZE } from "../config";
+import fs from "fs";
 
 var hoy = new Date();
 var hoyformateado = hoy
@@ -8,17 +9,24 @@ var hoyformateado = hoy
   .replace(/[^0-9]/g, "")
   .slice(0, -5);
 
-const storage = multer.diskStorage({
-  destination: path.join(__dirname, "..", "files"),
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      `${req.user.usuario.toString()}-${file.fieldname.toUpperCase()}-${hoyformateado}${path
-        .extname(file.originalname)
-        .toLowerCase()}`
-    );
-  },
-});
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      const codigoRepa = req.user.codigoRepa;
+      const dir = path.join(__dirname, "..", "files", codigoRepa);
+      fs.mkdirSync(dir, { recursive: true });
+      cb(null, dir);
+    },
+    filename: (req, file, cb) => {
+      const usuario = req.user.usuario;
+      const codigoRepa = req.user.codigoRepa;
+      const fieldName = file.fieldname.toUpperCase();
+      const extension = path.extname(file.originalname).toLowerCase();
+      const timestamp = hoyformateado;
+      const filename = `${usuario}-${fieldName}-${timestamp}${extension}`;
+      cb(null, filename);
+    },
+  });
+  
 
 const fileFilter = (filetypes) => (req, file, cb) => {
   const mimetype = filetypes.test(file.mimetype);

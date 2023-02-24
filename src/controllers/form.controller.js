@@ -23,9 +23,13 @@ export const renderForm = async (req, res) => {
         nombre,
         apellido,
         email,
-        codigoRepa,
       };
-      res.render("index", { datos: datos });
+      const editar = false;
+      res.render("index", {
+        datos: datos,
+        codigoRepa: codigoRepa,
+        editar: editar,
+      });
     } else {
       const datos = usuarioEncontrado;
       const medios = [];
@@ -40,16 +44,18 @@ export const renderForm = async (req, res) => {
       for (let i = 0; i < datos.areaComp.length; i++) {
         areaCompl.push(datos.areaComp[i]);
       }
-
+      const editar = true;
       const calle = datos.domicilio[0].calle.toString();
       res.render("edit", {
         datos: datos,
+        codigoRepa: codigoRepa,
         domicilio: datos.domicilio[0],
         calle: calle,
         telefono: datos.telefono[0],
         medios: medios,
         areaDesem: areaDesem,
         areaCompl: areaCompl,
+        editar: editar,
       });
     }
   } catch (error) {
@@ -139,7 +145,6 @@ export const captureEditForm = async (req, res) => {
       cv,
     } = req.body;
     const { tipoDoc, usuario, nombre, apellido, email } = req.user;
-    const codigoRepa = "AA11";
     const editForm = {
       cuil, //ok
       sexo, //ok
@@ -192,14 +197,15 @@ export const renderPDF = async (req, res) => {
         nombre,
         apellido,
         email,
-        codigoRepa,
       };
-      res.render("index", { datos: datos });
+
+      res.render("index", { datos: datos, codigoRepa: codigoRepa });
     } else {
       const datos = usuarioEncontrado;
       const mediosi = [];
       const areaDesemi = [];
       const areaCompli = [];
+
       for (let i = 0; i < datos.medios.length; i++) {
         mediosi.push(datos.medios[i]);
       }
@@ -270,7 +276,7 @@ export const renderPDF = async (req, res) => {
           cuilField.setText(datos.cuil.toString());
           perJurField.setText(datos.perJuridica ? "Sí" : "No");
           sitAfipField.setText(datos.sitAfip.toString());
-          codRepaField.setText(datos.codigoRepa.toString());
+          codRepaField.setText(codigoRepa.toString());
           fijoField.setText(telefono.fijo.toString());
           movilField.setText(telefono.movil.toString());
           movilAltField.setText(telefono.alternativo.toString());
@@ -297,13 +303,15 @@ export const renderPDF = async (req, res) => {
           form.flatten();
 
           // Generar el PDF y guardarlo en un archivo temporal
-          const codigoRepa = datos.codigoRepa;
+          console.log(codigoRepa);
           const tempFilePath = path.join(
             __dirname,
             "..",
-            "tmp",
+            "files",
+            codigoRepa,
+            "temp",
             `formulario-${codigoRepa}-REPA.pdf`
-          );
+          );          
           const pdfBytes = await pdfDoc.save();
           fs.writeFileSync(tempFilePath, pdfBytes);
 

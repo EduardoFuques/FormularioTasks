@@ -7,7 +7,7 @@ import morgan from "morgan";
 import flash from "connect-flash";
 import session from "express-session";
 import passport from "./config/passport";
-import { SESSION_SECRET } from "./config";
+import { SESSION_MAX_AGE, SESSION_SECRET } from "./config";
 // import { PDFDocument } from "pdfkit";
 // import { blobStream } from "blob-stream";
 import { getNextSequenceValue } from "./models/Contador";
@@ -39,6 +39,7 @@ app.use(
     secret: SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
+    cookie: { maxAge: 60 * 60 * 1000 }
   })
 );
 app.use(passport.initialize());
