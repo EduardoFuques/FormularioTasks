@@ -303,7 +303,6 @@ export const renderPDF = async (req, res) => {
           form.flatten();
 
           // Generar el PDF y guardarlo en un archivo temporal
-          console.log(codigoRepa);
           const tempFilePath = path.join(
             __dirname,
             "..",
