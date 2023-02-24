@@ -7,17 +7,35 @@ import {
 } from "../controllers/form.controller";
 import helpers from "../helpers/auth";
 import { uploadFile } from "../helpers/multer";
+import { verifyRole } from "../helpers/roles";
 
 const router = Router();
 
-router.get("/form", helpers.isAuthenticated, renderForm);
+// PERSONAS FISICAS
+router.get("/form", helpers.isAuthenticated, verifyRole('normal'), renderForm);
 
-router.get("/formem", helpers.isAuthenticated, renderFormem);
+router.post("/form", helpers.isAuthenticated, verifyRole('normal'), uploadFile, captureForm);
 
-router.post("/form", helpers.isAuthenticated, uploadFile, captureForm);
-
-router.post("/edit", helpers.isAuthenticated, uploadFile, captureEditForm);
+router.post("/edit", helpers.isAuthenticated, verifyRole('normal'), uploadFile, captureEditForm);
 
 router.get("/pdf", helpers.isAuthenticated, renderPDF);
+
+
+// PERSONAS JURIDICAS
+router.get("/formEm", helpers.isAuthenticated, verifyRole('perJur'), function(req, res) {
+  res.send('PerJur formulario');
+});
+
+router.post("/formEm", helpers.isAuthenticated, verifyRole('perJur'), function(req, res) {
+  res.send('PerJur post formulario');
+});
+
+router.post("/editEm", helpers.isAuthenticated, verifyRole('perJur'), function(req, res) {
+  res.send('PerJur post edit');
+});
+
+router.get("/pdfEm", helpers.isAuthenticated, verifyRole('perJur'), function(req, res) {
+  res.send('PerJur post formulario');
+});
 
 export default router;

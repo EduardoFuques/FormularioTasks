@@ -61,6 +61,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((id, done) => {
   User.findById(id, (err, user) => {
+    user.role=user.rol
     done(err, user);
   });
 });
