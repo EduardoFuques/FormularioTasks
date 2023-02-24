@@ -2,6 +2,8 @@ import User from "../models/Usuarios";
 import { isCorrectPassword } from "../models/Usuarios";
 import passport from "../config/passport";
 import { getNextSequenceValue } from "../models/Contador";
+import fs from "fs";
+import path from "path";
 
 export const renderSignUp = async (req, res) => {
   res.render("registro");
@@ -34,6 +36,11 @@ export const signUpUser = async (req, res) => {
       confirm_password,
     } = req.body;
     const codigoRepa = await codRepa()
+
+    // Create directory for the user on the server
+    const userDirectory = path.join(__dirname, "..", "files", codigoRepa);
+    fs.mkdirSync(userDirectory, { recursive: true });
+
     const user = { opcion, nombre, apellido, usuario, email };
     const rol = "normal";
     const emailUser = await User.findOne({ email: email });
@@ -85,33 +92,6 @@ export const renderSignIn = (req, res) => {
   res.render("ingreso");
 };
 
-export const signInUser = (req, res) => {
-  try {
-    const { usuario, password } = req.body;
-    console.log(usuario);
-    User.findOne({ usuario: usuario }, (err, usuario) => {
-      if (err) {
-        res.status(500).send("Error al autenticar al usuario");
-      } else if (!usuario) {
-        res.status(500).send("El usuario no existe");
-      } else {
-        isCorrectPassword(password, usuario, (err, result) => {
-          if (err) {
-            res.status(500).send("Error al autenticar");
-          } else if (result) {
-            res.redirect("/form");
-          } else {
-            res.status(500).send("Usuario o contraseña incorrecta");
-          }
-        });
-      }
-    });
-    //res.redirect("/");
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const autenticacion = passport.authenticate("login", {
   failureRedirect: "/",
   successRedirect: "/form",
@@ -119,11 +99,39 @@ export const autenticacion = passport.authenticate("login", {
 });
 
 
+// Controlador para logout
 export const logOut = function (req, res, next) {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/");
-  });
+  // Obtener el directorio temporal de la sesión y eliminarlo
+  const tempDir = req.session.tempDir;
+  
+  if (tempDir) {
+    deleteTempDir(tempDir, function() {
+      // Cerrar sesión y redirigir
+      req.logout(function (err) {
+        if (err) {
+          return next(err);
+        }
+        res.redirect("/");
+      });
+    });
+  } else {
+    // Si no hay directorio temporal, cerrar sesión y redirigir
+    req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.redirect("/");
+    });
+  }
 };
+
+export function deleteTempDir(tempDir, callback) {
+  fs.rmdir(tempDir, { recursive: true }, (err) => {
+    if (err) {
+      console.error(`Error al eliminar el directorio temporal ${tempDir}:`, err);
+    } else {
+      console.log(`Directorio temporal ${tempDir} eliminado`);
+    }
+    callback();
+  });
+}
