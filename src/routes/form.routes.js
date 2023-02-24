@@ -5,6 +5,7 @@ import {
   captureEditForm,
   renderPDF,
   getPDF,
+  renderFormem,
 } from "../controllers/form.controller";
 import helpers from "../helpers/auth";
 import { uploadFile } from "../helpers/multer";
@@ -14,6 +15,8 @@ import { dniUpload } from "../helpers/recFiles";
 const router = Router();
 
 router.get("/form", helpers.isAuthenticated, renderForm);
+
+router.get("/formem", helpers.isAuthenticated, renderFormem);
 
 router.post("/form", helpers.isAuthenticated, uploadFile, captureForm);
 
