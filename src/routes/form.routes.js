@@ -12,6 +12,8 @@ const router = Router();
 
 router.get("/form", helpers.isAuthenticated, renderForm);
 
+router.get("/formem", helpers.isAuthenticated, renderFormem);
+
 router.post("/form", helpers.isAuthenticated, uploadFile, captureForm);
 
 router.post("/edit", helpers.isAuthenticated, uploadFile, captureEditForm);
