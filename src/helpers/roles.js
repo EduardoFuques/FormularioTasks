@@ -1,9 +1,10 @@
 export function verifyRole(role) {
   return function (req, res, next) {
-    if (req.user && req.user.role === role) {
+    console.log(req.user.rol)
+    if (req.user && (req.user.rol === role || req.user.rol === 'admin')) {
       next();
     } else {
-      res.status(401).send("No autorizado");
+      res.redirect("/");
     }
   };
 }

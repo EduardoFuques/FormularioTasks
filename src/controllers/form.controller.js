@@ -63,65 +63,11 @@ export const renderForm = async (req, res) => {
   }
 };
 
-export const renderFormem = async (req, res) => {
-  try {
-    const userID = req.session.passport.user;
-    const { tipoDoc, usuario, nombre, apellido, email, codigoRepa } = req.user;
-    const usuarioEncontrado = await Form.findOne({ usuario }).lean();
-    if (!usuarioEncontrado) {
-      const datos = {
-        userID,
-        tipoDoc,
-        usuario,
-        nombre,
-        apellido,
-        email,
-      };
-      const editar = false;
-      res.render("editEmpresa", {
-        datos: datos,
-        codigoRepa: codigoRepa,
-        editar: editar,
-      });
-    } else {
-      const datos = usuarioEncontrado;
-      const medios = [];
-      const areaDesem = [];
-      const areaCompl = [];
-      for (let i = 0; i < datos.medios.length; i++) {
-        medios.push(datos.medios[i]);
-      }
-      for (let i = 0; i < datos.areaDes.length; i++) {
-        areaDesem.push(datos.areaDes[i]);
-      }
-      for (let i = 0; i < datos.areaComp.length; i++) {
-        areaCompl.push(datos.areaComp[i]);
-      }
-      const editar = true;
-      const calle = datos.domicilio[0].calle.toString();
-      res.render("editEmpresa", {
-        datos: datos,
-        codigoRepa: codigoRepa,
-        domicilio: datos.domicilio[0],
-        calle: calle,
-        telefono: datos.telefono[0],
-        medios: medios,
-        areaDesem: areaDesem,
-        areaCompl: areaCompl,
-        editar: editar,
-      });
-    }
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-
 export const captureForm = async (req, res) => {
   try {
     const {
       cuil,
       sexo,
-      perJuridica,
       sitAfip,
       telFijo,
       movilPpal,
@@ -148,7 +94,6 @@ export const captureForm = async (req, res) => {
       sexo, //ok
       sitAfip, //ok
       sitIaavim: true,
-      perJuridica, //ok
       domicilio: {
         calle: calle, //ok
         numero: numero, //ok
@@ -181,7 +126,6 @@ export const captureEditForm = async (req, res) => {
     const {
       cuil,
       sexo,
-      perJuridica,
       sitAfip,
       telFijo,
       movilPpal,
@@ -202,7 +146,6 @@ export const captureEditForm = async (req, res) => {
       cuil, //ok
       sexo, //ok
       sitAfip, //ok
-      perJuridica,
       domicilio: {
         calle: calle, //ok
         numero: numero, //ok
@@ -297,7 +240,6 @@ export const renderPDF = async (req, res) => {
           const tipoDocField = form.getField("TipoDoc");
           const numDocField = form.getField("NumDoc");
           const cuilField = form.getField("Cuil");
-          const perJurField = form.getField("PerJur");
           const sitAfipField = form.getField("SitAfip");
           const codRepaField = form.getField("CodRepa");
           const fijoField = form.getField("Fijo");
@@ -327,7 +269,6 @@ export const renderPDF = async (req, res) => {
           tipoDocField.setText(datos.tipoDoc.toString());
           numDocField.setText(datos.usuario.toString());
           cuilField.setText(datos.cuil.toString());
-          perJurField.setText(datos.perJuridica ? "Sí" : "No");
           sitAfipField.setText(datos.sitAfip.toString());
           codRepaField.setText(codigoRepa.toString());
           fijoField.setText(telefono.fijo.toString());

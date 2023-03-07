@@ -36,7 +36,8 @@ const formSchema = new Schema(
     medios: [{ type: String }],
     areaDes: [{ type: String }],
     areaComp: [{ type: String }],
-    cv: {type: String}
+    razonSocial: {type: String},
+    nombreFantasia: {type: String},
   },
   {
     timestamps: true,

@@ -33,6 +33,7 @@ export const signUpUser = async (req, res) => {
       usuario,
       email,
       password,
+      opcionPerJur,
       confirm_password,
     } = req.body;
     const codigoRepa = await codRepa()
@@ -42,7 +43,12 @@ export const signUpUser = async (req, res) => {
     fs.mkdirSync(userDirectory, { recursive: true });
 
     const user = { opcion, nombre, apellido, usuario, email };
-    const rol = "normal";
+    
+    let rol = "normal"
+
+    if (opcionPerJur === "SI") {
+      rol = "perJur"
+    }
     const emailUser = await User.findOne({ email: email });
     const dniUser = await User.findOne({ usuario: usuario });
     if (dniUser) {
@@ -87,15 +93,21 @@ export const signUpUser = async (req, res) => {
 
 export const renderSignIn = (req, res) => {
   if (req.isAuthenticated()) {
-    res.redirect("/form");
+    const { rol } = req.user;
+    if (rol === "perJur") {
+      return res.redirect("/formEm");
+    }
+    // Si el rol es normal o no se encuentra rol, redirigir a /form
+    return res.redirect("/form");
   }
   res.render("ingreso");
 };
 
+
 export const autenticacion = passport.authenticate("login", {
   failureRedirect: "/",
-  successRedirect: "/form",
   failureFlash: true,
+  successRedirect: "/formEm", // Ruta por defecto si no se encuentra rol o rol = normal
 });
 
 

@@ -30,7 +30,7 @@
     </div>
 {{!-- Fila 2 - Tipo doc, doc, email --}}
     <div class="row g-3 mb-4 ">
-      <div class="col-sm-3 was-validated form-floating">
+      <div class="col-sm-2 was-validated form-floating">
         <select name="opcion" id="slctDoc" class="form-select" required>
           <option value="" selected disabled hidden>Seleccione</option>
           <option value="DNI">Documento Nacional de Identidad</option>
@@ -44,11 +44,20 @@
         <input type="text" name="usuario" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 bg-white text-dark" value="{{user.usuario}}" onkeyup="this.value=Numeros(this.value)" required>
         <label for="floatingInput">Número de DNI</label>
       </div>
-      <div class="col-sm was-validated form-floating">
+      <div class="col-sm-5 was-validated form-floating">
         <input type="email" name="email" placeholder="Correo electrónico" class="form-control rounded-0 bg-white text-dark" value="{{user.email}}" required>
         <label for="floatingInput">Correo electrónico</label>
       </div>
+      <div class="col-sm-2 was-validated form-floating">
+        <select name="opcionPerJur" id="slctPerJur" class="form-select" required>
+          <option value="" selected disabled hidden>Seleccione</option>
+          <option value="SI">Si</option>
+          <option value="NO">No</option>
+        </select>
+        <label for="floatingSelect">Personería Jurídica</label>
+      </div>
     </div>
+    
 {{!-- Fila 3 - contraseña --}}
     <div class="row g-3 mb-4">
       <div class="col-sm was-validated form-floating">
@@ -69,7 +78,7 @@
   function NombreMayus(string){//solo letras y numeros
     var out = '';
     //Se añaden las letras validas
-    var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ';//Caracteres validos
+    var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ ';//Caracteres validos
 	
     for (var i=0; i<string.length; i++)
        if (filtro.indexOf(string.charAt(i)) != -1) 

@@ -55,15 +55,14 @@ passport.use(
   )
 );
 
+// Redirigir a /formEm si el rol es perJur
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    user.role=user.rol
-    done(err, user);
-  });
+passport.deserializeUser(async (id, done) => {
+  const user = await User.findById(id);
+  done(null, user);
 });
 
 export default passport;

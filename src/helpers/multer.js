@@ -50,3 +50,8 @@ export const uploadFile = multer(options).fields([
   { name: "cvFile", maxCount: 1 },
   { name: "dniFile", maxCount: 1 },
 ]);
+
+export const uploadFileEm = multer(options).fields([
+  { name: "estatutoFile", maxCount: 1 },
+  { name: "dniFile", maxCount: 1 },
+]);
