@@ -14,3 +14,19 @@ export const getNextSequenceValue = async function (counterId) {
   );
   return result.seq;
 }
+
+const counterSchemaPJ = new Schema({
+  _id: { type: String, required: true },
+  seq: { type: Number, default: 0 },
+});
+
+const CounterPJ = model("CounterPJ", counterSchemaPJ);
+
+export const getNextSequenceValuePJ = async function (counterId) {
+  const result = await CounterPJ.findOneAndUpdate(
+    { _id: counterId },
+    { $inc: { seq: 1 } },
+    { new: true, upsert: true }
+  );
+  return result.seq;
+};

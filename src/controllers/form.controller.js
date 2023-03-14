@@ -1,5 +1,4 @@
 import Form from "../models/Formulario";
-import os from "os";
 import { PDFDocument } from "pdf-lib";
 import fs from "fs";
 import path from "path";
@@ -24,11 +23,13 @@ export const renderForm = async (req, res) => {
         apellido,
         email,
       };
+      const perJur = false;
       const editar = false;
       res.render("index", {
         datos: datos,
         codigoRepa: codigoRepa,
         editar: editar,
+        perJur: perJur,
       });
     } else {
       const datos = usuarioEncontrado;
@@ -45,6 +46,7 @@ export const renderForm = async (req, res) => {
         areaCompl.push(datos.areaComp[i]);
       }
       const editar = true;
+      const perJur = false;
       const calle = datos.domicilio[0].calle.toString();
       res.render("edit", {
         datos: datos,
@@ -56,6 +58,7 @@ export const renderForm = async (req, res) => {
         areaDesem: areaDesem,
         areaCompl: areaCompl,
         editar: editar,
+        perJur: perJur,
       });
     }
   } catch (error) {
@@ -101,8 +104,6 @@ export const captureForm = async (req, res) => {
         depto: dpto, //ok
         localidad: localidad,
         cp: cp, //ok
-        //departamento,
-        //distrito
       }, //ok
       telefono: {
         fijo: telFijo,
@@ -114,7 +115,6 @@ export const captureForm = async (req, res) => {
       areaComp, //ok
     });
     await newForm.save();
-    //console.log(newForm)
     res.render("pantalla-ok");
   } catch (error) {
     console.log(error.message);
@@ -232,7 +232,7 @@ export const renderPDF = async (req, res) => {
       const doc = async () => {
         try {
           // Cargar el archivo PDF
-          const pdfData = fs.readFileSync("formulario2.pdf");
+          const pdfData = fs.readFileSync("PDF_PF_FORM.pdf");
           const pdfDoc = await PDFDocument.load(pdfData);
           const form = pdfDoc.getForm();
           const nombresField = form.getField("Nombres");
@@ -264,35 +264,35 @@ export const renderPDF = async (req, res) => {
           const medio3Field = form.getField("Medio3");
           const areaDes2Field = form.getField("AreaDes2");
           const areaDes1Field = form.getField("AreaDes1");
-          nombresField.setText(datos.nombre.toString());
-          apellidoField.setText(datos.apellido.toString());
-          tipoDocField.setText(datos.tipoDoc.toString());
-          numDocField.setText(datos.usuario.toString());
-          cuilField.setText(datos.cuil.toString());
-          sitAfipField.setText(datos.sitAfip.toString());
+          nombresField.setText("  " + datos.nombre.toString());
+          apellidoField.setText("  " + datos.apellido.toString());
+          tipoDocField.setText("  " + datos.tipoDoc.toString());
+          numDocField.setText("  " + datos.usuario.toString());
+          cuilField.setText("  " + datos.cuil.toString());
+          sitAfipField.setText("  " + datos.sitAfip.toString());
           codRepaField.setText(codigoRepa.toString());
-          fijoField.setText(telefono.fijo.toString());
-          movilField.setText(telefono.movil.toString());
-          movilAltField.setText(telefono.alternativo.toString());
-          emailField.setText(datos.email.toString());
-          sexoField.setText(datos.sexo.toString());
-          cpField.setText(domicilio.cp.toString());
-          departamentoField.setText(localidadOpc.opciones.Departamento);
-          distritoField.setText(localidadOpc.opciones.Distrito);
-          calleField.setText(calle.toString());
-          numeroField.setText(domicilio.numero.toString());
-          pisoField.setText(domicilio.piso.toString());
-          deptoField.setText(domicilio.depto.toString());
-          areaComp1Field.setText(areaCompl[0] ?? "");
-          areaComp2Field.setText(areaCompl[1] ?? "");
-          areaComp3Field.setText(areaCompl[2] ?? "");
-          medio1Field.setText(medios[0] ?? "");
-          medio2Field.setText(medios[1] ?? "");
-          medio3Field.setText(medios[2] ?? "");
-          areaDes1Field.setText(areaDesem[0] ?? " ");
-          areaDes2Field.setText(areaDesem[1] ?? " ");
-          areaDes3Field.setText(areaDesem[2] ?? " ");
-          localidadField.setText(nombreLocalidad);
+          fijoField.setText("  " + telefono.fijo.toString());
+          movilField.setText("  " + telefono.movil.toString());
+          movilAltField.setText("  " + telefono.alternativo.toString());
+          emailField.setText("  " + datos.email.toString());
+          sexoField.setText("  " + datos.sexo.toString());
+          cpField.setText("  " + domicilio.cp.toString());
+          departamentoField.setText("  " + localidadOpc.opciones.Departamento);
+          distritoField.setText("  " + localidadOpc.opciones.Distrito);
+          calleField.setText("  " + calle.toString());
+          numeroField.setText("  " + domicilio.numero.toString());
+          pisoField.setText("  " + domicilio.piso.toString());
+          deptoField.setText("  " + domicilio.depto.toString());
+          areaComp1Field.setText("  " + (areaCompl[0] ?? ""));
+          areaComp2Field.setText("  " + (areaCompl[1] ?? ""));
+          areaComp3Field.setText("  " + (areaCompl[2] ?? ""));
+          medio1Field.setText("  " + (medios[0] ?? ""));
+          medio2Field.setText("  " + (medios[1] ?? ""));
+          medio3Field.setText("  " + (medios[2] ?? ""));
+          areaDes1Field.setText("  " + (areaDesem[0] ?? " "));
+          areaDes2Field.setText("  " + (areaDesem[1] ?? " "));
+          areaDes3Field.setText("  " + (areaDesem[2] ?? " "));
+          localidadField.setText("  " + nombreLocalidad);
 
           form.flatten();
 
@@ -304,7 +304,7 @@ export const renderPDF = async (req, res) => {
             codigoRepa,
             "temp",
             `formulario-${codigoRepa}-REPA.pdf`
-          );          
+          );
           const pdfBytes = await pdfDoc.save();
           fs.writeFileSync(tempFilePath, pdfBytes);
 

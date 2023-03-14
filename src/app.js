@@ -17,14 +17,26 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 
 const exphbs = create({
+  // Configura la ruta para los diseños y fragmentos
   layoutsDir: path.join(app.get("views"), "layouts"),
   partialsDir: path.join(app.get("views"), "partials"),
+  // Configura la extensión de los archivos de plantilla
   extname: ".hbs",
+  // Configura el diseño predeterminado
   defaultLayout: "main",
+  // Agrega funciones auxiliares personalizadas
+  helpers: {
+    // Esta función ayuda a comparar dos valores
+    eq: function (a, b) {
+      return a === b;
+    },
+  },
 });
 
+// Configura Handlebars como el motor de plantillas
 app.engine(".hbs", exphbs.engine);
 app.set("view engine", ".hbs");
+
 
 
 //midlewares
