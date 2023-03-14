@@ -63,12 +63,30 @@
           {{/unless}}
           {{#if user}}
             {{#if editar}}
-              <li class="dropdown-item">
-                <a class="nav-link" href="/pdf">Descargar formulario de registro</a>
-              </li>
+              {{#if perJur}}
+                <li class="dropdown-item">
+                  <a class="nav-link" href="/pdfEm">Descargar formulario de
+                    registro</a>
+                </li>
+              {{else}}
+                <li class="dropdown-item">
+                  <a class="nav-link" href="/pdf">Descargar formulario de
+                    registro</a>
+                </li>
+              {{/if}}
             {{/if}}
 
           {{/if}}
+          <li>
+            <hr class="" />
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              href="/nomenclador_iaavim.pdf"
+              download
+            >Nomenclador IAAviM</a>
+          </li>
           <li>
             <hr class="" />
           </li>

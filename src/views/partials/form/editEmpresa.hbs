@@ -9,6 +9,40 @@
         </div>
       </div>
     </div>
+    {{!-- Fila 1 - Nombre Empresa - Nombre Fantasia --}}
+    <div class="row g-3 mb-4">
+      {{!-- Nombre Empresa --}}
+      <div class="col-sm-6 was-validated form-floating">
+        <input type="text" name="nombreEmpresa" placeholder="nombreEmpresa" id="nombreEmpresa" class="form-control" required/>
+        <label for="floatingInput">Nombre de la Empresa</label>
+      </div>
+      {{!-- marca o nombre de fantasia --}}
+      <div class="col-sm was-validated form-floating">
+        <input name="nombreFantasia" type="text" class="form-control" id="nombreFantasia" value={{datos.nombreFantasia}} placeholder="nombreFantasia" aria-label="Number" required>
+        <label for="floatingInput">Nombre de fantasía</label>
+      </div>
+    </div>
+    {{!-- Fila 2 - Razon Social - CUIT --}}
+    <div class="row g-3 mb-4">
+      {{!-- Razon social --}}
+      <div class="col-sm-6 was-validated form-floating">
+        <input name="razonSocial" type="text" class="form-control" id="razonSocial" placeholder="razonSocial" aria-label="Street" value="{{datos.razonSocial}}" required>
+        <label for="floatingInput">Razon Social</label>
+      </div>
+      {{!-- cuil --}}
+      <div class="col-sm  was-validated form-floating">
+        <input name="cuil" type="text" class="form-control item" id="cuil" placeholder="Número cuit/cuil" value={{datos.cuil}} onkeyup="NumeroCuil(event, this)" maxlength="13" pattern="\d{2}-\d{8}-\d{1}" required >
+        <label for="floatingInput">Número cuit/cuil</label>
+      </div>
+      {{!-- Situación AFIP --}}
+      <div class="col-sm  was-validated form-floating">
+        <select name="sitAfip" id="slctSitAfip" class="form-select" required>
+          <option value="" disabled hidden selected>Seleccione</option>
+        </select>
+        <label for="floatingSelect">Situación AFIP</label>
+      </div>
+    </div>
+
     {{!-- Fila 1 - Apellido y nombre --}}
     <div class="row g-3 mb-4">
       {{!-- Apellido --}}
@@ -135,31 +169,7 @@
         <label for="floatingInput">Dpto</label>
       </div>
     </div>
-    {{!-- Fila 8 - Razon Social, Nombre o Marca, cuit, afip --}}
-    <div class="row g-3 mb-4">
-      {{!-- Razon social --}}
-      <div class="col-sm-4 was-validated form-floating">
-        <input name="razonSocial" type="text" class="form-control" id="razonSocial" placeholder="razonSocial" aria-label="Street" value="{{datos.razonSocial}}" required>
-        <label for="floatingInput">Razon Social</label>
-      </div>
-      {{!-- marca o nombre de fantasia --}}
-      <div class="col-sm-4 was-validated form-floating">
-        <input name="nombreFantasia" type="text" class="form-control" id="nombreFantasia" value={{datos.nombreFantasia}} placeholder="nombreFantasia" aria-label="Number" required>
-        <label for="floatingInput">Nombre de fantasía</label>
-      </div>
-       {{!-- cuil --}}
-      <div class="col-sm  was-validated form-floating">
-        <input name="cuil" type="text" class="form-control item" id="cuil" placeholder="Número cuit/cuil" value={{datos.cuil}} onkeyup="NumeroCuil(event, this)" maxlength="13" pattern="\d{2}-\d{8}-\d{1}" required >
-        <label for="floatingInput">Número cuit/cuil</label>
-      </div>
-      {{!-- Situación AFIP --}}
-      <div class="col-sm  was-validated form-floating">
-        <select name="sitAfip" id="slctSitAfip" class="form-select" required>
-          <option value="" disabled hidden selected>Seleccione</option>
-        </select>
-        <label for="floatingSelect">Situación AFIP</label>
-      </div>
-    </div>
+    
 
 
 
@@ -931,6 +941,7 @@
 
   function setearOpciones() {
     document.getElementById("calle").value = `{{calle}}`;
+    document.getElementById("nombreEmpresa").value = `{{nombreEmpresa}}`;
     document.getElementById("slctSexo").value = `{{datos.sexo}}`;
     document.getElementById("slctSitAfip").value = `{{datos.sitAfip}}`
     document.getElementById("slctMunicipios").value = `{{domicilio.localidad}}`

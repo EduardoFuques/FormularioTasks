@@ -1,7 +1,8 @@
 import User from "../models/Usuarios";
+import { adminPJ } from "../controllers/admin.controller";
 import { isCorrectPassword } from "../models/Usuarios";
 import passport from "../config/passport";
-import { getNextSequenceValue } from "../models/Contador";
+import { getNextSequenceValue, getNextSequenceValuePJ } from "../models/Contador";
 import fs from "fs";
 import path from "path";
 
@@ -9,19 +10,23 @@ export const renderSignUp = async (req, res) => {
   res.render("registro");
 };
 
-async function codRepa() {
+async function codRepa(opcionPerJur) {
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const seq = await getNextSequenceValue('codigoRepa');
+  let seq;
+  if (opcionPerJur === "SI") {
+    seq = await getNextSequenceValuePJ('codigoRepaPJ');
+  } else {
+    seq = await getNextSequenceValue('codigoRepa');
+  }
   const letter1Index = Math.floor(seq / 26000);
   const letter1 = letters[letter1Index];
   const letter2Index = Math.floor(seq / 100) % 26;
   const letter2 = letters[letter2Index];
   const number1 = Math.floor(seq / 10) % 10;
   const number2 = seq % 10;
-  const codigoRepa = `${letter1}${letter2}${number1}${number2}`;
+  const codigoRepa = opcionPerJur === "SI" ? `PJ${number1}${number2}` : `${letter1}${letter2}${number1}${number2}`;
   return codigoRepa
 }
-
 
 export const signUpUser = async (req, res) => {
   try {
@@ -36,7 +41,7 @@ export const signUpUser = async (req, res) => {
       opcionPerJur,
       confirm_password,
     } = req.body;
-    const codigoRepa = await codRepa()
+    const codigoRepa = await codRepa(opcionPerJur);
 
     // Create directory for the user on the server
     const userDirectory = path.join(__dirname, "..", "files", codigoRepa);
@@ -91,7 +96,7 @@ export const signUpUser = async (req, res) => {
   }
 };
 
-export const renderSignIn = (req, res) => {
+export const renderSignIn = async (req, res) => {
   if (req.isAuthenticated()) {
     const { rol } = req.user;
     if (rol === "perJur") {
@@ -103,13 +108,11 @@ export const renderSignIn = (req, res) => {
   res.render("ingreso");
 };
 
-
 export const autenticacion = passport.authenticate("login", {
   failureRedirect: "/",
   failureFlash: true,
   successRedirect: "/formEm", // Ruta por defecto si no se encuentra rol o rol = normal
 });
-
 
 // Controlador para logout
 export const logOut = function (req, res, next) {
@@ -147,3 +150,4 @@ export function deleteTempDir(tempDir, callback) {
     callback();
   });
 }
+

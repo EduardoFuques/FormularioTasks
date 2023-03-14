@@ -801,3 +801,57 @@ export const domiciliosOpc = [
     },
   },
 ];
+
+export const headers = [
+  "Código REPA",
+  "Tipo de documento",
+  "Número de documento",
+  "Nombre",
+  "Apellido",
+  "CUIL",
+  "Género",
+  "Correo electrónico",
+  "Situación AFIP",
+  "Situación IAAViM",
+  "Localidad",
+  "Distrito",
+  "Departamento",
+  "Código Postal",
+  "Calle",
+  "Piso",
+  "Número",
+  "Departamento",
+  "Teléfono fijo",
+  "Teléfono móvil",
+  "Móvil alternativo",
+  "Medios",
+  "Area Desempeño",
+  "Area Complementaria",
+];
+
+export const columnasPerFis =[
+  { header: "Código Repa", key: "codigoRepa" },
+  { header: "Nombre", key: "nombre" },
+  { header: "Apellido", key: "apellido" },
+  { header: "Tipo Doc", key: "tipoDoc" },
+  { header: "Documento", key: "usuario" },
+  { header: "CUIL", key: "cuil" },
+  { header: "Género", key: "sexo" },
+  { header: "Email", key: "email" },
+  { header: "Sit. AFIP", key: "sitAfip" },
+  { header: "Sit. Iaavim", key: "sitIaavim" },
+  { header: "Localidad", key: "localidad" },
+  { header: "Distrito", key: "distrito" },
+  { header: "Departamento", key: "departamento" },
+  { header: "Domicilio", key: "domicilio" },
+  { header: "Teléfono", key: "telefono" },
+  { header: "Medios", key: "medios", getRowHeight: (value, row) => getMediosCellHeight(value) },
+  { header: "Área Desempeño", key: "areaDes", getRowHeight: (value, row) => getMediosCellHeight(value) },
+  { header: "Área Competencia", key: "areaComp", getRowHeight: (value, row) => getMediosCellHeight(value) },
+]
+
+function getMediosCellHeight(value) {
+  const medios = value.split("\n");
+  console.log(medios.length)
+  return medios.length;
+}

@@ -17,3 +17,7 @@ src/tmp
 
 # Files
 src/files
+
+# XLS
+datos.xlsx
+PerFis.xls

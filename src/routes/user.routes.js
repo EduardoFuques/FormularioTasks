@@ -1,5 +1,4 @@
 import { Router } from "express";
-
 import {
   renderSignIn,
   renderSignUp,
@@ -19,6 +18,6 @@ router.get("/", renderSignIn);
 
 router.post("/", autenticacion);
 
-router.get("/logout", helpers.isAuthenticated, logOut)
+router.get("/logout", helpers.isAuthenticated, logOut);
 
 export default router;

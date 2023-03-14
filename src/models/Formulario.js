@@ -38,6 +38,7 @@ const formSchema = new Schema(
     areaComp: [{ type: String }],
     razonSocial: {type: String},
     nombreFantasia: {type: String},
+    nombreEmpresa: {type: String},
   },
   {
     timestamps: true,

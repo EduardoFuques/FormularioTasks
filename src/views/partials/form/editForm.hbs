@@ -219,6 +219,7 @@
       Enviar Formulario
     </button>
   </form>
+
   <pre>
 
   </pre> 
@@ -1161,7 +1162,6 @@ function NumeroCuil(event, el){//Validar nombre
   function setearOpciones() {
     document.getElementById("calle").value = `{{calle}}`;
     document.getElementById("slctSexo").value = `{{datos.sexo}}`;
-    document.getElementById("slctPerJur").value = `{{datos.perJuridica}}`;
     document.getElementById("slctSitAfip").value = `{{datos.sitAfip}}`
     document.getElementById("slctMunicipios").value = `{{domicilio.localidad}}`
     const slctdepartamento = document.querySelector('.slctDepartamentos');
@@ -1181,7 +1181,7 @@ function NumeroCuil(event, el){//Validar nombre
     let areadesscontrola = areadescontrols.split(",")
     let areadescontrol = areadesscontrola.map(str => parseInt(str));
     for (let i = 0; i < areadescontrol.length; i++) {
-      selectorAreaDes.options[(areadescontrol[i]+1)].selected = true
+      selectorAreaDes.options[(areadescontrol[i])].selected = true
     }
     const selectorAreaComp = document.getElementById("slctAreaComp")
     let areacompcontrols =`{{areaCompl}}`
