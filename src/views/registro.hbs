@@ -3,7 +3,7 @@
 {{!-- Banner superior --}}
   <div class="row justify-content-center">
     <div class="col-md-6">
-      <div class="alert alert-success" role="alert">
+      <div class="alert alert-danger" role="alert">
         Si aun no te registraste al sistema iniciar aqui !
       </div>
     </div>
@@ -11,7 +11,7 @@
 {{!-- Header --}}
   <div class="row g-3 mb-4">
     <div class="col-sm-12">
-      <div class="card text-bg-dark mb-3 align-items-center">
+      <div class="card text-bg-secondary mb-3 align-items-center">
         <div class="card-header"> <h3>Registro al RePA</h3></div>
       </div>
     </div>
@@ -20,11 +20,11 @@
 {{!-- Fila 1 - Nombre y Apellido --}}
     <div class="row g-3 mb-4">
       <div class="col-sm was-validated form-floating">
-        <input type="text" name="nombre" placeholder="Nombres" class="form-control rounded-0 bg-white text-dark" value="{{user.nombre}}" onkeyup="this.value=NombreMayus(this.value)" required>
+        <input type="text" name="nombre" placeholder="Nombres" class="form-control rounded-0 text-dark" value="{{user.nombre}}" onkeyup="this.value=NombreMayus(this.value)" required>
         <label for="floatingInput">Nombres</label>
       </div>
       <div class="col-sm was-validated form-floating">
-        <input type="text" name="apellido" placeholder="Apellido" class="form-control rounded-0 bg-white text-dark" value="{{user.apellido}}" onkeyup="this.value=NombreMayus(this.value)" required>
+        <input type="text" name="apellido" placeholder="Apellido" class="form-control rounded-0 text-dark" value="{{user.apellido}}" onkeyup="this.value=NombreMayus(this.value)" required>
         <label for="floatingInput">Apellido</label>
       </div>
     </div>
@@ -41,11 +41,12 @@
         <label for="floatingSelect">Tipo de documento</label>
       </div>
       <div class="col-sm-3 was-validated form-floating">
-        <input type="text" name="usuario" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 bg-white text-dark" value="{{user.usuario}}" onkeyup="this.value=Numeros(this.value)" required>
+        <input type="text" name="usuario" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 text-dark" value="{{user.usuario}}" onkeyup="this.value=Numeros(this.value)" required>
         <label for="floatingInput">Número de DNI</label>
       </div>
+
       <div class="col-sm-5 was-validated form-floating">
-        <input type="email" name="email" placeholder="Correo electrónico" class="form-control rounded-0 bg-white text-dark" value="{{user.email}}" required>
+        <input type="email" name="email" placeholder="Correo electrónico" class="form-control rounded-0 text-dark" value="{{user.email}}" required>
         <label for="floatingInput">Correo electrónico</label>
       </div>
       <div class="col-sm-2 was-validated form-floating">
@@ -61,16 +62,16 @@
 {{!-- Fila 3 - contraseña --}}
     <div class="row g-3 mb-4">
       <div class="col-sm was-validated form-floating">
-        <input type="password" name="password" placeholder="Contraseña" minlength="4" class="form-control rounded-0 bg-white text-dark" required>
+        <input type="password" name="password" placeholder="Contraseña" minlength="4" class="form-control rounded-0 text-dark" required>
         <label for="floatingInput">Contraseña</label>
       </div>
       <div class="col-sm was-validated form-floating">
-        <input type="password" name="confirm_password" placeholder="Cargar contraseña nuevamente" minlength="4" class="form-control rounded-0 bg-white text-dark" required>
+        <input type="password" name="confirm_password" placeholder="Cargar contraseña nuevamente" minlength="4" class="form-control rounded-0 text-dark" required>
         <label for="floatingInput">Cargar contraseña nuevamente</label>
       </div>
     </div>
     <pre></pre>
-    <button class="btn btn-dark">Registrarse</button>
+    <button class="btn btn-secondary">Registrarse</button>
   </form>
 </div>
 
