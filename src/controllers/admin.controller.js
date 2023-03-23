@@ -7,10 +7,8 @@ import {
 } from "../helpers/arrays";
 import Form from "../models/Formulario";
 import User from "../models/Usuarios";
-import XlsxPopulate from "xlsx-populate";
 import ExcelJS from "exceljs";
-import { headers } from "../helpers/arrays";
-import XLSX from "xlsx";
+
 
 export const adminPJ = async (req, res) => {
   const usuarios = await User.find(
