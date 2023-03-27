@@ -34,6 +34,8 @@ const userSchema = new Schema(
       required: true,
     },
     codigoRepa: { type: String },
+    resetPasswordToken: { type: String},
+    resetPasswordExpiration: {type: String},
   },
   {
     timestamps: true,
