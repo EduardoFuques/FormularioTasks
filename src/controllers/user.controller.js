@@ -112,6 +112,8 @@ export const renderSignIn = async (req, res) => {
     const { rol } = req.user;
     if (rol === "perJur") {
       return res.redirect("/formEm");
+    } else if (rol === "admin") {
+      return res.redirect("/administracion");
     }
     // Si el rol es normal o no se encuentra rol, redirigir a /form
     return res.redirect("/form");

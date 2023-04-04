@@ -829,6 +829,32 @@ export const headers = [
   "Area Complementaria",
 ];
 
+export const columnasPerJur = [
+  { header: "Código Repa", key: "codigoRepa" },
+  { header: "Razón Social", key: "razonSocial" },
+  { header: "Nombre de Fantasía", key: "nombreFantasia" },
+  { header: "CUIL", key: "cuil" },
+  { header: "Nombre", key: "nombre" },
+  { header: "Apellido", key: "apellido" },
+  { header: "Tipo Doc", key: "tipoDoc" },
+  { header: "Documento", key: "usuario" },
+  { header: "Género", key: "sexo" },
+  { header: "Email", key: "email" },
+  { header: "Sit. AFIP", key: "sitAfip" },
+  { header: "Sit. Iaavim", key: "sitIaavim" },
+  { header: "Localidad", key: "localidad" },
+  { header: "Distrito", key: "distrito" },
+  { header: "Departamento", key: "departamento" },
+  { header: "Calle", key: "calle" },
+  { header: "Número", key: "numero" },
+  { header: "Piso", key: "piso" },
+  { header: "Depto", key: "depto" },
+  { header: "Código postal", key: "cp" },
+  { header: "Fijo", key: "fijo" },
+  { header: "Móvil", key: "movil" },
+  { header: "Móvil alternativo", key: "movilAlt" },
+]
+
 export const columnasPerFis =[
   { header: "Código Repa", key: "codigoRepa" },
   { header: "Nombre", key: "nombre" },
@@ -843,15 +869,21 @@ export const columnasPerFis =[
   { header: "Localidad", key: "localidad" },
   { header: "Distrito", key: "distrito" },
   { header: "Departamento", key: "departamento" },
-  { header: "Domicilio", key: "domicilio" },
-  { header: "Teléfono", key: "telefono" },
-  { header: "Medios", key: "medios", getRowHeight: (value, row) => getMediosCellHeight(value) },
-  { header: "Área Desempeño", key: "areaDes", getRowHeight: (value, row) => getMediosCellHeight(value) },
-  { header: "Área Competencia", key: "areaComp", getRowHeight: (value, row) => getMediosCellHeight(value) },
+  { header: "Calle", key: "calle" },
+  { header: "Número", key: "numero" },
+  { header: "Piso", key: "piso" },
+  { header: "Depto", key: "depto" },
+  { header: "Código postal", key: "cp" },
+  { header: "Fijo", key: "fijo" },
+  { header: "Móvil", key: "movil" },
+  { header: "Móvil alternativo", key: "movilAlt" },
+  { header: "Medio 1", key: "medio1"},
+  { header: "Medio 2", key: "medio2"},
+  { header: "Medio 3", key: "medio3"},
+  { header: "Área Desempeño 1", key: "areaDes1"},
+  { header: "Área Desempeño 2", key: "areaDes2"},
+  { header: "Área Desempeño 3", key: "areaDes3"},
+  { header: "Área Complementaria 1", key: "areaComp1"},
+  { header: "Área Complementaria 2", key: "areaComp2"},
+  { header: "Área Complementaria 3", key: "areaComp3"},
 ]
-
-function getMediosCellHeight(value) {
-  const medios = value.split("\n");
-  console.log(medios.length)
-  return medios.length;
-}

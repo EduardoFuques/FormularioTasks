@@ -6,7 +6,7 @@ import {
   captureEditForm,
   renderPDF,
 } from "../controllers/form.controller";
-import { adminPF, adminPJ } from "../controllers/admin.controller";
+import { adminPF, adminPJ, renderAdmin } from "../controllers/admin.controller";
 import helpers from "../helpers/auth";
 import { uploadFile, uploadFileEm } from "../helpers/multer";
 import { verifyRole } from "../helpers/roles";
@@ -33,8 +33,10 @@ router.post("/editEm", helpers.isAuthenticated, verifyRole('perJur'), uploadFile
 router.get("/pdfEm", helpers.isAuthenticated, verifyRole('perJur'), renderPDFEm);
 
 // ADMINISTRACION
-//router.get("/administracion/PJ", adminPJ);
+router.get("/administracion", verifyRole('admin'), renderAdmin)
 
-//router.get("/administracion/PF", adminPF);
+router.post("/administracion/PJ", verifyRole('admin'), adminPJ);
+
+router.post("/administracion/PF", verifyRole('admin'), adminPF);
 
 export default router;
