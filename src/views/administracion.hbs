@@ -1,79 +1,22 @@
-<html>
-  <head>
-    <title>Pestañas de Usuario</title>
-    <style>
-
-      table { border-collapse: collapse; width: 100%; } td, th { border: 1px
-      solid black; padding: 8px; text-align: left; }
-    </style>
-  </head>
-  <body>
-
-    <div id="perJur" class="tabcontent">
-      <h3>Personas Jurídicas</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Código REPA</th>
-            <th>Razón Social</th>
-            <th>Nombre de Fantasía</th>
-            <th>Tipo de documento</th>
-            <th>Número de documento</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>CUIL</th>
-            <th>Género</th>
-            <th>Correo electrónico</th>
-            <th>Situación AFIP</th>
-            <th>Situación IAAViM</th>
-            <th>Localidad</th>
-            <th>Distrito</th>
-            <th>Departamento</th>
-            <th>Código Postal</th>
-            <th>Calle</th>
-            <th>Piso</th>
-            <th>Número</th>
-            <th>Departamento</th>
-            <th>Teléfono fijo</th>
-            <th>Teléfono móvil</th>
-            <th>Móvil alternativo</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each usuariosConDatitos}}
-            {{#if (eq this.rol "perJur")}}
-              <tr>
-                <td>{{this.codigoRepa}}</td>
-                <td>{{this.razonSocial}}</td>
-                <td>{{this.nombreFantasia}}</td>
-                <td>{{this.tipoDoc}}</td>
-                <td>{{this.usuario}}</td>
-                <td>{{this.nombre}}</td>
-                <td>{{this.apellido}}</td>
-                <td>{{this.cuil}}</td>
-                <td>{{this.sexo}}</td>
-                <td>{{this.email}}</td>
-                <td>{{this.sitAfip}}</td>
-                <td>{{this.sitIaavim}}</td>
-                <td>{{this.localidad}}</td>
-                <td>{{this.distrito}}</td>
-                <td>{{this.departamento}}</td>
-                <td>{{this.domicilio.cp}}</td>
-                <td>{{this.domicilio.calle}}</td>
-                <td>{{this.domicilio.numero}}</td>
-                <td>{{this.domicilio.piso}}</td>
-                <td>{{this.domicilio.depto}}</td>
-                <td>{{this.telefono.fijo}}</td>
-                <td>{{this.telefono.movil}}</td>
-                <td>{{this.telefono.alternativo}}</td>
-              </tr>
-            {{/if}}
-          {{/each}}
-        </tbody>
-      </table>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="row g-3">
+        <div class="col-sm-12">
+          <div class="card text-bg-secondary mb-3 align-items-center">
+            <div class="card-header"> <h3>Bienvenido a la página de administración</h3></div>
+          </div>
+        </div>
+      </div>
+      <p>Descargar planillas de usuarios</p>
+      <div>
+      <form method="post" action="/administracion/PF" style="display: inline-block; margin-right: 10px;">
+        <button class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Planilla de personas físicas">Personas Físicas</button>
+      </form>
+      <form method="post" action="/administracion/PJ" style="display: inline-block;">
+        <button class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Planilla de personas jurídicas">Personas Jurídicas</button>
+      </form>
     </div>
-    <script>
-
-    </script>
-  </body>
-</html>
+    </div>
+  </div>
+</div>
