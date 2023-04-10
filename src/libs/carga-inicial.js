@@ -1,5 +1,5 @@
 import ExcelJS from "exceljs";
-import { signUpUser } from "../controllers/user.controller";
+import { signUpUserApi } from "../controllers/user.controller";
 import User from "../models/Usuarios";
 
 export const cargaInicial = async (req, res) => {
@@ -30,7 +30,7 @@ export const cargaInicial = async (req, res) => {
             return;
           }
     
-          await signUpUser({
+          await signUpUserApi({
             body: {
               opcion: opcion,
               nombre: nombre,
