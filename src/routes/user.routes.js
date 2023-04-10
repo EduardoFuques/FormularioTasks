@@ -11,6 +11,7 @@ import {
   updatePasswordController,
 } from "../controllers/user.controller";
 import helpers from "../helpers/auth";
+import { cargaInicial } from "../libs/carga-inicial";
 
 const router = Router();
 
@@ -31,5 +32,7 @@ router.post("/password", restablecerPassword)
 router.get("/reset-password/:token", resetPasswordController)
 
 router.post("/reset-password/:token", updatePasswordController)
+
+router.get("/carga", cargaInicial)
 
 export default router;

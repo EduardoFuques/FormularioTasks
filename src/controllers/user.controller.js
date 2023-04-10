@@ -272,3 +272,70 @@ export const updatePasswordController = async (req, res) => {
     });
   }
 };
+
+export const signUpUserApi = async (req, res) => {
+  try {
+    const errors = [];
+    const {
+      opcion,
+      nombre,
+      apellido,
+      usuario,
+      email,
+      password,
+      opcionPerJur,
+      confirm_password,
+    } = req.body;
+    const codigoRepa = await codRepa(opcionPerJur);
+
+    // Create directory for the user on the server
+    const userDirectory = path.join(__dirname, "..", "files", codigoRepa);
+    fs.mkdirSync(userDirectory, { recursive: true });
+
+    const user = { opcion, nombre, apellido, usuario, email };
+
+    let rol = "normal";
+
+    if (opcionPerJur === "SI") {
+      rol = "perJur";
+    }
+    const emailUser = await User.findOne({ email: email });
+    const dniUser = await User.findOne({ usuario: usuario });
+    if (dniUser) {
+      errors.push({ text: "El DNI ya ha sido registrado" });
+    }
+    if (opcion === undefined) {
+      errors.push({ text: "Seleccione tipo de documento" });
+    }
+    if (emailUser) {
+      errors.push({ text: "El correo ya está en uso" });
+    }
+    if (password != confirm_password) {
+      errors.push({ text: "Las contraseñas no coinciden" });
+    }
+    if (password.length < 4) {
+      errors.push({ text: "La contraseña debe tener al menos 4 caracteres" });
+    }
+    if (errors.length > 0) {
+      res.render("registro", {
+        errors,
+        user: user,
+      });
+    } else {
+      const tipoDoc = opcion;
+      const newUser = new User({
+        tipoDoc,
+        usuario,
+        password,
+        nombre,
+        apellido,
+        email,
+        rol,
+        codigoRepa,
+      });
+      await newUser.save();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
