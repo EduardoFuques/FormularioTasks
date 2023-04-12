@@ -1,35 +1,31 @@
 export const areasCompOpc = [
   {
-    medio: "Proveedor/a de software y/o hardware",
+    medio: "Actor/actriz con experiencia en realizaciones audiovisuales",
     indice: 0,
   },
   {
-    medio: "Fotografía",
+    medio: "Locutor/a con experiencia en realizaciones audiovisuales",
     indice: 1,
   },
   {
-    medio: "Desarrollador/a de vídeo juegos",
+    medio: "Músico con experiencia en realizaciones audiovisuales",
     indice: 2,
   },
   {
-    medio: "Bailarín/a con experiencia en audiovisuales",
+    medio: "Desarrollador/a de vídeo juegos",
     indice: 3,
   },
   {
-    medio: "Actor/actriz con experiencia en audiovisuales",
+    medio: "Proveedor/a de software y/o hardware",
     indice: 4,
   },
   {
-    medio: "Músico/a con experiencia en audiovisuales",
+    medio: "Bailarín/a con experiencia en audiovisuales",
     indice: 5,
   },
   {
-    medio: "Locutor/a con experiencia en audiovisuales",
+    medio: "Otros",
     indice: 6,
-  },
-  {
-    medio: "Otra Area Complementaria",
-    indice: 7,
   },
 ];
 
@@ -39,123 +35,123 @@ export const areaDesOpc = [
     indice: 0,
   },
   {
-    medio: "Director/a",
+    medio: "Productor Ejecutivo",
     indice: 1,
   },
   {
-    medio: "Director/a de Casting",
+    medio: "Director/a",
     indice: 2,
   },
   {
-    medio: "Director/a de Sonido",
+    medio: "Guionista",
     indice: 3,
   },
   {
-    medio: "Posproductor/a de Imagen",
+    medio: "Realizador/a comunitario",
     indice: 4,
   },
   {
-    medio: "Posproductor/a de Sonido",
+    medio: "Documentalista",
     indice: 5,
   },
   {
-    medio: "Escenógrafo/a",
+    medio: "Realizador/a integral audiovisual",
     indice: 6,
   },
   {
-    medio: "Fotógrafo/a de Filmación",
+    medio: "Asistente de Dirección",
     indice: 7,
   },
   {
-    medio: "Maquillador/a",
+    medio: "Director/a de Arte",
     indice: 8,
   },
   {
-    medio: "Vestuarista",
+    medio: "Dirección de Fotografía",
     indice: 9,
   },
   {
-    medio: "Gaffer",
+    medio: "Asistente de Producción",
     indice: 10,
   },
   {
-    medio: "Doblajista",
+    medio: "Gaffer",
     indice: 11,
   },
   {
-    medio: "Continuista / Script",
+    medio: "Camarógrafo/a",
     indice: 12,
   },
   {
-    medio: "Grip",
+    medio: "Foquista",
     indice: 13,
   },
   {
-    medio: "Microfonista",
+    medio: "Grip",
     indice: 14,
   },
   {
-    medio: "Montajista",
+    medio: "Asistente de Cámara",
     indice: 15,
   },
   {
-    medio: "Productor/a Ejecutivo/a",
+    medio: "Sonidista",
     indice: 16,
   },
   {
-    medio: "Jefe/a de Locaciones",
+    medio: "Microfonista",
     indice: 17,
   },
   {
-    medio: "Realizador/a integral audiovisual",
+    medio: "Video Assist",
     indice: 18,
   },
   {
-    medio: "Documentalista",
+    medio: "Continuista",
     indice: 19,
   },
   {
-    medio: "Iluminador/a",
+    medio: "Jefe/a eléctrico",
     indice: 20,
   },
   {
-    medio: "Distribuidor/a",
+    medio: "Editor/a de sonido",
     indice: 21,
   },
   {
-    medio: "Exhibidor/a",
+    medio: "Editor/a de imagen",
     indice: 22,
   },
   {
-    medio: "Capacitador/a o Formador/a",
+    medio: "Animador/a",
     indice: 23,
   },
   {
-    medio: "audiovisual",
+    medio: "Ilustrador/a",
     indice: 24,
   },
   {
-    medio: "Investigador/a",
+    medio: "Vestuarista",
     indice: 25,
   },
   {
-    medio: "Guionista",
+    medio: "Maquillador/a",
     indice: 26,
   },
   {
-    medio: "Colorista",
+    medio: "Utilero/a",
     indice: 27,
   },
   {
-    medio: "Director/a de Fotografía",
+    medio: "Coordinador/a de locaciones",
     indice: 28,
   },
   {
-    medio: "Comunicador/a especializado/a",
+    medio: "Coordinador/a de Casting",
     indice: 29,
   },
   {
-    medio: "Ilustrador/a",
+    medio: "Doblajista",
     indice: 30,
   },
   {
@@ -163,24 +159,52 @@ export const areaDesOpc = [
     indice: 31,
   },
   {
-    medio: "Animación",
+    medio: "Exhibidor/a sala IAAviM",
     indice: 32,
   },
   {
-    medio: "Abogada/o especializado/a en medios audiovisuales",
+    medio: "Exhibidor/a espacio INCAA",
     indice: 33,
   },
   {
-    medio: "Asistente de Dirección",
+    medio: "Exhibidor/a ambulante",
     indice: 34,
   },
   {
-    medio: "Camarógrafo/a",
+    medio: "Exhibidor/a web / TV",
     indice: 35,
   },
   {
-    medio: "Director/a de Arte",
+    medio: "Coordinador/a de Festivales",
     indice: 36,
+  },
+  {
+    medio: "Distribuidor/a",
+    indice: 37,
+  },
+  {
+    medio: "Desarrollador/a de videojuegos",
+    indice: 38,
+  },
+  {
+    medio: "Investigador/a",
+    indice: 39,
+  },
+  {
+    medio: "Capacitador/a o formador/a audiovisual",
+    indice: 40,
+  },
+  {
+    medio: "Prensa especializado/a en audiovisuales",
+    indice: 41,
+  },
+  {
+    medio: "Abogado/a especialización en comunicación audiovisuales",
+    indice: 42,
+  },
+  {
+    medio: "Otro",
+    indice: 43,
   },
 ];
 

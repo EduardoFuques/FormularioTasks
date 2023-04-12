@@ -1,0 +1,87 @@
+<style>
+  .form-group { display: flex; align-items: center; margin-right: 2px; height:
+  100%; } .form-control { height: 100%; } .custom-select-half { width: 50%;
+  height: 100%; border-radius: 0; border-color: #ced4da; }
+</style>
+
+<div class="container mt-5">
+  <h1 class="mb-4">Buscador de Empresas REPA</h1>
+  <form class="form-inline mb-4" action="/buscador/PJ" method="post">
+    <div class="row">
+      <div class="col-sm mr-1">
+        <div class="form-group align-items-center mr-2">
+          <input
+            type="text"
+            class="form-control"
+            name="q"
+            id="q"
+          />
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group align-items-center ml-auto">
+          <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  {{#if usersWithForms.length}}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Email</th>
+          <th scope="col">Localidad</th>
+          <th scope="col">Telefono</th>
+          <th scope="col">Nombre Empresa</th>
+          <th scope="col">Nombre Fantasía</th>
+          <th scope="col">Razón Social</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each usersWithForms}}
+          <tr>
+            <td>{{this.nombre}}</td>
+            <td>{{this.apellido}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.localidad}}</td>
+            <td>{{this.movil}}</td>
+            <td>{{this.nombreEmpresa}}</td>
+            <td>{{this.nombreFantasia}}</td>
+            <td>{{this.razonSocial}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <p>No se encontraron usuarios</p>
+  {{/if}}
+
+</div>
+
+
+
+<script>
+  window.onload = function() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/buscador/PJ');
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        // Actualizar la tabla con los datos de búsqueda
+        // Utiliza el objeto response que contiene los datos
+      } else {
+        console.error('Error en la solicitud de búsqueda');
+      }
+    };
+    xhr.send();
+  };
+  document.body.onload = function() {
+    setearOpciones();
+  }
+  function setearOpciones() {
+    document.getElementById("q").value = `{{criterioDeBusqueda}}`;
+  }
+</script>
