@@ -280,6 +280,19 @@
     newOption.value = situacion.indice;
     slctAreaComp.appendChild(newOption)
   })
+  $(document).ready(function() {
+  $('#slctAreaComp').select2();
+  $('#slctAreaComp').on('select2:select', function(e) {
+    if ($('#slctAreaComp').val().length > 3) {
+      $('#slctAreaComp').val(e.params.data.id).trigger('change.select2');
+      alert('Seleccione un máximo de 3 opciones');
+    }
+  });
+  $('#slctAreaComp').on('select2:unselect', function(e) {
+    if ($('#slctAreaComp').val().length < 4) {
+      $('#slctAreaComp').select2('enable');
+    }
+  })});
   
   areaDes = [
 {
@@ -437,6 +450,20 @@
     newOption.value = situacion.indice;
     slctAreaDes.appendChild(newOption)
   })
+  $(document).ready(function() {
+  $('#slctAreaDes').select2();
+  $('#slctAreaDes').on('select2:select', function(e) {
+    if ($('#slctAreaDes').val().length > 3) {
+      $('#slctAreaDes').val(e.params.data.id).trigger('change.select2');
+      alert('Seleccione un máximo de 3 opciones');
+    }
+  });
+  $('#slctAreaDes').on('select2:unselect', function(e) {
+    if ($('#slctAreaDes').val().length < 4) {
+      $('#slctAreaDes').select2('enable');
+    }
+  });
+});
   
   medios = [{
     "medio": "TV",
@@ -454,6 +481,10 @@
     newOption.value = situacion.indice;
     slctMedios.appendChild(newOption)
   })
+  $(document).ready(function() {
+    $('#slctMedios').select2();
+  });
+
   
   domicilios =[  {
     "localidad": "9 de Julio",  
@@ -1139,23 +1170,23 @@ function NumeroCuil(event, el){//Validar nombre
     return out;
   }
 
-  const selectAreaDes = document.getElementById('slctAreaDes');
-  selectAreaDes.addEventListener('change', function() {
-    if (selectAreaDes.selectedOptions.length > 3) {
-      selectAreaDes.setCustomValidity('Seleccione un máximo de 3 opciones');
-    } else {
-      selectAreaDes.setCustomValidity('');
-    }
-  });
+  //const selectAreaDes = document.getElementById('slctAreaDes');
+  //selectAreaDes.addEventListener('change', function() {
+  //  if (selectAreaDes.selectedOptions.length > 3) {
+  //    selectAreaDes.setCustomValidity('Seleccione un máximo de 3 opciones');
+  //  } else {
+  //    selectAreaDes.setCustomValidity('');
+  //  }
+  //});
 
-  const selectAreaComp = document.getElementById('slctAreaComp');
-  selectAreaComp.addEventListener('change', function() {
-    if (selectAreaComp.selectedOptions.length > 3) {
-      selectAreaComp.setCustomValidity('Seleccione un máximo de 3 opciones');
-    } else {
-      selectAreaComp.setCustomValidity('');
-    }
-  });
+  //const selectAreaComp = document.getElementById('slctAreaComp');
+  //selectAreaComp.addEventListener('change', function() {
+  //  if (selectAreaComp.selectedOptions.length > 3) {
+  //    selectAreaComp.setCustomValidity('Seleccione un máximo de 3 opciones');
+  //  } else {
+  //    selectAreaComp.setCustomValidity('');
+  //  }
+  //});
 
   document.body.onload = function() {
     setearOpciones();

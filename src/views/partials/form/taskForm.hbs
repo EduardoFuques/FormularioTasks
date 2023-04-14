@@ -71,7 +71,7 @@
       </div>
       {{!-- Situación Iaavim --}}
       <div class="col-sm form-floating">
-        <input type="text" class="form-control" id="sitIaavim" placeholder="Situación IAAViM" aria-label="sitIaavim" value="ACTIVO" disabled>
+        <input type="text" class="form-control" id="sitIaavim" placeholder="Situación IAAViM" aria-label="sitIaavim" value="INACTIVO" disabled>
         <label for="floatingInput">Situación IAAViM</label>
       </div>
     </div>
@@ -149,7 +149,6 @@
       <div class="col-sm-12">
         <div class="card text-bg-secondary mb-3 align-items-center">
           <div class="card-header"> <h3>Medios, Áreas de Desempeño y complementarias</h3></div>
-          <div class="card-header"> <h6>Utilice la tecla Ctrl para seleccionar más de una opción</h6></div>
         </div>
       </div>
     </div>
@@ -158,8 +157,8 @@
       {{!-- Medios --}}
       <div class="col-sm was-validated">
         <small class="text-muted">Medios</small>
-        <select name="medios" id="slctMedios" class="form-select" multiple size="3" required>
-          <option disabled hidden>Medios</option>
+        <select name="medios" id="slctMedios" class="form-select" multiple="true" size="3" required>
+            <option disabled hidden>Medios</option>
         </select>
       </div>
     </div>
@@ -170,9 +169,6 @@
         <select name="areaDes" id="slctAreaDes" class="form-select" multiple size="8" required>
           <option value="" disabled hidden>Áreas de desempeño</option>
         </select>
-        <small class="invalid-feedback">
-          Seleccione un máximo de 3 opciones
-        </small>
       </div>
     </div>
     <div class="row g-3 mb-4">
@@ -182,9 +178,6 @@
         <select name="areaComp" id="slctAreaComp" class="form-select" multiple size="8" required>
           <option value="" disabled hidden>Áreas Complementarias</option>
         </select>
-        <small class="invalid-feedback">
-          Seleccione un máximo de 3 opciones
-        </small>
       </div>
     </div>
     <pre>
@@ -278,6 +271,19 @@
     newOption.value = situacion.indice;
     slctAreaComp.appendChild(newOption)
   })
+  $(document).ready(function() {
+  $('#slctAreaComp').select2();
+  $('#slctAreaComp').on('select2:select', function(e) {
+    if ($('#slctAreaComp').val().length > 3) {
+      $('#slctAreaComp').val(e.params.data.id).trigger('change.select2');
+      alert('Seleccione un máximo de 3 opciones');
+    }
+  });
+  $('#slctAreaComp').on('select2:unselect', function(e) {
+    if ($('#slctAreaComp').val().length < 4) {
+      $('#slctAreaComp').select2('enable');
+    }
+  })});
   
   areaDes = [
 {
@@ -435,7 +441,22 @@
     newOption.value = situacion.indice;
     slctAreaDes.appendChild(newOption)
   })
-  
+  $(document).ready(function() {
+  $('#slctAreaDes').select2();
+  $('#slctAreaDes').on('select2:select', function(e) {
+    if ($('#slctAreaDes').val().length > 3) {
+      $('#slctAreaDes').val(e.params.data.id).trigger('change.select2');
+      alert('Seleccione un máximo de 3 opciones');
+    }
+  });
+  $('#slctAreaDes').on('select2:unselect', function(e) {
+    if ($('#slctAreaDes').val().length < 4) {
+      $('#slctAreaDes').select2('enable');
+    }
+  });
+});
+
+
   medios = [{
     "medio": "TV",
     "indice": 0
@@ -452,6 +473,11 @@
     newOption.value = situacion.indice;
     slctMedios.appendChild(newOption)
   })
+  $(document).ready(function() {
+    $('#slctMedios').select2();
+  });
+
+
   
   domicilios =[  {
     "localidad": "9 de Julio",  
@@ -1137,23 +1163,23 @@ function NumeroCuil(event, el){//Validar nombre
     return out;
   }
 
-  const selectAreaDes = document.getElementById('slctAreaDes');
-  selectAreaDes.addEventListener('change', function() {
-    if (selectAreaDes.selectedOptions.length > 3) {
-      selectAreaDes.setCustomValidity('Seleccione un máximo de 3 opciones');
-    } else {
-      selectAreaDes.setCustomValidity('');
-    }
-  });
+  //const selectAreaDes = document.getElementById('slctAreaDes');
+  //selectAreaDes.addEventListener('change', function() {
+  //  if (selectAreaDes.selectedOptions.length > 3) {
+  //    selectAreaDes.setCustomValidity('Seleccione un máximo de 3 opciones');
+  //  } else {
+  //    selectAreaDes.setCustomValidity('');
+  //  }
+  //});
 
-  const selectAreaComp = document.getElementById('slctAreaComp');
-  selectAreaComp.addEventListener('change', function() {
-    if (selectAreaComp.selectedOptions.length > 3) {
-      selectAreaComp.setCustomValidity('Seleccione un máximo de 3 opciones');
-    } else {
-      selectAreaComp.setCustomValidity('');
-    }
-  });
+  //const selectAreaComp = document.getElementById('slctAreaComp');
+  //selectAreaComp.addEventListener('change', function() {
+  //  if (selectAreaComp.selectedOptions.length > 3) {
+  //    selectAreaComp.setCustomValidity('Seleccione un máximo de 3 opciones');
+  //  } else {
+  //    selectAreaComp.setCustomValidity('');
+  //  }
+  //});
 
   function validarCV() {
   // Obtener nombre de archivo
