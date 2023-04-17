@@ -14,29 +14,32 @@
       </div>
     </div>
   </div>
+  {{!-- Form --}}
   <div class="row justify-content-center align-items-center"><div class="col-md-6">
 
-      <form "/signin" method="post" >
-        <div class="mb-3">
-          <input type="text" name="usuario" placeholder="Usuario (DNI sin puntos)" class="form-control rounded-0 bg-white text-dark" onkeyup="this.value=Numeros(this.value)" autofocus>
-        </div>
-        <div class="mb-3">
-          <input type="password" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark">
-        </div>
-        <button class="btn btn-secondary"> Ingresar</button>
-      </form>
-      <pre>
+    <form "/signin" method="post" >
+      <div class="mb-3">
+        <input type="text" name="usuario" placeholder="Usuario (DNI sin puntos)" class="form-control rounded-0 bg-white text-dark" onkeyup="this.value=Numeros(this.value)" autofocus>
+      </div>
+      <div class="mb-3">
+        <input type="password" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark">
+      </div>
+      <button class="btn btn-secondary"> Ingresar</button>
+    </form>
+    <pre>
         
-      </pre>
+    </pre>
+  </div>
+  {{!-- Botones --}}
+  <div class="alert alert-primary row g-2 mb-4 align-items-center">
+    <div class="col-sm was-validated ">
+      <a class="btn btn-secondary" role="button" aria-disabled="true" href="/password">Olvidé mi contraseña</a>
     </div>
- 
-
-<div class="alert alert-primary d-flex align-items-center" role="alert">
-  <div class="row">
-    <div class="col-12">
-      <a class="btn btn-secondary" role="button" aria-disabled="true" href="./password">Olvide mi contraseña</a>
+    <div class="col-sm was-validated">
+      <a class="btn btn-secondary" role="button" aria-current="page" id="termsBtn">Registrarse</a>
     </div>
   </div>
+  {{> terminosycondiciones}}
 </div>
 
 <script>
@@ -53,4 +56,5 @@
     //Retornar valor filtrado
     return out;
   }
+
 </script>
