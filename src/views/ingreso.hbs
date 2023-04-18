@@ -1,8 +1,8 @@
 <div class="container-md">
-  <div class="row justify-content-center align-items-center">
+  <div class="row justify-content-center text-center">
     <div class="col-md-6">
       <div class="alert alert-danger" role="alert">
-        Acceso a personas YA REGISTRADAS en REPA!
+        <h4>Acceso a personas YA REGISTRADAS en REPA!</h4>
       </div>
     </div>
   </div>
@@ -31,15 +31,15 @@
     </pre>
   </div>
   {{!-- Botones --}}
-  <div class="alert alert-primary row g-2 mb-4 align-items-center">
+  <div class="alert alert-danger row g-2">
     <div class="col-sm was-validated ">
-      <a class="btn btn-secondary" role="button" aria-disabled="true" href="/password">Olvidé mi contraseña</a>
+      <a class="btn btn-secondary text-center" role="button" aria-disabled="true" href="/password">Olvidé mi contraseña</a>
     </div>
     <div class="col-sm was-validated">
-      <a class="btn btn-secondary" role="button" aria-current="page" id="termsBtn">Registrarse</a>
+      <a class="btn btn-secondary text-center" role="button" aria-current="page" id="termsBtn">Registrarse</a>
     </div>
   </div>
-  {{> terminosycondiciones}}
+  {{ terminosycondiciones}}
 </div>
 
 <script>
