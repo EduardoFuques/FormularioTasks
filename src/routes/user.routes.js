@@ -33,6 +33,12 @@ router.get("/reset-password/:token", resetPasswordController)
 
 router.post("/reset-password/:token", updatePasswordController)
 
-router.get("/carga", cargaInicial)
+// router.post('/accept-terms', function(req, res) {
+//   var accepted = req.body.accepted;
+//   // Procesa la solicitud de aceptación de los términos y condiciones aquí.
+//   res.render('ok');
+// });
+
+//router.get("/carga", cargaInicial)
 
 export default router;

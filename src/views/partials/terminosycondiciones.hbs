@@ -1,0 +1,108 @@
+{{! Modal }}
+<div
+  class="modal fade"
+  id="terminosycondiciones"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Términos y condiciones</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-md">
+          <div class="row justify-content-center align-items-center">
+            <div class="col-md-12">
+              <div class="alert alert-danger" role="alert">
+                Formulario de Declaración Jurada ante la RePA
+              </div>
+            </div>
+          </div>
+          {{! Header }}
+          <div class="row g-3 mb-12">
+            <div class="col-sm-12">
+              <div class="card text-bg-secondary mb-3 align-items-center">
+                <div class="card-header">
+                  <h5>Es condición indispensable para registrarse cumplir con
+                    los siguientes requisitos previstos en el artículo 18 de la
+                    Ley VI-171 de Promoción Audiovisual de Misiones.</h5></div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-3 mb-12">
+            <div class="col-sm-12">
+              <div class="card text-bg-secondary mb-3 align-items-center">
+                <div class="card-header">
+                  <p>
+                    <ol>
+                      <li>Su efectiva radicación en la Provincia de
+                        Misiones, con al menos un (1) año de antigüedad.</li>
+                      <li>Haberse desempeñado durante el último año (al
+                        momento de iniciar la inscripción) en algunas de las
+                        actividades promovidas por la Ley.</li>
+                      <li>No poseer deuda exigible con la Provincia.</li>
+                      <li>Y en caso de ser empleador/a deberá adjuntar
+                        certificación de libre deuda expedida por los sindicatos
+                        y las obras sociales que representan a los trabajadores
+                        de los medios de comunicación.</li>
+                    </ol>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-3 mb-12">
+            <div class="col-sm-12">
+              <div class="card text-bg-secondary mb-3 align-items-center">
+                <div class="card-header">
+                  <h3>Si Usted cumple con los requisitos presiones REGISTRARME</h3></div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="alert alert-primary d-flex align-items-center"
+            role="alert"
+          >
+            <div class="row">
+              <div class="col-12">
+                <a
+                  class="btn btn-secondary"
+                  role="button"
+                  aria-disabled="true"
+                  href="./signup"
+                >REGISTRARME</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{! <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" id="acceptTermsBtn">Aceptar</button>
+          </div> }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+    $('#termsBtn').click(function() {
+      $('#terminosycondiciones').modal('show');
+    });
+  });
+  $(document).ready(function() {
+    $('#termsBtn2').click(function() {
+      $('#terminosycondiciones').modal('show');
+    });
+  });
+
+</script>

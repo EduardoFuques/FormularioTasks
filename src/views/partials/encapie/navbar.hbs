@@ -1,7 +1,7 @@
 <nav class="navbar navbar-dark bg-secondary">
   <div class="container-fluid">
 
-    <a class="navbar-brand" href="https://www.iaavim.gob.ar/">
+    <a class="navbar-brand" href="/">
       <img
         src="/icons/Logo_blanco_chico.png"
         alt="Logo"
@@ -57,7 +57,7 @@
               <a
                 class="nav-link active"
                 aria-current="page"
-                href="/signup"
+                id="termsBtn"
               >Registrarse</a>
             </li>
           {{/unless}}
@@ -98,8 +98,11 @@
             <hr class="" />
           </li>
           <li>
-            <a class="dropdown-item" href="/repa-puf.pdf" download>Preguntas
-              Frecuentes</a>
+            <a
+                class="nav-link active"
+                aria-current="page"
+                id="pufBtn"
+              >Preguntas Frecuentes</a>
           </li>
           {{#if user}}
             <li>
@@ -111,4 +114,7 @@
       </div>
     </div>
   </div>
+  {{> terminosycondiciones}}
+  {{> preguntasfrecuentes}}
+  
 </nav>
