@@ -1,9 +1,12 @@
 import {
   areaDesOpc,
+  areaDesUsuarioArr,
   areasCompOpc,
+  areasCompUsuarioArr,
   columnasPerFis,
   columnasPerJur,
   domiciliosOpc,
+  mediosUsuarioArr,
   mediosopc,
 } from "../helpers/arrays";
 import Form from "../models/Formulario";
@@ -164,35 +167,35 @@ export const adminPF = async (req, res) => {
       const domicilio = item.domicilio[0];
       const telefono = item.telefono[0];
       const medios = item.medios;
-      const medio1Obj = mediosopc.find(
-        (obj) => obj.indice === parseInt(medios[0])
-      );
-      const medio2Obj = mediosopc.find(
-        (obj) => obj.indice === parseInt(medios[1])
-      );
-      const medio3Obj = mediosopc.find(
-        (obj) => obj.indice === parseInt(medios[2])
-      );
-      const areaComp = item.areaComp;
-      const areaComp1Obj = areasCompOpc.find(
-        (obj) => obj.indice === parseInt(areaComp[0])
-      );
-      const areaComp2Obj = areasCompOpc.find(
-        (obj) => obj.indice === parseInt(areaComp[1])
-      );
-      const areaComp3Obj = areasCompOpc.find(
-        (obj) => obj.indice === parseInt(areaComp[2])
-      );
+      const mediosUsuario = mediosUsuarioArr;
+      medios.forEach((medioIndice) => {
+        const medioObj = mediosopc.find(
+          (obj) => obj.indice === parseInt(medioIndice)
+        );
+        if (medioObj) {
+          mediosUsuario[medioObj.medio] = medioObj.medio;
+        }
+      });
       const areaDes = item.areaDes;
-      const areaDes1Obj = areaDesOpc.find(
-        (obj) => obj.indice === parseInt(areaDes[0])
-      );
-      const areaDes2Obj = areaDesOpc.find(
-        (obj) => obj.indice === parseInt(areaDes[1])
-      );
-      const areaDes3Obj = areaDesOpc.find(
-        (obj) => obj.indice === parseInt(areaDes[2])
-      );
+      const areaDesUsuario = areaDesUsuarioArr;
+      areaDes.forEach((areaIndice) => {
+        const areaObj = areaDesOpc.find(
+          (obj) => obj.indice === parseInt(areaIndice)
+        );
+        if (areaObj) {
+          areaDesUsuario[areaObj.medio] = areaObj.medio;
+        }
+      });      
+      const areaComp = item.areaComp;
+      const areaCompUsuario = areasCompUsuarioArr;
+      areaComp.forEach((areaIndice) => {
+        const areaObj = areasCompOpc.find(
+          (obj) => obj.indice === parseInt(areaIndice)
+        );
+        if (areaObj) {
+          areaCompUsuario[areaObj.medio] = areaObj.medio;
+        }
+      });  
 
       const localidad = {
         localidad: "",
@@ -233,19 +236,22 @@ export const adminPF = async (req, res) => {
         fijo: telefono.fijo || "",
         movil: telefono.movil || "",
         movilAlt: telefono.alternativo || "",
-        medio1: medio1Obj !== undefined ? medio1Obj.medio : "",
-        medio2: medio2Obj !== undefined ? medio2Obj.medio : "",
-        medio3: medio3Obj !== undefined ? medio3Obj.medio : "",
-        areaDes1: areaDes1Obj !== undefined ? areaDes1Obj.medio : "",
-        areaDes2: areaDes2Obj !== undefined ? areaDes2Obj.medio : "",
-        areaDes3: areaDes3Obj !== undefined ? areaDes3Obj.medio : "",
-        areaComp1: areaComp1Obj !== undefined ? areaComp1Obj.medio : "",
-        areaComp2: areaComp2Obj !== undefined ? areaComp2Obj.medio : "",
-        areaComp3: areaComp3Obj !== undefined ? areaComp3Obj.medio : "",
+        // medio1: medio1Obj !== undefined ? medio1Obj.medio : "",
+        // medio2: medio2Obj !== undefined ? medio2Obj.medio : "",
+        // medio3: medio3Obj !== undefined ? medio3Obj.medio : "",
+        // areaDes1: areaDes1Obj !== undefined ? areaDes1Obj.medio : "",
+        // areaDes2: areaDes2Obj !== undefined ? areaDes2Obj.medio : "",
+        // areaDes3: areaDes3Obj !== undefined ? areaDes3Obj.medio : "",
+        // areaComp1: areaComp1Obj !== undefined ? areaComp1Obj.medio : "",
+        // areaComp2: areaComp2Obj !== undefined ? areaComp2Obj.medio : "",
+        // areaComp3: areaComp3Obj !== undefined ? areaComp3Obj.medio : "",
+        ...mediosUsuario, // Agregar los valores de mediosUsuario a las columnas correspondientes
+        ...areaDesUsuario,
+        ...areaCompUsuario,
       };
       return acc;
     }, {});
-
+    //console.log(datitosPorUsuario)
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Personas Físicas");
 
