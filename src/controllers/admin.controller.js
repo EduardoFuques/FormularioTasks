@@ -25,7 +25,7 @@ export const adminPJ = async (req, res) => {
     ).lean();
     const datitos = await Form.find(
       { usuario: { $in: usuarios.map((u) => u.usuario) } },
-      "razonSocial nombreFantasia tipoDoc usuario nombre apellido cuil sexo email sitAfip sitIaavim domicilio telefono"
+      "razonSocial nombreFantasia tipoDoc usuario nombre apellido cuil sexo email sitAfip sitIaavim domicilio telefono createdAt updatedAt"
     ).lean();
 
     const datitosPorUsuario = datitos.reduce((acc, item) => {
@@ -76,6 +76,8 @@ export const adminPJ = async (req, res) => {
         localidad: "",
         distrito: "",
         departamento: "",
+        createdAt: datitos.createdAt,
+        updatedAt: datitos.updatedAt,
       };
     });
 
@@ -89,6 +91,38 @@ export const adminPJ = async (req, res) => {
           break;
         }
       }
+      const fechaActual = new Date();
+      const fechaUpdatedAt = new Date(datitos.updatedAt);
+      const fechaCreatedAt = new Date(datitos.createdAt);
+
+      let diasDesdeUpdated;
+      if (fechaUpdatedAt.getTime() === fechaCreatedAt.getTime()) {
+        diasDesdeUpdated = 0;
+      } else {
+        diasDesdeUpdated = Math.round(
+          (fechaActual - fechaUpdatedAt) / (1000 * 60 * 60 * 24)
+        );
+      }
+
+      let resultadoUpdated;
+      if (
+        diasDesdeUpdated === 0 &&
+        fechaUpdatedAt.getTime() !== fechaCreatedAt.getTime()
+      ) {
+        resultadoUpdated = "Hoy";
+      } else if (
+        diasDesdeUpdated === 0 &&
+        fechaUpdatedAt.getTime() === fechaCreatedAt.getTime()
+      ) {
+        resultadoUpdated = "Nunca";
+      } else {
+        resultadoUpdated = `${diasDesdeUpdated} días atrás`;
+      }
+      console.log(datitos)
+      const fechaCreatedISO = datitos.createdAt ? datitos.createdAt.toISOString() : '';
+      const fechaCreated = fechaCreatedISO.slice(0, 10);
+      datitos.createdAt = fechaCreated
+      datitos.updatedAt = resultadoUpdated
     });
 
     const workbook = new ExcelJS.Workbook();
@@ -160,8 +194,13 @@ export const adminPF = async (req, res) => {
     ).lean();
     const datitos = await Form.find(
       { usuario: { $in: usuarios.map((u) => u.usuario) } },
-      "apellido nombre tipoDoc usuario cuil sexo sitAfip sitIaavim domicilio telefono email medios areaDes areaComp"
+      "apellido nombre tipoDoc usuario cuil sexo sitAfip sitIaavim domicilio telefono email medios areaDes areaComp createdAt updatedAt"
     ).lean(); //
+    // datitos.forEach((dato) => {
+    //   const fechaCreatedISO = dato.createdAt.toISOString();
+    //   const fechaCreated = fechaCreatedISO.slice(0, 10);
+    //   console.log(fechaCreated);
+    // });
 
     const datitosPorUsuario = datitos.reduce((acc, item) => {
       const domicilio = item.domicilio[0];
@@ -185,7 +224,7 @@ export const adminPF = async (req, res) => {
         if (areaObj) {
           areaDesUsuario[areaObj.medio] = areaObj.medio;
         }
-      });      
+      });
       const areaComp = item.areaComp;
       const areaCompUsuario = areasCompUsuarioArr;
       areaComp.forEach((areaIndice) => {
@@ -195,7 +234,7 @@ export const adminPF = async (req, res) => {
         if (areaObj) {
           areaCompUsuario[areaObj.medio] = areaObj.medio;
         }
-      });  
+      });
 
       const localidad = {
         localidad: "",
@@ -212,7 +251,36 @@ export const adminPF = async (req, res) => {
           break;
         }
       }
+      const fechaActual = new Date();
+      const fechaUpdatedAt = new Date(item.updatedAt);
+      const fechaCreatedAt = new Date(item.createdAt);
 
+      let diasDesdeUpdated;
+      if (fechaUpdatedAt.getTime() === fechaCreatedAt.getTime()) {
+        diasDesdeUpdated = 0;
+      } else {
+        diasDesdeUpdated = Math.round(
+          (fechaActual - fechaUpdatedAt) / (1000 * 60 * 60 * 24)
+        );
+      }
+
+      let resultadoUpdated;
+      if (
+        diasDesdeUpdated === 0 &&
+        fechaUpdatedAt.getTime() !== fechaCreatedAt.getTime()
+      ) {
+        resultadoUpdated = "Hoy";
+      } else if (
+        diasDesdeUpdated === 0 &&
+        fechaUpdatedAt.getTime() === fechaCreatedAt.getTime()
+      ) {
+        resultadoUpdated = "Nunca";
+      } else {
+        resultadoUpdated = `${diasDesdeUpdated} días atrás`;
+      }
+
+      const fechaCreatedISO = item.createdAt.toISOString();
+      const fechaCreated = fechaCreatedISO.slice(0, 10);
       acc[item.usuario] = {
         codigoRepa:
           usuarios.find((u) => u.usuario === item.usuario)?.codigoRepa ?? "",
@@ -248,6 +316,8 @@ export const adminPF = async (req, res) => {
         ...mediosUsuario, // Agregar los valores de mediosUsuario a las columnas correspondientes
         ...areaDesUsuario,
         ...areaCompUsuario,
+        createdAt: fechaCreated,
+        updatedAt: resultadoUpdated,
       };
       return acc;
     }, {});

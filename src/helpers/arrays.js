@@ -877,6 +877,8 @@ export const columnasPerJur = [
   { header: "Fijo", key: "fijo" },
   { header: "Móvil", key: "movil" },
   { header: "Móvil alternativo", key: "movilAlt" },
+  { header: "Fecha de Registro", key: "createdAt"},
+  { header: "Ultima modificación", key: "updatedAt"}
 ];
 
 export const columnasPerFis = [
@@ -991,6 +993,8 @@ export const columnasPerFis = [
     key: "Bailarín/a con experiencia en audiovisuales",
   },
   { header: "Otros", key: "Otros" },
+  { header: "Fecha de Registro", key: "createdAt"},
+  { header: "Ultima modificación", key: "updatedAt"}
 ];
 
 export const mediosUsuarioArr = {
