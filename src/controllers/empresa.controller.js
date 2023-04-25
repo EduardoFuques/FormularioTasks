@@ -9,7 +9,7 @@ import {
 export const renderFormem = async (req, res) => {
   try {
     const userID = req.session.passport.user;
-    const { tipoDoc, usuario, nombre, apellido, email, codigoRepa } = req.user;
+    const { tipoDoc, usuario, nombre, apellido, email, codigoRepa, nombreEmpresa } = req.user;
     const usuarioEncontrado = await Form.findOne({ usuario }).lean();
     if (!usuarioEncontrado) {
       const datos = {
@@ -19,7 +19,9 @@ export const renderFormem = async (req, res) => {
         nombre,
         apellido,
         email,
+        nombreEmpresa,
       };
+      const nombreEmpresa2 = datos.nombreEmpresa.toString();
       const editar = false;
       const perJur = true;
       res.render("indexEmpresa", {
@@ -27,6 +29,7 @@ export const renderFormem = async (req, res) => {
         codigoRepa: codigoRepa,
         editar: editar,
         perJur: perJur,
+        nombreEmpresa: nombreEmpresa2,
       });
     } else {
       const datos = usuarioEncontrado;
@@ -36,10 +39,10 @@ export const renderFormem = async (req, res) => {
       const calle = datos.domicilio[0].calle.toString();
       res.render("editEmpresa", {
         datos: datos,
+        nombreEmpresa: nombreEmpresa,
         codigoRepa: codigoRepa,
         domicilio: datos.domicilio[0],
         calle: calle,
-        nombreEmpresa: nombreEmpresa,
         telefono: datos.telefono[0],
         editar: editar,
         perJur: perJur,
@@ -53,8 +56,6 @@ export const renderFormem = async (req, res) => {
 export const captureFormEm = async (req, res) => {
   try {
     const {
-      nombreEmpresa,
-      cuil,
       sexo,
       sitAfip,
       telFijo,
@@ -68,8 +69,10 @@ export const captureFormEm = async (req, res) => {
       dpto,
       razonSocial,
       nombreFantasia,
+      apellido,
+      nombre,
     } = req.body;
-    const { tipoDoc, usuario, nombre, apellido, email } = req.user;
+    const { tipoDoc, usuario, nombreEmpresa, email } = req.user;
 
     const newForm = new Form({
       tipoDoc,
@@ -77,7 +80,6 @@ export const captureFormEm = async (req, res) => {
       nombre,
       apellido,
       email,
-      cuil, //ok
       sexo, //ok
       sitAfip, //ok
       sitIaavim: true,
@@ -108,8 +110,6 @@ export const captureFormEm = async (req, res) => {
 export const captureEditFormEm = async (req, res) => {
   try {
     const {
-      nombreEmpresa,
-      cuil,
       sexo,
       sitAfip,
       telFijo,
@@ -123,11 +123,14 @@ export const captureEditFormEm = async (req, res) => {
       dpto,
       razonSocial,
       nombreFantasia,
+      nombre,
+      apellido,
     } = req.body;
-    const { tipoDoc, usuario, nombre, apellido, email, codigoRepa } = req.user;
+    const { tipoDoc, usuario, email, codigoRepa, nombreEmpresa } = req.user;
     const editForm = {
-      cuil, //ok
       sexo, //ok
+      nombre,
+      apellido,
       sitAfip, //ok
       domicilio: {
         calle: calle, //ok
@@ -144,7 +147,6 @@ export const captureEditFormEm = async (req, res) => {
       }, //ok
       razonSocial: razonSocial,
       nombreFantasia: nombreFantasia,
-      nombreEmpresa: nombreEmpresa,
     };
     await Form.updateOne({ usuario: usuario }, { $set: editForm }, (error) => {
       if (error) {
@@ -226,7 +228,7 @@ export const renderPDFEm = async (req, res) => {
           codRepaField.setText(codigoRepa.toString());
           nomEmprField.setText("  " + datos.nombreEmpresa);
           razSociField.setText("  " + datos.razonSocial.toString());
-          cuitField.setText("  " + datos.cuil.toString());
+          cuitField.setText("  " + datos.usuario.toString());
           resLegalField.setText("  " + resLegal)
           tipoDocField.setText("  " + datos.tipoDoc.toString());
           numDocField.setText("  " + datos.usuario.toString());
