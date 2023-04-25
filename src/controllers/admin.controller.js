@@ -25,7 +25,7 @@ export const adminPJ = async (req, res) => {
     ).lean();
     const datitos = await Form.find(
       { usuario: { $in: usuarios.map((u) => u.usuario) } },
-      "razonSocial nombreFantasia tipoDoc usuario nombre apellido cuil sexo email sitAfip sitIaavim domicilio telefono createdAt updatedAt"
+      "razonSocial nombreFantasia tipoDoc usuario nombre apellido cuil sexo email sitAfip sitIaavim domicilio telefono createdAt updatedAt dniFileUrl cvFileUrl"
     ).lean();
 
     const datitosPorUsuario = datitos.reduce((acc, item) => {
@@ -78,6 +78,8 @@ export const adminPJ = async (req, res) => {
         departamento: "",
         createdAt: datitos.createdAt,
         updatedAt: datitos.updatedAt,
+        dniFileUrl: datitos.dniFileUrl,
+        cvFileUrl: datitos.cvFileUrl,
       };
     });
 
@@ -194,7 +196,7 @@ export const adminPF = async (req, res) => {
     ).lean();
     const datitos = await Form.find(
       { usuario: { $in: usuarios.map((u) => u.usuario) } },
-      "apellido nombre tipoDoc usuario cuil sexo sitAfip sitIaavim domicilio telefono email medios areaDes areaComp createdAt updatedAt"
+      "apellido nombre tipoDoc usuario cuil sexo sitAfip sitIaavim domicilio telefono email medios areaDes areaComp createdAt updatedAt dniFileUrl cvFileUrl"
     ).lean(); //
     // datitos.forEach((dato) => {
     //   const fechaCreatedISO = dato.createdAt.toISOString();
@@ -318,6 +320,8 @@ export const adminPF = async (req, res) => {
         ...areaCompUsuario,
         createdAt: fechaCreated,
         updatedAt: resultadoUpdated,
+        dniFileUrl: item.dniFileUrl,
+        cvFileUrl: item.cvFileUrl,
       };
       return acc;
     }, {});

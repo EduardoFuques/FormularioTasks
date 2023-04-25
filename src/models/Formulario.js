@@ -39,6 +39,8 @@ const formSchema = new Schema(
     razonSocial: {type: String},
     nombreFantasia: {type: String},
     nombreEmpresa: { ref: "Usuario", type: Schema.Types.String },
+    cvFileUrl: {type: String},
+    dniFileUrl: {type: String}
   },
   {
     timestamps: true,

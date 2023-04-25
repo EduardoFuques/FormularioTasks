@@ -69,6 +69,7 @@ app.use(userRoutes);
 
 //static files
 app.use(express.static(path.join(__dirname, "public")));
+app.use('/files', express.static(path.join(__dirname, 'files')));
 
 export default app;
 

@@ -86,7 +86,8 @@ export const captureForm = async (req, res) => {
       areaComp,
     } = req.body;
     const { tipoDoc, usuario, nombre, apellido, email } = req.user;
-
+    const cvFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.cvFile[0].filename}`;
+    const dniFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.dniFile[0].filename}`;
     const newForm = new Form({
       tipoDoc,
       usuario,
@@ -113,6 +114,8 @@ export const captureForm = async (req, res) => {
       medios, //ok
       areaDes, //ok
       areaComp, //ok
+      cvFileUrl,
+      dniFileUrl,
     });
     await newForm.save();
     res.render("pantalla-ok");
@@ -139,9 +142,10 @@ export const captureEditForm = async (req, res) => {
       medios,
       areaDes,
       areaComp,
-      cv,
     } = req.body;
     const { tipoDoc, usuario, nombre, apellido, email } = req.user;
+    const cvFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.cvFile[0].filename}`;
+    const dniFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.dniFile[0].filename}`;
     const editForm = {
       cuil, //ok
       sexo, //ok
@@ -164,6 +168,8 @@ export const captureEditForm = async (req, res) => {
       medios, //ok
       areaDes, //ok
       areaComp, //ok
+      cvFileUrl,
+      dniFileUrl,
     };
     await Form.updateOne({ usuario: usuario }, { $set: editForm }, (error) => {
       if (error) {
