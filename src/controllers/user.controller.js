@@ -18,6 +18,10 @@ export const renderSignUp = async (req, res) => {
   res.render("registro");
 };
 
+export const renderSignUpPJ = async (req, res) => {
+  res.render("registroPJ");
+};
+
 async function codRepa(opcionPerJur) {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   let seq;
@@ -49,10 +53,10 @@ export const signUpUser = async (req, res) => {
       usuario,
       email,
       password,
-      opcionPerJur,
       confirm_password,
     } = req.body;
     const codigoRepa = await codRepa(opcionPerJur);
+    const opcionPerJur = "NO"
 
     // Create directory for the user on the server
     const userDirectory = path.join(__dirname, "..", "files", codigoRepa);
@@ -200,8 +204,19 @@ export const restablecerPassword = async (req, res) => {
     const mailOptions = {
       from: MAIL_USER,
       to: email,
-      subject: "Restablecer contraseña - REPA - IAAViM",
-      html: `<p>Hola,</p><p>Puedes restablecer tu contraseña <a href="http://${DOMINIO}/reset-password/${token}">aquí</a>.</p>`, // include reset password token in link
+      subject: "Restablecimiento de contraseña RePA - IAAviM",
+      html: `  <h2 class="mb-4">Estimado/a</h2>
+      <p>El proceso de cambio de contraseña, se ha iniciado. Haga click en el siguiente link para cambiar su contraseña.</p>
+      <p><a href="http://${DOMINIO}/reset-password/${token}">CLICKEE AQUI</a></p>
+      <pre>
+      </pre>
+      <p>Si tiene alguna pregunta o necesita ayuda adicional, no dude en contactarnos por correo electrónico a <a href="mailto:repa@iaavim.gob.ar">repa@iaavim.gob.ar<a></a>.</strong></p>
+      <p>Este es un mensaje automático generado por nuestro sistema.</p><p><strong> Por favor, no responda a este correo electrónico.</strong></p>
+      <p>Atentamente,</p><pre>
+      </pre>
+      <p><strong>Silvana Gonzalez Gregori</strong></p> 
+      <p>Responsable del Registro Provincial del Audiovisual -RePA-</p>
+      <p>Instituto de Artes Audiovisuales de Misiones -IAAviM-</p>`, // include reset password token in link
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -334,6 +349,76 @@ export const signUpUserApi = async (req, res) => {
         codigoRepa,
       });
       await newUser.save();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const signUpPJ = async (req, res) => {
+  try {
+    const errors = [];
+    const {
+      nombreEmpresa,
+      usuario,
+      email, //si
+      password, //si
+      confirm_password,
+    } = req.body;
+    const opcionPerJur = "SI"
+    const opcion = "DNI"
+    const nombre = " "
+    const apellido = " "
+    const codigoRepa = await codRepa(opcionPerJur);
+
+    // Create directory for the user on the server
+    const userDirectory = path.join(__dirname, "..", "files", codigoRepa);
+    fs.mkdirSync(userDirectory, { recursive: true });
+
+    const user = { opcion, nombre, apellido, usuario, email, nombreEmpresa };
+
+    let rol = "normal";
+
+    if (opcionPerJur === "SI") {
+      rol = "perJur";
+    }
+    const emailUser = await User.findOne({ email: email });
+    const dniUser = await User.findOne({ usuario: usuario });
+    if (dniUser) {
+      errors.push({ text: "El CUIL ya ha sido registrado" });
+    }
+    if (opcion === undefined) {
+      errors.push({ text: "Seleccione tipo de documento" });
+    }
+    if (emailUser) {
+      errors.push({ text: "El correo ya está en uso" });
+    }
+    if (password != confirm_password) {
+      errors.push({ text: "Las contraseñas no coinciden" });
+    }
+    if (password.length < 4) {
+      errors.push({ text: "La contraseña debe tener al menos 4 caracteres" });
+    }
+    if (errors.length > 0) {
+      res.render("registroPJ", {
+        errors,
+        user: user,
+      });
+    } else {
+      const tipoDoc = opcion;
+      const newUser = new User({
+        tipoDoc,
+        usuario,
+        password,
+        nombre,
+        apellido,
+        email,
+        rol,
+        codigoRepa,
+        nombreEmpresa,
+      });
+      await newUser.save();
+      res.redirect("/");
     }
   } catch (error) {
     console.log(error);

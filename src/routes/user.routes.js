@@ -9,6 +9,8 @@ import {
   restablecerPassword,
   resetPasswordController,
   updatePasswordController,
+  renderSignUpPJ,
+  signUpPJ,
 } from "../controllers/user.controller";
 import helpers from "../helpers/auth";
 import { cargaInicial } from "../libs/carga-inicial";
@@ -19,19 +21,23 @@ router.get("/signup", renderSignUp);
 
 router.post("/signup", signUpUser);
 
+router.get("/signupPJ", renderSignUpPJ);
+
+router.post("/signupPJ", signUpPJ);
+
 router.get("/", renderSignIn);
 
 router.post("/", autenticacion);
 
 router.get("/logout", helpers.isAuthenticated, logOut);
 
-router.get("/password", renderPassword)
+router.get("/password", renderPassword);
 
-router.post("/password", restablecerPassword)
+router.post("/password", restablecerPassword);
 
-router.get("/reset-password/:token", resetPasswordController)
+router.get("/reset-password/:token", resetPasswordController);
 
-router.post("/reset-password/:token", updatePasswordController)
+router.post("/reset-password/:token", updatePasswordController);
 
 // router.post('/accept-terms', function(req, res) {
 //   var accepted = req.body.accepted;

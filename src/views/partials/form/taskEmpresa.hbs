@@ -13,7 +13,7 @@
     <div class="row g-3 mb-4">
       {{!-- Nombre Empresa --}}
       <div class="col-sm-6 was-validated form-floating">
-        <input type="text" name="nombreEmpresa" placeholder="nombreEmpresa" id="nombreEmpresa" class="form-control" required/>
+        <input type="text" name="nombreEmpresa" placeholder="nombreEmpresa" id="nombreEmpresa" class="form-control" disabled/>
         <label for="floatingInput">Nombre de la Empresa</label>
       </div>
       {{!-- marca o nombre de fantasia --}}
@@ -31,7 +31,7 @@
       </div>
       {{!-- cuil --}}
       <div class="col-sm  was-validated form-floating">
-        <input name="cuil" type="text" class="form-control item" id="cuil" placeholder="Número cuit/cuil" onkeyup="NumeroCuil(event, this)" maxlength="13" pattern="\d{2}-\d{8}-\d{1}" required >
+        <input name="cuil" type="text" class="form-control item" id="cuil" placeholder="Número cuit/cuil" value={{datos.usuario}} onkeyup="NumeroCuil(event, this)" maxlength="13" pattern="\d{2}-\d{8}-\d{1}" disabled >
         <label for="floatingInput">Número cuit/cuil</label>
       </div>
       {{!-- Situación AFIP --}}
@@ -46,26 +46,13 @@
     <div class="row g-3 mb-4">
       {{!-- Apellido --}}
       <div class="col-sm-6 form-floating">
-        <input type="text" name="apellido" placeholder="Apellido" id="apellido" value={{datos.apellido}} class="form-control" disabled/>
+        <input type="text" name="apellido" placeholder="Apellido" id="apellido" class="form-control" required/>
         <label for="floatingInput">Apellido del responsable legal</label>
       </div>
       {{!-- Nombre --}}
       <div class="col-sm form-floating">
-        <input type="text" name="nombres" placeholder="Nombres" id="nombres" value={{datos.nombre}} class="form-control" disabled/>
-        <label for="floatingInput">Nombres</label>
-      </div>
-    </div>
-    {{!-- Fila 2 - tipo y numero documento --}}
-    <div class="row g-3 mb-4">
-      {{!-- Tipo doc --}}
-      <div class="col-sm-6 form-floating">
-        <input type="text" name="tipoDoc" id="tipoDoc" value={{datos.tipoDoc}} class="form-control" disabled>
-        <label for="floatingInput">Tipo de documento</label>
-      </div>
-      {{!-- Numero doc --}}
-      <div class="col-sm form-floating">
-        <input type="text" name="nro-doc" placeholder="Número de documento" id="nro-dni" value={{datos.usuario}} class="form-control" disabled/>
-        <label for="floatingInput">Número de documento</label>
+        <input type="text" name="nombre" placeholder="Nombres" id="nombre" class="form-control" required/>
+        <label for="floatingInput">Nombre del responsable legal</label>
       </div>
     </div>
     {{!-- Fila 3 - email, cuil, sexo, repa, iaavim --}}
@@ -932,5 +919,13 @@
       alert('Archivo inválido. No se permite la extensión ' + extension);
       document.getElementById('estatutoFile').value = ""
     }
+  }
+
+  document.body.onload = function() {
+    setearOpciones();
+  }
+
+  function setearOpciones() {
+    document.getElementById("nombreEmpresa").value = `{{nombreEmpresa}}`;
   }
 </script>

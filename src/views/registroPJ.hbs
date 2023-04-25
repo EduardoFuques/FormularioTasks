@@ -13,40 +13,26 @@
   <div class="row g-3 mb-4">
     <div class="col-sm-12">
       <div class="card text-bg-secondary mb-3 align-items-center">
-        <div class="card-header"> <h3>Registro al RePA - Personas Físicas</h3></div>
+        <div class="card-header"> <h3>Registro al RePA - Personas Jurídicas</h3></div>
       </div>
     </div>
   </div>
-  <form "/signup" method="post">
+  <form "/signupPJ" method="post">
 {{!-- Fila 1 - Nombre y Apellido --}}
     <div class="row g-3 mb-4">
       <div class="col-sm was-validated form-floating">
-        <input type="text" name="nombre" placeholder="Nombres" class="form-control rounded-0 text-dark" value="{{user.nombre}}" onkeyup="this.value=NombreMayus(this.value)" required>
-        <label for="floatingInput">Nombres</label>
-      </div>
-      <div class="col-sm was-validated form-floating">
-        <input type="text" name="apellido" placeholder="Apellido" class="form-control rounded-0 text-dark" value="{{user.apellido}}" onkeyup="this.value=NombreMayus(this.value)" required>
-        <label for="floatingInput">Apellido</label>
+        <input type="text" name="nombreEmpresa" placeholder="Nombres" class="form-control rounded-0 text-dark" value="{{user.nombreEmpresa}}" onkeyup="this.value=NombreMayus(this.value)" required>
+        <label for="floatingInput">Nombre de la Organización o Empresa</label>
       </div>
     </div>
 {{!-- Fila 2 - Tipo doc, doc, email --}}
     <div class="row g-3 mb-4 ">
-      <div class="col-sm-2 was-validated form-floating">
-        <select name="opcion" id="slctDoc" class="form-select" required>
-          <option value="" selected disabled hidden>Seleccione</option>
-          <option value="DNI">Documento Nacional de Identidad</option>
-          <option value="Cedula">Cédula Policia Federal</option>
-          <option value="LC">Libreta Cívica</option>
-          <option value="LE">Libreta de Enrolamiento</option>
-        </select>
-        <label for="floatingSelect">Tipo de documento</label>
-      </div>
-      <div class="col-sm-3 was-validated form-floating">
+      <div class="col-sm-6 was-validated form-floating">
         <input type="text" name="usuario" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 text-dark" value="{{user.usuario}}" onkeyup="this.value=Numeros(this.value)" required>
-        <label for="floatingInput">Número de DNI</label>
+        <label for="floatingInput">Número de CUIL</label>
       </div>
 
-      <div class="col-sm was-validated form-floating">
+      <div class="col-sm-6 was-validated form-floating">
         <input type="email" name="email" placeholder="Correo electrónico" class="form-control rounded-0 text-dark" value="{{user.email}}" required>
         <label for="floatingInput">Correo electrónico</label>
       </div>
