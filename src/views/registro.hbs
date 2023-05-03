@@ -30,7 +30,7 @@
       </div>
     </div>
 {{!-- Fila 2 - Tipo doc, doc, email --}}
-    <div class="row g-3 mb-4 ">
+    <div class="row g-3 mb-4">
       <div class="col-sm-2 was-validated form-floating">
         <select name="opcion" id="slctDoc" class="form-select" required>
           <option value="" selected disabled hidden>Seleccione</option>
@@ -45,7 +45,6 @@
         <input type="text" name="usuario" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 text-dark" value="{{user.usuario}}" onkeyup="this.value=Numeros(this.value)" required>
         <label for="floatingInput">Número de DNI</label>
       </div>
-
       <div class="col-sm was-validated form-floating">
         <input type="email" name="email" placeholder="Correo electrónico" class="form-control rounded-0 text-dark" value="{{user.email}}" required>
         <label for="floatingInput">Correo electrónico</label>
@@ -53,14 +52,24 @@
     </div>
     
 {{!-- Fila 3 - contraseña --}}
-    <div class="row g-3 mb-4">
-      <div class="col-sm was-validated form-floating">
-        <input type="password" name="password" placeholder="Contraseña" minlength="4" class="form-control rounded-0 text-dark" required>
+    <div class="row g-3 mb-4 input-group">
+      <div class="col-sm was-validated form-floating ">
+        <input id="passInput1" type="password" name="password" placeholder="Contraseña" minlength="4" class="form-control rounded-0 text-dark" required>
         <label for="floatingInput">Contraseña</label>
+        <div class="input-group-append">
+          <span class="input-group-text" id="passwordEye1">
+            <i class="fa fa-eye-slash"></i>
+          </span>
+        </div>
       </div>
-      <div class="col-sm was-validated form-floating">
-        <input type="password" name="confirm_password" placeholder="Cargar contraseña nuevamente" minlength="4" class="form-control rounded-0 text-dark" required>
+      <div class="col-sm was-validated form-floating ">
+        <input id="passInput2" type="password" name="confirm_password" placeholder="Cargar contraseña nuevamente" minlength="4" class="form-control rounded-0 text-dark" required>
         <label for="floatingInput">Cargar contraseña nuevamente</label>
+        <div class="input-group-append">
+          <span class="input-group-text" id="passwordEye2">
+            <i class="fa fa-eye-slash"></i>
+          </span>
+        </div>
       </div>
     </div>
     <pre></pre>
@@ -101,4 +110,18 @@
   function setearOpciones() {
     document.getElementById("slctDoc").value = `{{user.opcion}}`;
   }
+
+  const PassBtn1 = document.querySelector('#passwordEye1');
+  const input1 = document.querySelector('#passInput1');
+  PassBtn1.addEventListener('click', () => {
+      input1.getAttribute('type') === 'password' ? input1.setAttribute('type', 'text') : input1.setAttribute('type', 'password');
+      PassBtn1.innerHTML = input1.getAttribute('type') === 'text' ? '<i class="fa fa-eye"></i>' : '<i class="fa fa-eye-slash"></i>';
+  });
+
+  const PassBtn2 = document.querySelector('#passwordEye2');
+  const input2 = document.querySelector('#passInput2');
+  PassBtn2.addEventListener('click', () => {
+      input2.getAttribute('type') === 'password' ? input2.setAttribute('type', 'text') : input2.setAttribute('type', 'password');
+      PassBtn2.innerHTML = input2.getAttribute('type') === 'text' ? '<i class="fa fa-eye"></i>' : '<i class="fa fa-eye-slash"></i>';
+  });
 </script>

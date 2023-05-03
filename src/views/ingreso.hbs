@@ -21,8 +21,13 @@
       <div class="mb-3">
         <input type="text" name="usuario" placeholder="Usuario (DNI sin puntos)" class="form-control rounded-0 bg-white text-dark" onkeyup="this.value=Numeros(this.value)" autofocus>
       </div>
-      <div class="mb-3">
-        <input type="password" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark">
+      <div class="input-group mb-3">
+        <input id="passInput" type="password" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark">
+        <div class="input-group-append">
+          <span class="input-group-text" id="passwordEye">
+            <i class="fa fa-eye-slash"></i>
+          </span>
+        </div>
       </div>
       <button class="btn btn-secondary"> Ingresar</button>
     </form>
@@ -57,4 +62,10 @@
     return out;
   }
 
+  const PassBtn = document.querySelector('#passwordEye');
+  const input = document.querySelector('#passInput');
+  PassBtn.addEventListener('click', () => {
+      input.getAttribute('type') === 'password' ? input.setAttribute('type', 'text') : input.setAttribute('type', 'password');
+      PassBtn.innerHTML = input.getAttribute('type') === 'text' ? '<i class="fa fa-eye"></i>' : '<i class="fa fa-eye-slash"></i>';
+  });
 </script>

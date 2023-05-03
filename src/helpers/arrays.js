@@ -221,6 +221,10 @@ export const mediosopc = [
     medio: "Cine",
     indice: 2,
   },
+  {
+    medio: "Otro Medio",
+    indice: 3,
+  },
 ];
 
 export const domiciliosOpc = [
@@ -909,6 +913,7 @@ export const columnasPerFis = [
   { header: "TV", key: "TV" },
   { header: "Web", key: "Web" },
   { header: "Cine", key: "Cine" },
+  { header: "Otro", key: "Otro Medio"},
   { header: "AREAS DE DESEMPEÑO" },
   { header: "Productor/a", key: "Productor/a" },
   { header: "Productor Ejecutivo", key: "Productor Ejecutivo" },
@@ -1005,6 +1010,7 @@ export const mediosUsuarioArr = {
   TV: "",
   Web: "",
   Cine: "",
+  'Otro Medio': "",
 };
 
 export const areaDesUsuarioArr = {
