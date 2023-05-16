@@ -175,7 +175,7 @@
       {{!-- Area complementaria --}}
       <div class="col-sm was-validated">
         <small class="text-muted">Áreas Complementarias</small>
-        <select name="areaComp" id="slctAreaComp" class="form-select" multiple size="7" required>
+        <select name="areaComp" id="slctAreaComp" class="form-select" multiple size="7">
           <option value="" disabled hidden>Áreas Complementarias</option>
         </select>
       </div>
@@ -475,7 +475,6 @@
     newOption.value = situacion.indice;
     slctAreaDes.appendChild(newOption)
   })
-
   $(document).ready(function() {
   $('#slctAreaDes').select2();
   $('#slctAreaDes').on('select2:select', function(e) {
@@ -501,7 +500,11 @@
   },{
     "medio": "Cine",
     "indice": 2
-  }]
+  },
+  {
+    medio: "Otro",
+    indice: 3,
+  },]
 
   medios.forEach(function(situacion){
     let newOption = document.createElement("option");

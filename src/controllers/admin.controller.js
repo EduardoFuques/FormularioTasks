@@ -208,15 +208,16 @@ export const adminPF = async (req, res) => {
       const domicilio = item.domicilio[0];
       const telefono = item.telefono[0];
       const medios = item.medios;
-      const mediosUsuario = mediosUsuarioArr;
-      medios.forEach((medioIndice) => {
+      console.log(medios)
+      const mediosUsuarioArrCopy = Object.assign({}, mediosUsuarioArr);       medios.forEach((medioIndice) => {
         const medioObj = mediosopc.find(
           (obj) => obj.indice === parseInt(medioIndice)
         );
         if (medioObj) {
-          mediosUsuario[medioObj.medio] = medioObj.medio;
+          mediosUsuarioArrCopy[medioObj.medio] = medioObj.medio;
         }
       });
+      console.log(mediosUsuarioArrCopy)
       const areaDes = item.areaDes;
       const areaDesUsuario = areaDesUsuarioArr;
       areaDes.forEach((areaIndice) => {
@@ -315,7 +316,7 @@ export const adminPF = async (req, res) => {
         // areaComp1: areaComp1Obj !== undefined ? areaComp1Obj.medio : "",
         // areaComp2: areaComp2Obj !== undefined ? areaComp2Obj.medio : "",
         // areaComp3: areaComp3Obj !== undefined ? areaComp3Obj.medio : "",
-        ...mediosUsuario, // Agregar los valores de mediosUsuario a las columnas correspondientes
+        ...mediosUsuarioArrCopy, // Agregar los valores de mediosUsuario a las columnas correspondientes
         ...areaDesUsuario,
         ...areaCompUsuario,
         createdAt: fechaCreated,
