@@ -205,12 +205,22 @@
       </div>
     </div>
     {{!-- Boton enviar formulario --}}
+    <div class="row g-3 mb-4">
+      <div class="col-sm-6 form-floating">  
+       <button class="btn btn-secondary"
+        data-bs-toggle="tooltip" data-bs-placement="top"
+        data-bs-custom-class="custom-tooltip"
+        data-bs-title="Por favor chequee la información antes de enviar el formulario."> 
+        Enviar Formulario
+      </button></div>
+      <div class="col-sm-6 form-floating">
     <button class="btn btn-secondary"
       data-bs-toggle="tooltip" data-bs-placement="top"
       data-bs-custom-class="custom-tooltip"
-      data-bs-title="Por favor chequee la información antes de enviar el formulario."> 
-      Enviar Formulario
-    </button>
+      data-bs-title="Si cancela el envío se descartan todos los cambios."> 
+      Cancelar - No guardar cambios
+    </button></div>
+    </div>
   </form>
   <pre>
 
