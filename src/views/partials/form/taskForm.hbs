@@ -157,7 +157,7 @@
       {{!-- Medios --}}
       <div class="col-sm was-validated">
         <small class="text-muted">Medios</small>
-        <select name="medios" id="slctMedios" class="form-select" multiple="true" size="3" required>
+        <select name="medios" id="slctMedios" class="form-select w-100" multiple="true" size="3" required>
             <option disabled hidden>Medios</option>
         </select>
       </div>
@@ -166,7 +166,7 @@
       {{!-- Area de desempeño --}}
       <div class="col-sm was-validated">
         <small class="text-muted">Áreas de desempeño</small>
-        <select name="areaDes" id="slctAreaDes" class="form-select" multiple size="7" required>
+        <select name="areaDes" id="slctAreaDes" class="form-select w-100" multiple size="7" required>
           <option value="" disabled hidden>Áreas de desempeño</option>
         </select>
       </div>
@@ -206,20 +206,48 @@
     </div>
     {{!-- Boton enviar formulario --}}
     <div class="row g-3 mb-4">
-      <div class="col-sm-6 form-floating">  
-       <button class="btn btn-secondary"
-        data-bs-toggle="tooltip" data-bs-placement="top"
-        data-bs-custom-class="custom-tooltip"
-        data-bs-title="Por favor chequee la información antes de enviar el formulario."> 
-        Enviar Formulario
-      </button></div>
-      <div class="col-sm-6 form-floating">
-    <button class="btn btn-secondary"
-      data-bs-toggle="tooltip" data-bs-placement="top"
-      data-bs-custom-class="custom-tooltip"
-      data-bs-title="Si cancela el envío se descartan todos los cambios."> 
-      Cancelar - No guardar cambios
-    </button></div>
+      <div class="col-sm-12 d-flex justify-content-between">  
+       <button
+          class="btn btn-secondary"
+          type="submit"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          id="enviarBtn"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Por favor chequee la información antes de enviar el formulario."
+        >
+          <i class="bi bi-send-check-fill me-2"></i>Enviar Formulario
+        </button>
+        <button
+          class="btn btn-secondary"
+          type="button"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          id="mailBtn"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Solicitar al administrador un cambio de e-mail"
+          formnovalidate
+        >
+          <i class="bi bi-envelope-at-fill me-2"></i>Solicitar cambio de e-mail
+        </button>
+        <button
+          class="btn btn-custom"
+          type="button"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          id="cancelarBtn"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Si cancela el envío se descartan todos los cambios."
+        >
+          <i class="bi bi-x-circle-fill me-2"></i>Cancelar - No guardar cambios
+        </button>
+        <style>
+          .btn-custom {
+            background-color: #b33; /* Cambia el valor por el color deseado */
+            color: #ffffff; /* Cambia el valor por el color deseado */
+          }
+        </style>
+      </div>
     </div>
   </form>
   <pre>
@@ -505,7 +533,6 @@
     medio: "Otro",
     indice: 3,
   },]
-
   medios.forEach(function(situacion){
     let newOption = document.createElement("option");
     newOption.text = situacion.medio;
@@ -1245,4 +1272,25 @@ function NumeroCuil(event, el){//Validar nombre
     }
   }
 
+
+  const cancelarBtn = document.getElementById('cancelarBtn');
+  cancelarBtn.addEventListener('click', function() {
+    // Realizar el logout redireccionando al usuario a la página de logout
+    window.location.href = "/logout";
+  });
+  var mailBtn = document.getElementById('mailBtn');
+  mailBtn.addEventListener('click', function() {
+    var apellido = document.getElementById('apellido').value;
+    var nombres = document.getElementById('nombres').value;
+    var usuario = document.getElementById('nro-dni').value;
+    
+    var subject = encodeURIComponent('REPA: Solicitud de cambio de e-mail');
+    var message = 'Hola, me gustaría solicitar un cambio de e-mail.\n\n' +
+                  'Nombre: ' + apellido + ', ' + nombres + '\n' +
+                  'DNI: ' + usuario;
+                  
+    var encodedMessage = encodeURIComponent(message);
+    var mailtoLink = 'mailto:repa@iaavim.gob.ar?subject=' + subject + '&body=' + encodedMessage;
+    window.location.href = mailtoLink;
+  });
 </script>

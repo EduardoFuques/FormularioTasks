@@ -1,45 +1,95 @@
+<div class="container-fluid">
+  <pre></pre>
+{{!-- Banner superior --}}
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="alert alert-danger text-center" role="alert">
+        <h3>Preguntas Frecuentes</h3>
+         <a class="btn btn-outline-secondary btn-lg" role="button" aria-current="page" id="pufBtn2">Leer instructivo de registro</a>
+      </div>
+    </div>
+  </div>
 {{!-- Header --}}
   <div class="row g-3 mb-4">
     <div class="col-sm-12">
       <div class="card text-bg-secondary mb-3 align-items-center">
-        <div class="card-header"> <h3>Registro Provincial del Audiovisual - IAAviM</h3></div>
+        <div class="card-header"> <h3>Registro al RePA - Personas Físicas</h3></div>
       </div>
     </div>
   </div>
-     {{!-- Botones --}}
-  <div class="alert alert-danger row g-2">
-    <div class="col-sm was-validated ">
-      <a class="btn btn-secondary text-center" role="button" aria-disabled="true" href="/password">Olvidé mi contraseña</a>
-    </div>
-    <div class="col-sm was-validated">
-      <a class="btn btn-secondary text-center" role="button" aria-current="page" id="termsBtn2">Registrarse</a>
-    </div>
-  </div>
-  {{!-- Form --}}
-  <div class="row justify-content-center align-items-center"><div class="col-md-6">
-
-    <form "/signin" method="post" >
-      <div class="mb-3">
-        <input type="text" name="usuario" placeholder="Usuario (DNI sin puntos)" class="form-control rounded-0 bg-white text-dark" onkeyup="this.value=Numeros(this.value)" autofocus>
+  <form "/signup" method="post">
+{{!-- Fila 1 - Nombre y Apellido --}}
+    <div class="row g-3 mb-4">
+      <div class="col-sm was-validated form-floating">
+        <input type="text" name="nombre" placeholder="Nombres" class="form-control rounded-0 text-dark" value="{{user.nombre}}" onkeyup="this.value=NombreMayus(this.value)" required>
+        <label for="floatingInput">Nombres</label>
       </div>
-      <div class="input-group mb-3">
-        <input id="passInput" type="password" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark">
+      <div class="col-sm was-validated form-floating">
+        <input type="text" name="apellido" placeholder="Apellido" class="form-control rounded-0 text-dark" value="{{user.apellido}}" onkeyup="this.value=NombreMayus(this.value)" required>
+        <label for="floatingInput">Apellido</label>
+      </div>
+    </div>
+{{!-- Fila 2 - Tipo doc, doc, email --}}
+    <div class="row g-3 mb-4">
+      <div class="col-sm-2 was-validated form-floating">
+        <select name="opcion" id="slctDoc" class="form-select" required>
+          <option value="" selected disabled hidden>Seleccione</option>
+          <option value="DNI">Documento Nacional de Identidad</option>
+          <option value="Cedula">Cédula Policia Federal</option>
+          <option value="LC">Libreta Cívica</option>
+          <option value="LE">Libreta de Enrolamiento</option>
+        </select>
+        <label for="floatingSelect">Tipo de documento</label>
+      </div>
+      <div class="col-sm-3 was-validated form-floating">
+        <input type="text" name="usuario" placeholder="Número de DNI (USUARIO REPA)" class="form-control rounded-0 text-dark" value="{{user.usuario}}" onkeyup="this.value=Numeros(this.value)" required>
+        <label for="floatingInput">Número de DNI</label>
+      </div>
+      <div class="col-sm was-validated form-floating">
+        <input type="email" name="email" placeholder="Correo electrónico" class="form-control rounded-0 text-dark" value="{{user.email}}" required>
+        <label for="floatingInput">Correo electrónico</label>
+      </div>
+    </div>
+    
+{{!-- Fila 3 - contraseña --}}
+    <div class="row g-3 mb-4 input-group">
+      <div class="col-sm was-validated form-floating ">
+        <input id="passInput1" type="password" name="password" placeholder="Contraseña" minlength="4" class="form-control rounded-0 text-dark" required>
+        <label for="floatingInput">Contraseña</label>
         <div class="input-group-append">
-          <span class="input-group-text" id="passwordEye">
+          <span class="input-group-text" id="passwordEye1">
             <i class="fa fa-eye-slash"></i>
           </span>
         </div>
       </div>
-      <button class="btn btn-secondary"> Ingresar</button>
-    </form>
-    <pre>
-        
-    </pre>
-  </div>
-  {{ terminosycondiciones}}
+      <div class="col-sm was-validated form-floating ">
+        <input id="passInput2" type="password" name="confirm_password" placeholder="Cargar contraseña nuevamente" minlength="4" class="form-control rounded-0 text-dark" required>
+        <label for="floatingInput">Cargar contraseña nuevamente</label>
+        <div class="input-group-append">
+          <span class="input-group-text" id="passwordEye2">
+            <i class="fa fa-eye-slash"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <pre></pre>
+    <button class="btn btn-secondary">Registrarse</button>
+  </form>
 </div>
 
 <script>
+  function NombreMayus(string){//solo letras y numeros
+    var out = '';
+    //Se añaden las letras validas
+    var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ ';//Caracteres validos
+	
+    for (var i=0; i<string.length; i++)
+       if (filtro.indexOf(string.charAt(i)) != -1) 
+	     out += (string.charAt(i)).toUpperCase();
+
+    return out;
+  }
+
   function Numeros(string){//Solo numeros
     var out = '';
     var filtro = '1234567890';//Caracteres validos
@@ -54,10 +104,24 @@
     return out;
   }
 
-  const PassBtn = document.querySelector('#passwordEye');
-  const input = document.querySelector('#passInput');
-  PassBtn.addEventListener('click', () => {
-      input.getAttribute('type') === 'password' ? input.setAttribute('type', 'text') : input.setAttribute('type', 'password');
-      PassBtn.innerHTML = input.getAttribute('type') === 'text' ? '<i class="fa fa-eye"></i>' : '<i class="fa fa-eye-slash"></i>';
+  document.body.onload = function() {
+    setearOpciones();
+  }
+  function setearOpciones() {
+    document.getElementById("slctDoc").value = `{{user.opcion}}`;
+  }
+
+  const PassBtn1 = document.querySelector('#passwordEye1');
+  const input1 = document.querySelector('#passInput1');
+  PassBtn1.addEventListener('click', () => {
+      input1.getAttribute('type') === 'password' ? input1.setAttribute('type', 'text') : input1.setAttribute('type', 'password');
+      PassBtn1.innerHTML = input1.getAttribute('type') === 'text' ? '<i class="fa fa-eye"></i>' : '<i class="fa fa-eye-slash"></i>';
+  });
+
+  const PassBtn2 = document.querySelector('#passwordEye2');
+  const input2 = document.querySelector('#passInput2');
+  PassBtn2.addEventListener('click', () => {
+      input2.getAttribute('type') === 'password' ? input2.setAttribute('type', 'text') : input2.setAttribute('type', 'password');
+      PassBtn2.innerHTML = input2.getAttribute('type') === 'text' ? '<i class="fa fa-eye"></i>' : '<i class="fa fa-eye-slash"></i>';
   });
 </script>

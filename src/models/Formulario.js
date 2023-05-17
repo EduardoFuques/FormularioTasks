@@ -40,7 +40,9 @@ const formSchema = new Schema(
     nombreFantasia: {type: String},
     nombreEmpresa: { ref: "Usuario", type: Schema.Types.String },
     cvFileUrl: {type: String},
-    dniFileUrl: {type: String}
+    dniFileUrl: {type: String},
+    cvFileDate: {type: Date},
+    dniFileDate: {type: Date}
   },
   {
     timestamps: true,

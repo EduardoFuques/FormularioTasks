@@ -8,6 +8,7 @@ import {
   mediosopc,
   domiciliosOpc,
 } from "../helpers/arrays";
+import { format } from "date-fns";
 
 export const renderForm = async (req, res) => {
   try {
@@ -48,6 +49,8 @@ export const renderForm = async (req, res) => {
       const editar = true;
       const perJur = false;
       const calle = datos.domicilio[0].calle.toString();
+      const formattedDNIDate = format(datos.dniFileDate, 'dd/MM/yyyy');
+      const formattedCVDate = format(datos.cvFileDate, 'dd/MM/yyyy')
       res.render("edit", {
         datos: datos,
         codigoRepa: codigoRepa,
@@ -59,6 +62,8 @@ export const renderForm = async (req, res) => {
         areaCompl: areaCompl,
         editar: editar,
         perJur: perJur,
+        formattedDNIDate: formattedDNIDate,
+        formattedCVDate: formattedCVDate
       });
     }
   } catch (error) {
@@ -88,6 +93,15 @@ export const captureForm = async (req, res) => {
     const { tipoDoc, usuario, nombre, apellido, email } = req.user;
     const cvFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.cvFile[0].filename}`;
     const dniFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.dniFile[0].filename}`;
+
+    const cvFilename = req.files.cvFile[0].filename;
+    const cvFileDate = cvFilename.substring(cvFilename.lastIndexOf("-") + 1, cvFilename.lastIndexOf("."));
+    const cvFileDateISO = cvFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1-$2-$3T$4:$5:00Z');
+
+    const dniFilename = req.files.dniFile[0].filename;
+    const dniFileDate = dniFilename.substring(dniFilename.lastIndexOf("-") + 1, dniFilename.lastIndexOf("."));
+    const dniFileDateISO = dniFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1-$2-$3T$4:$5:00Z');
+    
     const newForm = new Form({
       tipoDoc,
       usuario,
@@ -115,7 +129,9 @@ export const captureForm = async (req, res) => {
       areaDes, //ok
       areaComp, //ok
       cvFileUrl,
+      cvFileDate: new Date(cvFileDateISO),
       dniFileUrl,
+      dniFileDate: new Date(dniFileDateISO)
     });
     await newForm.save();
     res.render("pantalla-ok");
