@@ -9,12 +9,18 @@ import {
   mediosUsuarioArr,
   mediosopc,
 } from "../helpers/arrays";
+import { getUsersWithForms } from "../helpers/buscador";
 import Form from "../models/Formulario";
 import User from "../models/Usuarios";
 import ExcelJS from "exceljs";
 
 export const renderAdmin = async (req, res) => {
-  res.render("administracion");
+  let usersWithForms = await getUsersWithForms();
+  const admin = true;
+  res.render("administracion", {
+    admin: admin,
+    usersWithForms: usersWithForms,
+  });
 };
 
 export const adminPJ = async (req, res) => {
@@ -120,7 +126,6 @@ export const adminPJ = async (req, res) => {
       } else {
         resultadoUpdated = `${diasDesdeUpdated} días atrás`;
       }
-      console.log(datitos)
       const fechaCreatedISO = datitos.createdAt ? datitos.createdAt.toISOString() : '';
       const fechaCreated = fechaCreatedISO.slice(0, 10);
       datitos.createdAt = fechaCreated
@@ -208,7 +213,6 @@ export const adminPF = async (req, res) => {
       const domicilio = item.domicilio[0];
       const telefono = item.telefono[0];
       const medios = item.medios;
-      console.log(medios)
       const mediosUsuarioArrCopy = Object.assign({}, mediosUsuarioArr);       medios.forEach((medioIndice) => {
         const medioObj = mediosopc.find(
           (obj) => obj.indice === parseInt(medioIndice)
@@ -217,7 +221,6 @@ export const adminPF = async (req, res) => {
           mediosUsuarioArrCopy[medioObj.medio] = medioObj.medio;
         }
       });
-      console.log(mediosUsuarioArrCopy)
       const areaDes = item.areaDes;
       const areaDesUsuario = areaDesUsuarioArr;
       areaDes.forEach((areaIndice) => {
@@ -387,3 +390,15 @@ export const adminPF = async (req, res) => {
     res.status(500).json({ message: "Error al obtener los datos" });
   }
 };
+
+export const updateAdminiaavim = async (req, res) => {
+  try {
+    const {
+      usuario,
+      sitIaavim
+    } = req.body;
+    await Form.updateOne({usuario: usuario}, { $set: { sitIaavim: sitIaavim } })
+  } catch (error) {
+    console.log(error.message);
+  }
+}

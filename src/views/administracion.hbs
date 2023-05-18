@@ -4,19 +4,89 @@
       <div class="row g-3">
         <div class="col-sm-12">
           <div class="card text-bg-secondary mb-3 align-items-center">
-            <div class="card-header"> <h3>Bienvenido a la página de administración</h3></div>
+            <div class="card-header">
+              <h3>Bienvenido a la página de administración</h3></div>
           </div>
         </div>
       </div>
-      <p>Descargar planillas de usuarios</p>
       <div>
-      <form method="post" action="/administracion/PF" style="display: inline-block; margin-right: 10px;">
-        <button class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Planilla de personas físicas">Personas Físicas</button>
-      </form>
-      <form method="post" action="/administracion/PJ" style="display: inline-block;">
-        <button class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Planilla de personas jurídicas">Personas Jurídicas</button>
-      </form>
-    </div>
+        {{#if usersWithForms.length}}
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Código Repa</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">DNI</th>
+                <th scope="col">Email</th>
+                <th scope="col">Situación IAAVIM</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each usersWithForms}}
+                <tr>
+                  <td>{{this.codigoRepa}}</td>
+                  <td>{{this.nombre}}</td>
+                  <td>{{this.apellido}}</td>
+                  <th>{{this.form.[0].usuario}}</th>
+                  <td>{{this.email}}</td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault{{this.form.[0].usuario}}"{{#if this.form.[0].sitIaavim}} checked{{/if}} onchange="updateSitIaavim(this)" data-id="{{this.form.[0].usuario}}">
+                      <label class="form-check-label" for="flexSwitchCheckDefault{{this.form.[0].usuario}}">
+                        {{#if this.form.[0].sitIaavim}}
+                          ACTIVO
+                        {{else}}
+                          INACTIVO
+                        {{/if}}
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        {{else}}
+          <p>No se encontraron usuarios</p>
+        {{/if}}
+       
+      </div>
     </div>
   </div>
 </div>
+
+<script>
+  async function updateSitIaavim(element) {
+    const switchLabel = element.parentNode.querySelector('.form-check-label');
+
+    if (element.checked) {
+      switchLabel.textContent = 'ACTIVO';
+    } else {
+      switchLabel.textContent = 'INACTIVO';
+    }
+
+    const id = element.getAttribute('data-id');
+    const sitIaavim = element.checked;
+
+    try {
+      // Realizar una solicitud HTTP POST al servidor
+      const response = await fetch('administracion/update/sitiaavim', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ usuario: id, sitIaavim: sitIaavim })
+      });
+
+      // Manejar la respuesta
+      if (sitIaavim) {
+        switchLabel.textContent = 'ACTIVO';
+      } else {
+        switchLabel.textContent = 'INACTIVO';
+      }
+    } catch (error) {
+      // Capturar cualquier error durante la solicitud
+      console.error('Error al realizar la solicitud:', error);
+    }
+  }
+</script>

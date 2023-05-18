@@ -41,7 +41,7 @@ export const getUsersWithForms = async () => {
         delete userWithForms.usuario;
         delete userWithForms.password;
         delete userWithForms.rol;
-        delete userWithForms.codigoRepa;
+        //delete userWithForms.codigoRepa;
         delete userWithForms.createdAt;
         delete userWithForms.updatedAt;
       }

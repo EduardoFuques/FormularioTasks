@@ -111,7 +111,7 @@ export const captureForm = async (req, res) => {
       cuil, //ok
       sexo, //ok
       sitAfip, //ok
-      sitIaavim: true,
+      sitIaavim: false,
       domicilio: {
         calle: calle, //ok
         numero: numero, //ok

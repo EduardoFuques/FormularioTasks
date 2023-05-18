@@ -77,6 +77,31 @@
             {{/if}}
 
           {{/if}}
+
+          {{!-- ADMINISTRACION --}}
+          {{#if admin}}
+            <li>
+              <hr class="" />
+            </li>
+            <li>
+              <b>Descargar planillas de usuarios</b>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="#"
+                onclick="descargarPF(event)"
+              >Personas Físicas</a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="#"
+                onclick="descargarPJ(event)"
+              >Personas Jurídicas</a>
+            </li>
+          {{/if}}
+
           <li>
             <hr class="" />
           </li>
@@ -85,7 +110,14 @@
               class="dropdown-item"
               href="/nomenclador_iaavim.pdf"
               download
-            >Nomenclador IAAviM</a>
+            >Nomenclador IAAviM Personas Físicas</a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              href="/nomenclador_pj.pdf"
+              download
+            >Nomenclador IAAviM Personas Jurídicas</a>
           </li>
           <li>
             <hr class="" />
@@ -118,3 +150,22 @@
   {{> preguntasfrecuentes}}
   
 </nav>
+
+<script>
+  function descargarPF(event) {
+    event.preventDefault(); 
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/administracion/PF';
+    document.body.appendChild(form);
+    form.submit();
+  }
+    function descargarPJ(event) {
+    event.preventDefault(); 
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/administracion/PJ';
+    document.body.appendChild(form);
+    form.submit();
+  }
+</script>
