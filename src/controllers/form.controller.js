@@ -160,8 +160,34 @@ export const captureEditForm = async (req, res) => {
       areaComp,
     } = req.body;
     const { tipoDoc, usuario, nombre, apellido, email } = req.user;
-    const cvFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.cvFile[0].filename}`;
-    const dniFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.dniFile[0].filename}`;
+    const usuarioEncontrado = await Form.findOne({ usuario }).lean();
+    let cvFileUrl;
+    let cvFilename;
+    let cvFileDate;
+    let cvFileDateISO;
+    if (req.files.cvFile && req.files.cvFile.length > 0 && req.files.cvFile[0].filename) {
+      cvFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.cvFile[0].filename}`;
+      cvFilename = req.files.cvFile[0].filename;
+      cvFileDate = cvFilename.substring(cvFilename.lastIndexOf("-") + 1, cvFilename.lastIndexOf("."));
+      cvFileDateISO = new Date(cvFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1-$2-$3T$4:$5:00Z'));
+    } else {
+      cvFileUrl = usuarioEncontrado.cvFileUrl;
+      cvFileDateISO = usuarioEncontrado.cvFileDate;
+    }
+    let dniFileUrl;
+    let dniFilename;
+    let dniFileDate;
+    let dniFileDateISO;
+    if (req.files.dniFile && req.files.dniFile.length > 0 && req.files.dniFile[0].filename) {
+      dniFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.dniFile[0].filename}`;
+      dniFilename = req.files.dniFile[0].filename;
+      dniFileDate = dniFilename.substring(dniFilename.lastIndexOf("-") + 1, dniFilename.lastIndexOf("."));
+      dniFileDateISO = new Date(dniFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1-$2-$3T$4:$5:00Z'));
+    } else {
+      dniFileUrl = usuarioEncontrado.dniFileUrl;
+      dniFileDateISO = usuarioEncontrado.dniFileDate;
+    }
+
     const editForm = {
       cuil, //ok
       sexo, //ok
@@ -185,7 +211,9 @@ export const captureEditForm = async (req, res) => {
       areaDes, //ok
       areaComp, //ok
       cvFileUrl,
+      cvFileDate: new Date(cvFileDateISO),
       dniFileUrl,
+      dniFileDate: new Date(dniFileDateISO)
     };
     await Form.updateOne({ usuario: usuario }, { $set: editForm }, (error) => {
       if (error) {

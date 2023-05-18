@@ -45,12 +45,12 @@
     {{!-- Fila 1 - Apellido y nombre --}}
     <div class="row g-3 mb-4">
       {{!-- Apellido --}}
-      <div class="col-sm-6 form-floating">
+      <div class="col-sm-6 form-floating was-validated">
         <input type="text" name="apellido" placeholder="Apellido" id="apellido" class="form-control" required/>
         <label for="floatingInput">Apellido del responsable legal</label>
       </div>
       {{!-- Nombre --}}
-      <div class="col-sm form-floating">
+      <div class="col-sm form-floating was-validated">
         <input type="text" name="nombre" placeholder="Nombres" id="nombre" class="form-control" required/>
         <label for="floatingInput">Nombre del responsable legal</label>
       </div>
@@ -186,12 +186,50 @@
     </div>
 
     {{!-- Boton enviar formulario --}}
-    <button class="btn btn-secondary"
-      data-bs-toggle="tooltip" data-bs-placement="top"
-      data-bs-custom-class="custom-tooltip"
-      data-bs-title="Por favor chequee la información antes de enviar el formulario."> 
-      Enviar Formulario
-    </button>
+    <div class="row g-3 mb-4">
+      <div class="col-sm-12 d-flex justify-content-between">  
+       <button
+          class="btn btn-secondary"
+          type="submit"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          id="enviarBtn"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Por favor chequee la información antes de enviar el formulario."
+        >
+          <i class="bi bi-send-check-fill me-2"></i>Enviar Formulario
+        </button>
+        <button
+          class="btn btn-secondary"
+          type="button"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          id="mailBtn"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Solicitar al administrador un cambio de e-mail"
+          formnovalidate
+        >
+          <i class="bi bi-envelope-at-fill me-2"></i>Solicitar cambio de e-mail
+        </button>
+        <button
+          class="btn btn-custom"
+          type="button"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          id="cancelarBtn"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Si cancela el envío se descartan todos los cambios."
+        >
+          <i class="bi bi-x-circle-fill me-2"></i>Cancelar - No guardar cambios
+        </button>
+        <style>
+          .btn-custom {
+            background-color: #b33; /* Cambia el valor por el color deseado */
+            color: #ffffff; /* Cambia el valor por el color deseado */
+          }
+        </style>
+      </div>
+    </div>
   </form>
   <pre>
 
@@ -928,4 +966,24 @@
   function setearOpciones() {
     document.getElementById("nombreEmpresa").value = `{{nombreEmpresa}}`;
   }
+
+  const cancelarBtn = document.getElementById('cancelarBtn');
+  cancelarBtn.addEventListener('click', function() {
+    // Realizar el logout redireccionando al usuario a la página de logout
+    window.location.href = "/logout";
+  });
+  var mailBtn = document.getElementById('mailBtn');
+  mailBtn.addEventListener('click', function() {
+    var nombres = document.getElementById('nombreEmpresa').value;
+    var usuario = document.getElementById('cuil').value;
+    
+    var subject = encodeURIComponent('REPA: Solicitud de cambio de e-mail');
+    var message = 'Hola, me gustaría solicitar un cambio de e-mail.\n\n' +
+                  'Nombre de la Empresa: ' + nombres + '\n' +
+                  'CUIT: ' + usuario;
+                  
+    var encodedMessage = encodeURIComponent(message);
+    var mailtoLink = 'mailto:repa@iaavim.gob.ar?subject=' + subject + '&body=' + encodedMessage;
+    window.location.href = mailtoLink;
+  });
 </script>

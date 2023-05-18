@@ -5,6 +5,7 @@ import path from "path";
 import {
   domiciliosOpc,
 } from "../helpers/arrays";
+import { format } from "date-fns";
 
 export const renderFormem = async (req, res) => {
   try {
@@ -37,6 +38,8 @@ export const renderFormem = async (req, res) => {
       const perJur = true;
       const nombreEmpresa = datos.nombreEmpresa.toString();
       const calle = datos.domicilio[0].calle.toString();
+      const formattedDNIDate = format(datos.dniFileDate, 'dd/MM/yyyy');
+      const formattedCVDate = format(datos.cvFileDate, 'dd/MM/yyyy')
       res.render("editEmpresa", {
         datos: datos,
         nombreEmpresa: nombreEmpresa,
@@ -46,6 +49,8 @@ export const renderFormem = async (req, res) => {
         telefono: datos.telefono[0],
         editar: editar,
         perJur: perJur,
+        formattedDNIDate: formattedDNIDate,
+        formattedCVDate: formattedCVDate
       });
     }
   } catch (error) {
@@ -72,10 +77,20 @@ export const captureFormEm = async (req, res) => {
       apellido,
       nombre,
     } = req.body;
+
     const { tipoDoc, usuario, nombreEmpresa, email } = req.user;
+
     const cvFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.estatutoFile[0].filename}`;
     const dniFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.dniFile[0].filename}`;
 
+    const cvFilename = req.files.estatutoFile[0].filename;
+    const cvFileDate = cvFilename.substring(cvFilename.lastIndexOf("-") + 1, cvFilename.lastIndexOf("."));
+    const cvFileDateISO = cvFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1-$2-$3T$4:$5:00Z');
+
+    const dniFilename = req.files.dniFile[0].filename;
+    const dniFileDate = dniFilename.substring(dniFilename.lastIndexOf("-") + 1, dniFilename.lastIndexOf("."));
+    const dniFileDateISO = dniFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1-$2-$3T$4:$5:00Z');
+    
     const newForm = new Form({
       tipoDoc,
       usuario,
@@ -102,7 +117,9 @@ export const captureFormEm = async (req, res) => {
       nombreFantasia,
       nombreEmpresa,
       cvFileUrl,
+      cvFileDate: new Date(cvFileDateISO),
       dniFileUrl,
+      dniFileDate: new Date(dniFileDateISO)
     });
     await newForm.save();
     res.render("pantalla-ok", {perJur: true});
@@ -130,9 +147,35 @@ export const captureEditFormEm = async (req, res) => {
       nombre,
       apellido,
     } = req.body;
-    const { tipoDoc, usuario, email, codigoRepa, nombreEmpresa } = req.user;
-    const cvFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.estatutoFile[0].filename}`;
-    const dniFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.dniFile[0].filename}`;
+    const { usuario } = req.user;
+    const usuarioEncontrado = await Form.findOne({ usuario }).lean();
+    let cvFileUrl;
+    let cvFilename;
+    let cvFileDate;
+    let cvFileDateISO;
+    if (req.files.estatutoFile && req.files.estatutoFile.length > 0 && req.files.estatutoFile[0].filename) {
+      cvFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.estatutoFile[0].filename}`;
+      cvFilename = req.files.estatutoFile[0].filename;
+      cvFileDate = cvFilename.substring(cvFilename.lastIndexOf("-") + 1, cvFilename.lastIndexOf("."));
+      cvFileDateISO = new Date(cvFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1-$2-$3T$4:$5:00Z'));
+    } else {
+      cvFileUrl = usuarioEncontrado.cvFileUrl;
+      cvFileDateISO = usuarioEncontrado.cvFileDate;
+    }    
+    let dniFileUrl;
+    let dniFilename;
+    let dniFileDate;
+    let dniFileDateISO;
+    if (req.files.dniFile && req.files.dniFile.length > 0 && req.files.dniFile[0].filename) {
+      dniFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.dniFile[0].filename}`;
+      dniFilename = req.files.dniFile[0].filename;
+      dniFileDate = dniFilename.substring(dniFilename.lastIndexOf("-") + 1, dniFilename.lastIndexOf("."));
+      dniFileDateISO = new Date(dniFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1-$2-$3T$4:$5:00Z'));
+    } else {
+      dniFileUrl = usuarioEncontrado.dniFileUrl;
+      dniFileDateISO = usuarioEncontrado.dniFileDate;
+    }
+        
     const editForm = {
       sexo, //ok
       nombre,
@@ -154,7 +197,9 @@ export const captureEditFormEm = async (req, res) => {
       razonSocial: razonSocial,
       nombreFantasia: nombreFantasia,
       cvFileUrl,
+      cvFileDate: cvFileDateISO,
       dniFileUrl,
+      dniFileDate: dniFileDateISO
     };
     await Form.updateOne({ usuario: usuario }, { $set: editForm }, (error) => {
       if (error) {

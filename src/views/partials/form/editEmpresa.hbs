@@ -174,25 +174,93 @@
     </div>
     {{!-- Fila 9 - Carga Estatuto--}}
     <div class="row g-3 mb-4">
-      <div class="col-sm-12 was-validated">
-        <small class="text-muted">Estatuto</small>
-        <input name="estatutoFile" class="form-control" type="file" id="estatutoFile" accept=".pdf,.doc,.docx,.odt" required onchange="validarEstatuto()">
+      <div class="col-sm-8 was-validated">
+        <small class="text-muted">Currículum Vitae</small>
+        <input
+          name="cvFile"
+          class="form-control"
+          type="file"
+          id="cvFile"
+          accept=".pdf,.doc,.docx,.odt"
+          onchange="validarCV()"
+        />
+      </div>
+      <div class="col-sm-1 d-flex justify-content-center align-items-end">
+        <a href={{datos.cvFileUrl}} class="btn btn-secondary"><i
+            class="bi bi-file-earmark-pdf-fill"
+          ></i></a>
+      </div>
+      <div class="col-sm-3 d-flex justify-content-center align-items-end">
+        <span><b>Última actualización: {{formattedCVDate}}</b></span>
       </div>
     </div>
+
     <div class="row g-3 mb-4">
-      <div class="col-sm-12 was-validated">
+      <div class="col-sm-8 was-validated">
         <small class="text-muted">DNI frente y dorso</small>
-        <input name="dniFile" class="form-control" type="file" id="dniFile" accept=".pdf" required onchange="validarDNI()">
+        <input
+          name="dniFile"
+          class="form-control"
+          type="file"
+          id="dniFile"
+          accept=".pdf"
+          onchange="validarDNI()"
+        />
+      </div>
+      <div class="col-sm-1 d-flex justify-content-center align-items-end">
+        <a href={{datos.dniFileUrl}} class="btn btn-secondary"><i
+            class="bi bi-file-earmark-pdf-fill"
+          ></i></a>
+      </div>
+      <div class="col-sm-3 d-flex justify-content-center align-items-end">
+        <span><b>Última actualización: {{formattedDNIDate}}</b></span>
       </div>
     </div>
 
     {{!-- Boton enviar formulario --}}
-    <button class="btn btn-secondary"
-      data-bs-toggle="tooltip" data-bs-placement="top"
-      data-bs-custom-class="custom-tooltip"
-      data-bs-title="Por favor chequee la información antes de enviar el formulario."> 
-      Enviar Formulario
-    </button>
+    <div class="row g-3 mb-4">
+      <div class="col-sm-12 d-flex justify-content-between">
+        <button
+          class="btn btn-secondary"
+          type="submit"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          id="enviarBtn"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Por favor chequee la información antes de enviar el formulario."
+        >
+          <i class="bi bi-send-check-fill me-2"></i>Enviar Formulario
+        </button>
+        <button
+          class="btn btn-secondary"
+          type="button"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          id="mailBtn"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Solicitar al administrador un cambio de e-mail"
+          formnovalidate
+        >
+          <i class="bi bi-envelope-at-fill me-2"></i>Solicitar cambio de e-mail
+        </button>
+        <button
+          class="btn btn-custom"
+          type="button"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          id="cancelarBtn"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Si cancela el envío se descartan todos los cambios."
+        >
+          <i class="bi bi-x-circle-fill me-2"></i>Cancelar - No guardar cambios
+        </button>
+        <style>
+          .btn-custom { background-color: #b33; /* Cambia el valor por el color
+          deseado */ color: #ffffff; /* Cambia el valor por el color deseado */
+          }
+        </style>
+      </div>
+    </div>
   </form>
   <pre>
 
@@ -938,4 +1006,26 @@
     slctdepartamento.textContent = `${domicilios[indice].opciones.Departamento}`;
     slctdistrito.textContent = `${domicilios[indice].opciones.Distrito}`;
   }
+
+  const cancelarBtn = document.getElementById('cancelarBtn');
+  cancelarBtn.addEventListener('click', function() {
+    // Realizar el logout redireccionando al usuario a la página de logout
+    window.location.href = "/logout";
+  });
+
+  var mailBtn = document.getElementById('mailBtn');
+  mailBtn.addEventListener('click', function() {
+    var apellido = document.getElementById('apellido').value;
+    var nombres = document.getElementById('nombres').value;
+    var usuario = document.getElementById('nro-dni').value;
+    
+    var subject = encodeURIComponent('REPA: Solicitud de cambio de e-mail');
+    var message = 'Hola, me gustaría solicitar un cambio de e-mail.\n\n' +
+                  'Nombre: ' + apellido + ', ' + nombres + '\n' +
+                  'DNI: ' + usuario;
+                  
+    var encodedMessage = encodeURIComponent(message);
+    var mailtoLink = 'mailto:repa@iaavim.gob.ar?subject=' + subject + '&body=' + encodedMessage;
+    window.location.href = mailtoLink;
+  });
 </script>
