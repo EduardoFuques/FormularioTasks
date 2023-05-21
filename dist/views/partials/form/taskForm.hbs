@@ -1,0 +1,1296 @@
+<div class="container-fluid">
+  <pre></pre>
+  <form "/form" method="post" enctype="multipart/form-data">
+        {{!-- Header datos personales --}}
+    <div class="row g-3">
+      <div class="col-sm-12">
+        <div class="card text-bg-secondary mb-3 align-items-center">
+          <div class="card-header"> <h3>Datos Personales</h3></div>
+        </div>
+      </div>
+    </div>
+    {{!-- Fila 1 - Apellido y nombre --}}
+    <div class="row g-3 mb-4">
+      {{!-- Apellido --}}
+      <div class="col-sm-6 form-floating">
+        <input type="text" name="apellido" placeholder="Apellido" id="apellido" value={{datos.apellido}} class="form-control" disabled/>
+        <label for="floatingInput">Apellido</label>
+      </div>
+      {{!-- Nombre --}}
+      <div class="col-sm form-floating">
+        <input type="text" name="nombres" placeholder="Nombres" id="nombres" value={{datos.nombre}} class="form-control" disabled/>
+        <label for="floatingInput">Nombres</label>
+      </div>
+    </div>
+    {{!-- Fila 2 - tipo y numero documento --}}
+    <div class="row g-3 mb-4">
+      {{!-- Tipo doc --}}
+      <div class="col-sm-6 form-floating">
+        <input type="text" name="tipoDoc" id="tipoDoc" value={{datos.tipoDoc}} class="form-control" disabled>
+        <label for="floatingInput">Tipo de documento</label>
+      </div>
+      {{!-- Numero doc --}}
+      <div class="col-sm form-floating">
+        <input type="text" name="nro-doc" placeholder="Número de documento" id="nro-dni" value={{datos.usuario}} class="form-control" disabled/>
+        <label for="floatingInput">Número de documento</label>
+      </div>
+    </div>
+    {{!-- Fila 3 - email, cuil, sexo --}}
+    <div class="row g-3 mb-4">
+      {{!-- email --}}
+      <div class="col-sm-6 form-floating">
+        <input name="email" type="email" class="form-control" id="email" value={{datos.email}} placeholder="e-mail: nombre@ejemplo.com" disabled>
+        <label for="floatingInput">e-mail</label>
+      </div>
+      {{!-- cuil --}}
+      <div class="col-sm  was-validated form-floating">
+        <input name="cuil" type="text" class="form-control item" id="cuil" placeholder="Número cuit/cuil" onkeyup="NumeroCuil(event, this)" maxlength="13" pattern="\d{2}-\d{8}-\d{1}" required >
+        <label for="floatingInput">Número cuit/cuil</label>
+      </div>
+      {{!-- sexo --}}
+      <div class="col-sm-3  was-validated form-floating">
+        <select name="sexo" id="slctSexo" class="form-select" required>
+          <option value="" disabled hidden selected>Seleccione</option>
+        </select>
+        <label for="floatingSelect">Género</label>
+      </div>
+    </div>
+    {{!-- Fila 4 - Personeria juridica, afip, iaavim, repa--}}
+    <div class="row g-3 mb-4"> 
+      {{!-- Situación AFIP --}}
+      <div class="col-sm  was-validated form-floating">
+        <select name="sitAfip" id="slctSitAfip" class="form-select" required>
+          <option value="" disabled hidden selected>Seleccione</option>
+        </select>
+        <label for="floatingSelect">Situación AFIP</label>
+      </div>
+      {{!-- Código REPA --}}
+      <div class="col-sm form-floating">
+        <input type="text" class="form-control" id="codRepa" placeholder="Código REPA" value={{codigoRepa}} aria-label="codRepa" disabled>
+        <label for="floatingInput">Código REPA</label>
+      </div>
+      {{!-- Situación Iaavim --}}
+      <div class="col-sm form-floating">
+        <input type="text" class="form-control" id="sitIaavim" placeholder="Situación IAAViM" aria-label="sitIaavim" value="INACTIVO" disabled>
+        <label for="floatingInput">Situación IAAViM</label>
+      </div>
+    </div>
+    {{!-- Fila 5 - Telefonos --}}
+    <div class="row g-3 mb-4">
+      {{!-- Telefono fijo --}}
+      <div class="col-sm-4 form-floating">
+        <input name="telFijo" type="text" class="form-control" id="telFijo" placeholder="Teléfono Fijo" aria-label="Phone" onkeyup="this.value=NumerosTelefono(this.value)">
+        <label for="floatingInput">Teléfono Fijo</label>
+      </div>
+      {{!-- Movil principal --}}
+      <div class="col-sm-4  was-validated form-floating">
+        <input name="movilPpal" type="text" class="form-control" id="movilPpal" placeholder="Móvil" aria-label="Mobile" onkeyup="this.value=NumerosTelefono(this.value)" required>
+        <label for="floatingInput">Teléfono Móvil</label>
+      </div>
+      {{!-- Movil Alternativo --}}
+      <div class="col-sm form-floating">
+        <input name="movilAlt" type="text" class="form-control" id="movilAlt" placeholder="Móvil Alternativo" aria-label="SecondPhone" onkeyup="this.value=NumerosTelefono(this.value)">
+        <label for="floatingInput">Móvil Alternativo</label>
+      </div>
+    </div>
+    {{!-- Fila 6 - Localidad, Departamento, Distrito CP--}}
+    <div class="row g-3 mb-4">
+      {{!-- Municipio --}}
+      <div class="col-sm-3  was-validated form-floating">
+        <select name="localidad" id="slctMunicipios" class="slctMunicipios form-select" required>
+          <option value="" disabled hidden selected>Seleccione</option>
+        </select>
+        <label for="floatingSelect">Localidad</label>
+      </div>
+      {{!-- Departamento --}}
+      <div class="col-sm-3 form-floating">
+        <div class="slctDepartamentos form-control"></div>
+        <label for="floatingInput">Departamento</label>
+      </div>
+      {{!-- Distrito --}}
+      <div class="col-sm-3 form-floating">
+        <div class="slctDistritos form-control"></div>
+        <label for="floatingInput">Distrito</label>
+      </div>
+      {{!-- Codigo postal --}}
+      <div class="col-sm  was-validated form-floating">
+        <input name="cp" type="text" class="form-control" minlength="4" id="cp" placeholder="C.P." aria-label="Zip" onkeyup="this.value=NumCP(this.value)" required>
+        <label for="floatingInput">Código postal</label>
+      </div>
+    </div>
+    {{!-- Fila 7 - Calle, piso, número, depto --}}
+    <div class="row g-3 mb-4">
+      {{!-- calle --}}
+      <div class="col-sm-5 was-validated form-floating">
+        <input name="calle" type="text" class="form-control" id="calle" placeholder="Calle" aria-label="Street" required>
+        <label for="floatingInput">Calle</label>
+      </div>
+      {{!-- número --}}
+      <div class="col-sm was-validated form-floating">
+        <input name="numero" type="text" class="form-control" id="numero" placeholder="Número" aria-label="Number" onkeyup="this.value=NumerosTelefono(this.value)" required>
+        <label for="floatingInput">Número</label>
+      </div>
+      {{!-- piso --}}
+      <div class="col-sm form-floating">
+        <input name="piso" type="text" class="form-control" id="piso" placeholder="Piso" aria-label="Floor">
+        <label for="floatingInput">Piso</label>
+      </div>
+      {{!-- Depto --}}
+      <div class="col-sm form-floating">
+        <input name="dpto" type="text" class="form-control" id="dpto" placeholder="Dpto" aria-label="Depto">
+        <label for="floatingInput">Dpto</label>
+      </div>
+    </div>
+    <pre>
+      
+    </pre>
+    {{!-- Header Medios --}}
+    <div class="row g-3 mb-3">
+      <div class="col-sm-12">
+        <div class="card text-bg-secondary mb-3 align-items-center">
+          <div class="card-header"> <h3>Medios, Áreas de Desempeño y complementarias</h3></div>
+        </div>
+      </div>
+    </div>
+    {{!-- Fila 8  - Selección de medios--}}
+    <div class="row g-3 mb-4">
+      {{!-- Medios --}}
+      <div class="col-sm was-validated">
+        <small class="text-muted">Medios</small>
+        <select name="medios" id="slctMedios" class="form-select w-100" multiple="true" size="3" required>
+            <option disabled hidden>Medios</option>
+        </select>
+      </div>
+    </div>
+    <div class="row g-3 mb-4">
+      {{!-- Area de desempeño --}}
+      <div class="col-sm was-validated">
+        <small class="text-muted">Áreas de desempeño</small>
+        <select name="areaDes" id="slctAreaDes" class="form-select w-100" multiple size="7" required>
+          <option value="" disabled hidden>Áreas de desempeño</option>
+        </select>
+      </div>
+    </div>
+    <div class="row g-3 mb-4">
+      {{!-- Area complementaria --}}
+      <div class="col-sm was-validated">
+        <small class="text-muted">Áreas Complementarias</small>
+        <select name="areaComp" id="slctAreaComp" class="form-select" multiple size="7">
+          <option value="" disabled hidden>Áreas Complementarias</option>
+        </select>
+      </div>
+    </div>
+    <pre>
+
+    </pre>
+    {{!-- Header carga CV --}}
+    <div class="row g-3">
+      <div class="col-sm-12">
+        <div class="card text-bg-secondary mb-3 align-items-center">
+          <div class="card-header"> <h3>Carga de Currículum Vitae y DNI</h3></div>
+        </div>
+      </div>
+    </div>
+    {{!-- Fila 9 - Carga CV--}}
+    <div class="row g-3 mb-4">
+      <div class="col-sm-12 was-validated">
+        <small class="text-muted">Currículum Vitae</small>
+        <input name="cvFile" class="form-control" type="file" id="cvFile" accept=".pdf,.doc,.docx,.odt" required onchange="validarCV()">
+      </div>
+    </div>
+    <div class="row g-3 mb-4">
+      <div class="col-sm-12 was-validated">
+        <small class="text-muted">DNI frente y dorso</small>
+        <input name="dniFile" class="form-control" type="file" id="dniFile" accept=".pdf" required onchange="validarDNI()">
+      </div>
+    </div>
+    {{!-- Boton enviar formulario --}}
+    <div class="row g-3 mb-4">
+      <div class="col-sm-12 d-flex justify-content-between">  
+       <button
+          class="btn btn-secondary"
+          type="submit"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          id="enviarBtn"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Por favor chequee la información antes de enviar el formulario."
+        >
+          <i class="bi bi-send-check-fill me-2"></i>Enviar Formulario
+        </button>
+        <button
+          class="btn btn-secondary"
+          type="button"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          id="mailBtn"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Solicitar al administrador un cambio de e-mail"
+          formnovalidate
+        >
+          <i class="bi bi-envelope-at-fill me-2"></i>Solicitar cambio de e-mail
+        </button>
+        <button
+          class="btn btn-custom"
+          type="button"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          id="cancelarBtn"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Si cancela el envío se descartan todos los cambios."
+        >
+          <i class="bi bi-x-circle-fill me-2"></i>Cancelar - No guardar cambios
+        </button>
+        <style>
+          .btn-custom {
+            background-color: #b33; /* Cambia el valor por el color deseado */
+            color: #ffffff; /* Cambia el valor por el color deseado */
+          }
+        </style>
+      </div>
+    </div>
+  </form>
+  <pre>
+
+  </pre> 
+</div>
+
+<script>
+  opcAFIP = [
+    "Exento",
+    "No Inscripto",
+    "Monotributista",
+    "Responsable Inscripto",
+  ];
+  opcAFIP.forEach(function(situacion){
+    let newOption = document.createElement("option");
+    newOption.text = situacion;
+    newOption.value = situacion;
+    slctSitAfip.appendChild(newOption)
+  })
+  
+  areaComp = [    
+      {
+    medio: "Actor/actriz con experiencia en realizaciones audiovisuales",
+    indice: 0,
+  },
+  {
+    medio: "Locutor/a con experiencia en realizaciones audiovisuales",
+    indice: 1,
+  },
+  {
+    medio: "Músico con experiencia en realizaciones audiovisuales",
+    indice: 2,
+  },
+  {
+    medio: "Desarrollador/a de vídeo juegos",
+    indice: 3,
+  },
+  {
+    medio: "Proveedor/a de software y/o hardware",
+    indice: 4,
+  },
+  {
+    medio: "Bailarín/a con experiencia en audiovisuales",
+    indice: 5,
+  },
+  {
+    medio: "Otros",
+    indice: 6,
+  },
+  ]
+  areaComp.forEach(function(situacion){
+    let newOption = document.createElement("option");
+    newOption.text = situacion.medio;
+    newOption.value = situacion.indice;
+    slctAreaComp.appendChild(newOption)
+  })
+  $(document).ready(function() {
+  $('#slctAreaComp').select2();
+  $('#slctAreaComp').on('select2:select', function(e) {
+    if ($('#slctAreaComp').val().length > 3) {
+      $('#slctAreaComp').val(e.params.data.id).trigger('change.select2');
+      alert('Seleccione un máximo de 3 opciones');
+    }
+  });
+  $('#slctAreaComp').on('select2:unselect', function(e) {
+    if ($('#slctAreaComp').val().length < 4) {
+      $('#slctAreaComp').select2('enable');
+    }
+  })});
+  
+  areaDes = [
+ {
+    medio: "Productor/a",
+    indice: 0,
+  },
+  {
+    medio: "Productor Ejecutivo",
+    indice: 1,
+  },
+  {
+    medio: "Director/a",
+    indice: 2,
+  },
+  {
+    medio: "Guionista",
+    indice: 3,
+  },
+  {
+    medio: "Realizador/a comunitario",
+    indice: 4,
+  },
+  {
+    medio: "Documentalista",
+    indice: 5,
+  },
+  {
+    medio: "Realizador/a integral audiovisual",
+    indice: 6,
+  },
+  {
+    medio: "Asistente de Dirección",
+    indice: 7,
+  },
+  {
+    medio: "Director/a de Arte",
+    indice: 8,
+  },
+  {
+    medio: "Dirección de Fotografía",
+    indice: 9,
+  },
+  {
+    medio: "Asistente de Producción",
+    indice: 10,
+  },
+  {
+    medio: "Gaffer",
+    indice: 11,
+  },
+  {
+    medio: "Camarógrafo/a",
+    indice: 12,
+  },
+  {
+    medio: "Foquista",
+    indice: 13,
+  },
+  {
+    medio: "Grip",
+    indice: 14,
+  },
+  {
+    medio: "Asistente de Cámara",
+    indice: 15,
+  },
+  {
+    medio: "Sonidista",
+    indice: 16,
+  },
+  {
+    medio: "Microfonista",
+    indice: 17,
+  },
+  {
+    medio: "Video Assist",
+    indice: 18,
+  },
+  {
+    medio: "Continuista",
+    indice: 19,
+  },
+  {
+    medio: "Jefe/a eléctrico",
+    indice: 20,
+  },
+  {
+    medio: "Editor/a de sonido",
+    indice: 21,
+  },
+  {
+    medio: "Editor/a de imagen",
+    indice: 22,
+  },
+  {
+    medio: "Animador/a",
+    indice: 23,
+  },
+  {
+    medio: "Ilustrador/a",
+    indice: 24,
+  },
+  {
+    medio: "Vestuarista",
+    indice: 25,
+  },
+  {
+    medio: "Maquillador/a",
+    indice: 26,
+  },
+  {
+    medio: "Utilero/a",
+    indice: 27,
+  },
+  {
+    medio: "Coordinador/a de locaciones",
+    indice: 28,
+  },
+  {
+    medio: "Coordinador/a de Casting",
+    indice: 29,
+  },
+  {
+    medio: "Doblajista",
+    indice: 30,
+  },
+  {
+    medio: "Efectos especiales",
+    indice: 31,
+  },
+  {
+    medio: "Exhibidor/a sala IAAviM",
+    indice: 32,
+  },
+  {
+    medio: "Exhibidor/a espacio INCAA",
+    indice: 33,
+  },
+  {
+    medio: "Exhibidor/a ambulante",
+    indice: 34,
+  },
+  {
+    medio: "Exhibidor/a web / TV",
+    indice: 35,
+  },
+  {
+    medio: "Coordinador/a de Festivales",
+    indice: 36,
+  },
+  {
+    medio: "Distribuidor/a",
+    indice: 37,
+  },
+  {
+    medio: "Desarrollador/a de videojuegos",
+    indice: 38,
+  },
+  {
+    medio: "Investigador/a",
+    indice: 39,
+  },
+  {
+    medio: "Capacitador/a o formador/a audiovisual",
+    indice: 40,
+  },
+  {
+    medio: "Prensa especializado/a en audiovisuales",
+    indice: 41,
+  },
+  {
+    medio: "Abogado/a especialización en comunicación audiovisuales",
+    indice: 42,
+  },
+  {
+    medio: "Otro",
+    indice: 43,
+  },
+    ]
+  areaDes.forEach(function(situacion){
+    let newOption = document.createElement("option");
+    newOption.text = situacion.medio;
+    newOption.value = situacion.indice;
+    slctAreaDes.appendChild(newOption)
+  })
+  $(document).ready(function() {
+  $('#slctAreaDes').select2();
+  $('#slctAreaDes').on('select2:select', function(e) {
+    if ($('#slctAreaDes').val().length > 3) {
+      $('#slctAreaDes').val(e.params.data.id).trigger('change.select2');
+      alert('Seleccione un máximo de 3 opciones');
+    }
+  });
+  $('#slctAreaDes').on('select2:unselect', function(e) {
+    if ($('#slctAreaDes').val().length < 4) {
+      $('#slctAreaDes').select2('enable');
+    }
+  });
+});
+
+
+  medios = [{
+    "medio": "TV",
+    "indice": 0
+  },{
+    "medio": "Web",
+    "indice": 1
+  },{
+    "medio": "Cine",
+    "indice": 2
+  },
+  {
+    medio: "Otro",
+    indice: 3,
+  },]
+  medios.forEach(function(situacion){
+    let newOption = document.createElement("option");
+    newOption.text = situacion.medio;
+    newOption.value = situacion.indice;
+    slctMedios.appendChild(newOption)
+  })
+  $(document).ready(function() {
+    $('#slctMedios').select2();
+  });
+
+
+  
+  domicilios =[  {
+    "localidad": "9 de Julio",  
+    "opciones": {
+    "Departamento": "Eldorado",
+    "Distrito": "NORTE",
+    "indice": 0
+    }
+  },
+  {
+    "localidad": "25 de Mayo",  
+    "opciones": {
+    "Departamento": "25 de Mayo",
+    "Distrito": "URUGUAY",
+    "indice": 1
+    }
+  },
+  {
+    "localidad": "Alba Posse",  
+    "opciones": {
+    "Departamento": "25 de Mayo",
+    "Distrito": "URUGUAY",
+    "indice": 2
+    }
+  },
+  {
+    "localidad": "Almafuerte",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 3
+    }
+  },
+  {
+    "localidad": "Ameghino",  
+    "opciones": {
+    "Departamento": "San Javier",
+    "Distrito": "URUGUAY",
+    "indice": 4
+    }
+  },
+  {
+    "localidad": "Apóstoles",  
+    "opciones": {
+    "Departamento": "Apóstoles",
+    "Distrito": "SUR",
+    "indice": 5
+    }
+  },
+  {
+    "localidad": "Aristóbulo del Valle",  
+    "opciones": {
+    "Departamento": "Cainguás",
+    "Distrito": "URUGUAY",
+    "indice": 6
+    }
+  },
+  {
+    "localidad": "Arroyo del Medio",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 7
+    }
+  },
+  {
+    "localidad": "Azara",  
+    "opciones": {
+    "Departamento": "Apóstoles",
+    "Distrito": "SUR",
+    "indice": 8
+    }
+  },
+  {
+    "localidad": "Bernardo de Irigoyen",  
+    "opciones": {
+    "Departamento": "General Manuel Belgrano",
+    "Distrito": "NORTE",
+    "indice": 9
+    }
+  },
+  {
+    "localidad": "Bonpland",  
+    "opciones": {
+    "Departamento": "Candelaria",
+    "Distrito": "SUR",
+    "indice": 10
+    }
+  },
+  {
+    "localidad": "Caa Yarí",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 11
+    }
+  },
+  {
+    "localidad": "Campo Grande",  
+    "opciones": {
+    "Departamento": "Cainguás",
+    "Distrito": "URUGUAY",
+    "indice": 12
+    }
+  },
+  {
+    "localidad": "Campo Ramón",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 13
+    }
+  },
+  {
+    "localidad": "Campo Viera",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 14
+    }
+  },
+  {
+    "localidad": "Candelaria",  
+    "opciones": {
+    "Departamento": "Candelaria",
+    "Distrito": "SUR",
+    "indice": 15
+    }
+  },
+  {
+    "localidad": "Capioví",  
+    "opciones": {
+    "Departamento": "Libertador General San Martín",
+    "Distrito": "PARANÁ",
+    "indice": 16
+    }
+  },
+  {
+    "localidad": "Caraguatay",  
+    "opciones": {
+    "Departamento": "Montecarlo",
+    "Distrito": "PARANÁ",
+    "indice": 17
+    }
+  },
+  {
+    "localidad": "Cerro Azul",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 18
+    }
+  },
+  {
+    "localidad": "Cerro Corá",  
+    "opciones": {
+    "Departamento": "Candelaria",
+    "Distrito": "SUR",
+    "indice": 19
+    }
+  },
+  {
+    "localidad": "Colonia Alberdi",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 20
+    }
+  },
+  {
+    "localidad": "Colonia Aurora",  
+    "opciones": {
+    "Departamento": "25 de Mayo",
+    "Distrito": "URUGUAY",
+    "indice": 21
+    }
+  },
+  {
+    "localidad": "Colonia Delicia",  
+    "opciones": {
+    "Departamento": "Eldorado",
+    "Distrito": "NORTE",
+    "indice": 22
+    }
+  },
+  {
+    "localidad": "Colonia Polana",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 23
+    }
+  },
+  {
+    "localidad": "Colonia Victoria",  
+    "opciones": {
+    "Departamento": "Eldorado",
+    "Distrito": "NORTE",
+    "indice": 24
+    }
+  },
+  {
+    "localidad": "Colonia Wanda",  
+    "opciones": {
+    "Departamento": "Iguazú",
+    "Distrito": "NORTE",
+    "indice": 25
+    }
+  },
+  {
+    "localidad": "Comandante A. Guacurary",  
+    "opciones": {
+    "Departamento": "General Manuel Belgrano",
+    "Distrito": "NORTE",
+    "indice": 26
+    }
+  },
+  {
+    "localidad": "Concepción de la Sierra",  
+    "opciones": {
+    "Departamento": "Concepción",
+    "Distrito": "",
+    "indice": 27
+    }
+  },
+  {
+    "localidad": "Corpus",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 28
+    }
+  },
+  {
+    "localidad": "Dos Arroyos",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 29
+    }
+  },
+  {
+    "localidad": "Dos de Mayo",  
+    "opciones": {
+    "Departamento": "Cainguás",
+    "Distrito": "URUGUAY",
+    "indice": 30
+    }
+  },
+  {
+    "localidad": "El Alcázar",  
+    "opciones": {
+    "Departamento": "Libertador General San Martín",
+    "Distrito": "PARANÁ",
+    "indice": 31
+    }
+  },
+  {
+    "localidad": "El Soberbio",  
+    "opciones": {
+    "Departamento": "Guaraní",
+    "Distrito": "URUGUAY",
+    "indice": 32
+    }
+  },
+  {
+    "localidad": "Eldorado",  
+    "opciones": {
+    "Departamento": "Eldorado",
+    "Distrito": "NORTE",
+    "indice": 33
+    }
+  },
+  {
+    "localidad": "Fachinal",  
+    "opciones": {
+    "Departamento": "Capital",
+    "Distrito": "SUR",
+    "indice": 34
+    }
+  },
+  {
+    "localidad": "Garuhapé",  
+    "opciones": {
+    "Departamento": "Libertador General San Martín",
+    "Distrito": "PARANÁ",
+    "indice": 35
+    }
+  },
+  {
+    "localidad": "Garupá",  
+    "opciones": {
+    "Departamento": "Capital",
+    "Distrito": "SUR",
+    "indice": 36
+    }
+  },
+  {
+    "localidad": "General J. J. Urquiza",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 37
+    }
+  },
+  {
+    "localidad": "Gobernador López",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 38
+    }
+  },
+  {
+    "localidad": "Gobernador Roca",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 39
+    }
+  },
+  {
+    "localidad": "Gral. Alvear",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 40
+    }
+  },
+  {
+    "localidad": "Guaraní",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 41
+    }
+  },
+  {
+    "localidad": "Hipólito Irigoyen",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 42
+    }
+  },
+  {
+    "localidad": "Iguazú",  
+    "opciones": {
+    "Departamento": "Iguazú",
+    "Distrito": "NORTE",
+    "indice": 43
+    }
+  },
+  {
+    "localidad": "Itacaruaré",  
+    "opciones": {
+    "Departamento": "San Javier",
+    "Distrito": "URUGUAY",
+    "indice": 44
+    }
+  },
+  {
+    "localidad": "Jardín América",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 45
+    }
+  },
+  {
+    "localidad": "Leandro N. Alem",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 46
+    }
+  },
+  {
+    "localidad": "Leoni",  
+    "opciones": {
+    "Departamento": "Libertador General San Martín",
+    "Distrito": "PARANÁ",
+    "indice": 47
+    }
+  },
+  {
+    "localidad": "Libertad",  
+    "opciones": {
+    "Departamento": "Iguazú",
+    "Distrito": "NORTE",
+    "indice": 48
+    }
+  },
+  {
+    "localidad": "Loreto",  
+    "opciones": {
+    "Departamento": "Candelaria",
+    "Distrito": "SUR",
+    "indice": 49
+    }
+  },
+  {
+    "localidad": "Los Helechos",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 50
+    }
+  },
+  {
+    "localidad": "Mártires",  
+    "opciones": {
+    "Departamento": "Candelaria",
+    "Distrito": "SUR",
+    "indice": 51
+    }
+  },
+  {
+    "localidad": "Mojón Grande",  
+    "opciones": {
+    "Departamento": "San Javier",
+    "Distrito": "URUGUAY",
+    "indice": 52
+    }
+  },
+  {
+    "localidad": "Montecarlo",  
+    "opciones": {
+    "Departamento": "Montecarlo",
+    "Distrito": "PARANÁ",
+    "indice": 53
+    }
+  },
+  {
+    "localidad": "Oberá",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 54
+    }
+  },
+  {
+    "localidad": "Olegario V. Andrade",  
+    "opciones": {
+    "Departamento": "Leandro N. Alem",
+    "Distrito": "URUGUAY",
+    "indice": 55
+    }
+  },
+  {
+    "localidad": "Panambí",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 56
+    }
+  },
+  {
+    "localidad": "Posadas",  
+    "opciones": {
+    "Departamento": "Capital",
+    "Distrito": "SUR",
+    "indice": 57
+    }
+  },
+  {
+    "localidad": "Profundidad",  
+    "opciones": {
+    "Departamento": "Candelaria",
+    "Distrito": "SUR",
+    "indice": 58
+    }
+  },
+  {
+    "localidad": "Puerto Esperanza",  
+    "opciones": {
+    "Departamento": "Iguazú",
+    "Distrito": "NORTE",
+    "indice": 59
+    }
+  },
+  {
+    "localidad": "Puerto Piray",  
+    "opciones": {
+    "Departamento": "Montecarlo",
+    "Distrito": "PARANÁ",
+    "indice": 60
+    }
+  },
+  {
+    "localidad": "Puerto Rico",  
+    "opciones": {
+    "Departamento": "Libertador General San Martín",
+    "Distrito": "PARANÁ",
+    "indice": 61
+    }
+  },
+  {
+    "localidad": "Ruiz de Montoya",  
+    "opciones": {
+    "Departamento": "Libertador General San Martín",
+    "Distrito": "PARANÁ",
+    "indice": 62
+    }
+  },
+  {
+    "localidad": "San Antonio",  
+    "opciones": {
+    "Departamento": "General Manuel Belgrano",
+    "Distrito": "NORTE",
+    "indice": 63
+    }
+  },
+  {
+    "localidad": "San Ignacio",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 64
+    }
+  },
+  {
+    "localidad": "San Javier",  
+    "opciones": {
+    "Departamento": "San Javier",
+    "Distrito": "URUGUAY",
+    "indice": 65
+    }
+  },
+  {
+    "localidad": "San José",  
+    "opciones": {
+    "Departamento": "Apóstoles",
+    "Distrito": "SUR",
+    "indice": 66
+    }
+  },
+  {
+    "localidad": "San Martín",  
+    "opciones": {
+    "Departamento": "Oberá",
+    "Distrito": "URUGUAY",
+    "indice": 67
+    }
+  },
+  {
+    "localidad": "San Pedro",  
+    "opciones": {
+    "Departamento": "San Pedro",
+    "Distrito": "NORTE",
+    "indice": 68
+    }
+  },
+  {
+    "localidad": "San Vicente",  
+    "opciones": {
+    "Departamento": "Guaraní",
+    "Distrito": "URUGUAY",
+    "indice": 69
+    }
+  },
+  {
+    "localidad": "Santa Ana",  
+    "opciones": {
+    "Departamento": "Candelaria",
+    "Distrito": "SUR",
+    "indice": 70
+    }
+  },
+  {
+    "localidad": "Santa María",  
+    "opciones": {
+    "Departamento": "Concepción",
+    "Distrito": "SUR",
+    "indice": 71
+    }
+  },
+  {
+    "localidad": "Santiago de Liniers",  
+    "opciones": {
+    "Departamento": "Eldorado",
+    "Distrito": "NORTE",
+    "indice": 72
+    }
+  },
+  {
+    "localidad": "Santo Pipo",  
+    "opciones": {
+    "Departamento": "San Ignacio",
+    "Distrito": "PARANÁ",
+    "indice": 73
+    }
+  },
+  {
+    "localidad": "Tres Capones",  
+    "opciones": {
+    "Departamento": "Apóstoles",
+    "Distrito": "SUR",
+    "indice": 74
+    }
+  }]
+  domicilios.forEach(function(situacion){
+    let newOption = document.createElement("option");
+    newOption.text = situacion.localidad;
+    newOption.value = situacion.opciones.indice
+    slctMunicipios.appendChild(newOption)
+  })  
+
+  sexos = [
+  "Masculino",
+  "Femenino",
+  "Otro"]
+  sexos.forEach(function(situacion){
+    let newOption = document.createElement("option");
+    newOption.text = situacion;
+    newOption.value = situacion;
+    slctSexo.appendChild(newOption)
+  })
+
+  const selectMunicipios = document.querySelector('.slctMunicipios');
+  selectMunicipios.addEventListener('change', (event) => {
+    const slctdepartamento = document.querySelector('.slctDepartamentos');
+    const slctdistrito = document.querySelector('.slctDistritos')
+    const indice = event.target.value;
+    slctdepartamento.textContent = `${domicilios[indice].opciones.Departamento}`;
+    slctdistrito.textContent = `${domicilios[indice].opciones.Distrito}`;
+  });
+
+
+function NumeroCuil(event, el){//Validar nombre	
+    //Obteniendo posicion del cursor 
+    var val = el.value;//Valor de la caja de texto
+    
+    var pos = val.slice(0, el.selectionStart).length;
+	
+    var out = '';//Salida
+    var filtro = '1234567890';
+    var v = 0;//Contador de caracteres validos
+	
+    //Filtar solo los numeros
+    for (var i=0; i<val.length; i++){
+       if (filtro.indexOf(val.charAt(i)) != -1){
+	     v++;
+	     out += val.charAt(i);		   
+	     //Agregando guiones
+	     if((v==2) || (v==10))
+	         out+='-';
+	   }
+    }
+    //Reemplazando el valor
+    el.value = out;
+
+    //En caso de modificar un numero reposicionar el cursor
+    if(event.keyCode==8){//Tecla borrar precionada
+        el.selectionStart = pos;
+        el.selectionEnd = pos;
+    }
+  }
+
+  function NumerosTelefono(string){//Solo numeros
+    var out = '';
+    var filtro = '1234567890';//Caracteres validos
+	
+    //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
+    for (var i=0; i<string.length; i++)
+       if (filtro.indexOf(string.charAt(i)) != -1) 
+             //Se añaden a la salida los caracteres validos
+	     out += string.charAt(i);
+	
+    //Retornar valor filtrado
+    return out;
+  }
+
+  function NumCP(string){//solo letras y numeros
+    var out = '';
+    //Se añaden las letras validas
+    var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890';//Caracteres validos
+	
+    for (var i=0; i<string.length; i++)
+       if (filtro.indexOf(string.charAt(i)) != -1) 
+	     out += (string.charAt(i)).toUpperCase();
+
+    return out;
+  }
+
+  //const selectAreaDes = document.getElementById('slctAreaDes');
+  //selectAreaDes.addEventListener('change', function() {
+  //  if (selectAreaDes.selectedOptions.length > 3) {
+  //    selectAreaDes.setCustomValidity('Seleccione un máximo de 3 opciones');
+  //  } else {
+  //    selectAreaDes.setCustomValidity('');
+  //  }
+  //});
+
+  //const selectAreaComp = document.getElementById('slctAreaComp');
+  //selectAreaComp.addEventListener('change', function() {
+  //  if (selectAreaComp.selectedOptions.length > 3) {
+  //    selectAreaComp.setCustomValidity('Seleccione un máximo de 3 opciones');
+  //  } else {
+  //    selectAreaComp.setCustomValidity('');
+  //  }
+  //});
+
+  function validarCV() {
+  // Obtener nombre de archivo
+    let archivo = document.getElementById('cvFile').value,
+  // Obtener extensión del archivo
+    extension = archivo.substring(archivo.lastIndexOf('.'),archivo.length);
+  // Si la extensión obtenida no está incluida en la lista de valores
+  // del atributo "accept", mostrar un error.
+    if(document.getElementById('cvFile').getAttribute('accept').split(',').indexOf(extension) < 0) {
+      alert('Archivo inválido. No se permite la extensión ' + extension);
+      document.getElementById('cvFile').value = ""
+    }
+  }
+  function validarDNI() {
+  // Obtener nombre de archivo
+    let archivo = document.getElementById('dniFile').value,
+  // Obtener extensión del archivo
+    extension = archivo.substring(archivo.lastIndexOf('.'),archivo.length);
+  // Si la extensión obtenida no está incluida en la lista de valores
+  // del atributo "accept", mostrar un error.
+    if(document.getElementById('dniFile').getAttribute('accept').split(',').indexOf(extension) < 0) {
+      alert('Archivo inválido. No se permite la extensión ' + extension);
+      document.getElementById('dniFile').value = ""
+    }
+  }
+
+
+  const cancelarBtn = document.getElementById('cancelarBtn');
+  cancelarBtn.addEventListener('click', function() {
+    // Realizar el logout redireccionando al usuario a la página de logout
+    window.location.href = "/logout";
+  });
+  var mailBtn = document.getElementById('mailBtn');
+  mailBtn.addEventListener('click', function() {
+    var apellido = document.getElementById('apellido').value;
+    var nombres = document.getElementById('nombres').value;
+    var usuario = document.getElementById('nro-dni').value;
+    
+    var subject = encodeURIComponent('REPA: Solicitud de cambio de e-mail');
+    var message = 'Hola, me gustaría solicitar un cambio de e-mail.\n\n' +
+                  'Nombre: ' + apellido + ', ' + nombres + '\n' +
+                  'DNI: ' + usuario;
+                  
+    var encodedMessage = encodeURIComponent(message);
+    var mailtoLink = 'mailto:repa@iaavim.gob.ar?subject=' + subject + '&body=' + encodedMessage;
+    window.location.href = mailtoLink;
+  });
+</script>

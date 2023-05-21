@@ -1,0 +1,63 @@
+  {{!-- Header --}}
+  <div class="row g-3 mb-4">
+    <div class="col-sm-12">
+      <div class="card text-bg-secondary mb-3 align-items-center">
+        <div class="card-header"> <h3>Registro Provincial del Audiovisual - IAAviM</h3></div>
+      </div>
+    </div>
+  </div>
+     {{!-- Botones --}}
+  <div class="alert alert-danger row g-2">
+    <div class="col-sm was-validated ">
+      <a class="btn btn-secondary text-center" role="button" aria-disabled="true" href="/password">Olvidé mi contraseña</a>
+    </div>
+    <div class="col-sm was-validated">
+      <a class="btn btn-secondary text-center" role="button" aria-current="page" id="termsBtn2">Registrarse</a>
+    </div>
+  </div>
+  {{!-- Form --}}
+  <div class="row justify-content-center align-items-center"><div class="col-md-6">
+
+    <form "/signin" method="post" >
+      <div class="mb-3">
+        <input type="text" name="usuario" placeholder="Usuario (DNI sin puntos)" class="form-control rounded-0 bg-white text-dark" onkeyup="this.value=Numeros(this.value)" autofocus>
+      </div>
+      <div class="input-group mb-3">
+        <input id="passInput" type="password" name="password" placeholder="Contraseña" class="form-control rounded-0 bg-white text-dark">
+        <div class="input-group-append">
+          <span class="input-group-text" id="passwordEye">
+            <i class="fa fa-eye-slash"></i>
+          </span>
+        </div>
+      </div>
+      <button class="btn btn-secondary"> Ingresar</button>
+    </form>
+    <pre>
+        
+    </pre>
+  </div>
+  {{ terminosycondiciones}}
+</div>
+
+<script>
+  function Numeros(string){//Solo numeros
+    var out = '';
+    var filtro = '1234567890';//Caracteres validos
+	
+    //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
+    for (var i=0; i<string.length; i++)
+       if (filtro.indexOf(string.charAt(i)) != -1) 
+             //Se añaden a la salida los caracteres validos
+	     out += string.charAt(i);
+	
+    //Retornar valor filtrado
+    return out;
+  }
+
+  const PassBtn = document.querySelector('#passwordEye');
+  const input = document.querySelector('#passInput');
+  PassBtn.addEventListener('click', () => {
+      input.getAttribute('type') === 'password' ? input.setAttribute('type', 'text') : input.setAttribute('type', 'password');
+      PassBtn.innerHTML = input.getAttribute('type') === 'text' ? '<i class="fa fa-eye"></i>' : '<i class="fa fa-eye-slash"></i>';
+  });
+</script>
