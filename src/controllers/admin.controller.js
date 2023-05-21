@@ -13,6 +13,7 @@ import { getUsersWithForms } from "../helpers/buscador";
 import Form from "../models/Formulario";
 import User from "../models/Usuarios";
 import ExcelJS from "exceljs";
+import validator from "validator";
 
 export const renderAdmin = async (req, res) => {
   let usersWithForms = await getUsersWithForms();
