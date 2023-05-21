@@ -29,7 +29,8 @@ var getUsersWithForms = /*#__PURE__*/function () {
               }
             }, {
               $match: {
-                rol: "normal"
+                rol: "normal",
+                sitIaavim: true
               }
             }]);
           case 3:
@@ -116,7 +117,8 @@ var getEmpresasWithForms = /*#__PURE__*/function () {
               }
             }, {
               $match: {
-                rol: "perJur"
+                rol: "perJur",
+                sitIaavim: true
               }
             }]);
           case 3:
