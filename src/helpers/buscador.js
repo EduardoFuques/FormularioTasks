@@ -15,7 +15,6 @@ export const getUsersWithForms = async () => {
       {
         $match: {
           rol: "normal",
-          sitIaavim: true
         },
       },
     ]);
@@ -90,7 +89,6 @@ export const getEmpresasWithForms = async () => {
       {
         $match: {
           rol: "perJur",
-          sitIaavim: true
         },
       },
     ]);

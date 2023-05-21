@@ -1,4 +1,5 @@
 import { getEmpresasWithForms, getUsersWithForms } from "../helpers/buscador";
+import validator from "validator";
 
 export const filtroBuscadorPersonas = async (req, res) => {
   try {
