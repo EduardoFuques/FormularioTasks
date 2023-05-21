@@ -239,7 +239,7 @@ var signUpUser = /*#__PURE__*/function () {
 exports.signUpUser = signUpUser;
 var renderSignIn = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(req, res) {
-    var errors, rol, successMessage;
+    var errors, rol, successMessage, errorMessage;
     return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
@@ -274,11 +274,13 @@ var renderSignIn = /*#__PURE__*/function () {
             req.flash('error', errors);
             return _context4.abrupt("return", res.redirect("/logout"));
           case 18:
-            successMessage = req.flash('success'); //const successMessage = req.query.successMessage;
+            successMessage = req.flash('success');
+            errorMessage = req.flash('error'); //const successMessage = req.query.successMessage;
             return _context4.abrupt("return", res.render("ingreso", {
-              successMessage: successMessage
+              successMessage: successMessage,
+              errorMessage: errorMessage
             }));
-          case 20:
+          case 21:
           case "end":
             return _context4.stop();
         }
@@ -313,10 +315,7 @@ var logOut = function logOut(req, res, next) {
         if (err) {
           return next(err);
         }
-        var errors = req.flash('error');
-        res.render('ingreso', {
-          errors: errors
-        });
+        res.redirect('/');
       });
     });
   } else {
@@ -325,9 +324,7 @@ var logOut = function logOut(req, res, next) {
         return next(err);
       }
       var errors = req.flash('error');
-      res.render('ingreso', {
-        errors: errors
-      });
+      res.redirect('/');
     });
   }
 };

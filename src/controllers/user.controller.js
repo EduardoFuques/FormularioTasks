@@ -140,8 +140,9 @@ export const renderSignIn = async (req, res) => {
     }    
   }
   const successMessage = req.flash('success');
+  const errorMessage = req.flash('error');
   //const successMessage = req.query.successMessage;
-  return res.render("ingreso", { successMessage });
+  return res.render("ingreso", { successMessage, errorMessage });
 };
 
 export const autenticacion = passport.authenticate("login", {
@@ -167,8 +168,7 @@ export const logOut = function (req, res, next) {
         if (err) {
           return next(err);
         }
-        const errors = req.flash('error');
-        res.render('ingreso', { errors });
+        res.redirect('/');
       });
     });
   } else {
@@ -177,7 +177,7 @@ export const logOut = function (req, res, next) {
         return next(err);
       }
       const errors = req.flash('error');
-      res.render('ingreso', { errors });
+      res.redirect('/');
     });
   }
 };
