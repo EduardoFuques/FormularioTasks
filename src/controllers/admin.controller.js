@@ -399,9 +399,18 @@ export const updateAdminiaavim = async (req, res) => {
       sitIaavim
     } = req.body;
     const Vusuario = validator.escape(usuario);
-    const VsitIaavim = validator.escape(sitIaavim);
+    let VsitIaavim;
+    if (isBoolean(sitIaavim)) {
+      VsitIaavim = sitIaavim;
+    } else {
+      VsitIaavim = false;
+    }
     await Form.updateOne({usuario: Vusuario}, { $set: { sitIaavim: VsitIaavim } })    
   } catch (error) {
     console.log(error.message);
   }
+}
+
+function isBoolean(value) {
+  return typeof value === 'boolean';
 }

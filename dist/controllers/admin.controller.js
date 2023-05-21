@@ -472,7 +472,11 @@ var updateAdminiaavim = /*#__PURE__*/function () {
             _context4.prev = 0;
             _req$body = req.body, usuario = _req$body.usuario, sitIaavim = _req$body.sitIaavim;
             Vusuario = _validator["default"].escape(usuario);
-            VsitIaavim = _validator["default"].escape(sitIaavim);
+            if (isBoolean(sitIaavim)) {
+              VsitIaavim = sitIaavim;
+            } else {
+              VsitIaavim = false;
+            }
             _context4.next = 6;
             return _Formulario["default"].updateOne({
               usuario: Vusuario
@@ -500,3 +504,6 @@ var updateAdminiaavim = /*#__PURE__*/function () {
   };
 }();
 exports.updateAdminiaavim = updateAdminiaavim;
+function isBoolean(value) {
+  return typeof value === 'boolean';
+}
