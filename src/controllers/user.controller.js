@@ -13,6 +13,7 @@ import {
   verifyResetPasswordToken,
 } from "../helpers/resetPassword";
 import { DOMINIO, MAIL_HOST, MAIL_PASS, MAIL_PORT, MAIL_USER } from "../config";
+import validator from "validator";
 
 export const renderSignUp = async (req, res) => {
   res.render("registro");
@@ -55,26 +56,37 @@ export const signUpUser = async (req, res) => {
       password,
       confirm_password,
     } = req.body;
-    const codigoRepa = await codRepa(opcionPerJur);
+    const Vopcion=validator.escape(opcion)
+    const Vnombre=validator.escape(nombre)
+    const Vapellido=validator.escape(apellido)
+    const Vusuario=validator.escape(usuario)
+    const isEmailValid=validator.isEmail(email)
+    let Vemail
+    if (isEmailValid) {
+      Vemail=email
+    } else {
+      errors.push({ text: "El correo es inválido" });
+      const user = { opcion: Vopcion, nombre: Vnombre, apellido: Vapellido, usuario: Vusuario };
+      res.render("registro", {
+        errors,
+        user: user,
+      });
+    }
     const opcionPerJur = "NO"
-
-    // Create directory for the user on the server
+    const codigoRepa = await codRepa(opcionPerJur);
     const userDirectory = path.join(__dirname, "..", "files", codigoRepa);
     fs.mkdirSync(userDirectory, { recursive: true });
-
-    const user = { opcion, nombre, apellido, usuario, email };
-
+    const user = { opcion: Vopcion, nombre: Vnombre, apellido: Vapellido, usuario: Vusuario, email: Vemail };
     let rol = "normal";
-
     if (opcionPerJur === "SI") {
       rol = "perJur";
     }
-    const emailUser = await User.findOne({ email: email });
-    const dniUser = await User.findOne({ usuario: usuario });
+    const emailUser = await User.findOne({ email: Vemail });
+    const dniUser = await User.findOne({ usuario: Vusuario });
     if (dniUser) {
       errors.push({ text: "El DNI ya ha sido registrado" });
     }
-    if (opcion === undefined) {
+    if (Vopcion === undefined) {
       errors.push({ text: "Seleccione tipo de documento" });
     }
     if (emailUser) {
@@ -92,14 +104,14 @@ export const signUpUser = async (req, res) => {
         user: user,
       });
     } else {
-      const tipoDoc = opcion;
+      const tipoDoc = Vopcion;
       const newUser = new User({
         tipoDoc,
-        usuario,
+        usuario: Vusuario,
         password,
-        nombre,
-        apellido,
-        email,
+        nombre: Vnombre,
+        apellido: Vapellido,
+        email: Vemail,
         rol,
         codigoRepa,
       });
@@ -112,15 +124,20 @@ export const signUpUser = async (req, res) => {
 };
 
 export const renderSignIn = async (req, res) => {
+  const errors = [];
   if (req.isAuthenticated()) {
     const { rol } = req.user;
     if (rol === "perJur") {
       return res.redirect("/formEm");
     } else if (rol === "admin") {
       return res.redirect("/administracion");
-    }
-    // Si el rol es normal o no se encuentra rol, redirigir a /form
-    return res.redirect("/form");
+    } else if (rol == "normal") {
+      return res.redirect("/form");
+    } else {
+      errors.push({ text: "Ha ocurrido un error. Póngase en contacto con administración" });
+      req.flash('error', errors);
+      return res.redirect("/logout");
+    }    
   }
   const successMessage = req.flash('success');
   //const successMessage = req.query.successMessage;
@@ -133,28 +150,34 @@ export const autenticacion = passport.authenticate("login", {
   successRedirect: "/formEm", // Ruta por defecto si no se encuentra rol o rol = normal
 });
 
-// Controlador para logout
-export const logOut = function (req, res, next) {
-  // Obtener el directorio temporal de la sesión y eliminarlo
-  const tempDir = req.session.tempDir;
+export const mostrarErroresFlash = (req, res, next) => {
+  const errores = req.flash("error");
+  console.log("Middleware mostrarErroresFlash se está ejecutando");
+  if (errores.length > 0) {
+    console.error("Errores de autenticación:", errores);
+  }
+  next();
+};
 
+export const logOut = function (req, res, next) {
+  const tempDir = req.session.tempDir;
   if (tempDir) {
     deleteTempDir(tempDir, function () {
-      // Cerrar sesión y redirigir
       req.logout(function (err) {
         if (err) {
           return next(err);
         }
-        res.redirect("/");
+        const errors = req.flash('error');
+        res.render('ingreso', { errors });
       });
     });
   } else {
-    // Si no hay directorio temporal, cerrar sesión y redirigir
     req.logout(function (err) {
       if (err) {
         return next(err);
       }
-      res.redirect("/");
+      const errors = req.flash('error');
+      res.render('ingreso', { errors });
     });
   }
 };
@@ -173,7 +196,6 @@ export function deleteTempDir(tempDir, callback) {
   });
 }
 
-// Controlador para restablecer contraseñas
 export const renderPassword = async (req, res) => {
   res.render("password");
 };
@@ -181,9 +203,18 @@ export const renderPassword = async (req, res) => {
 export const restablecerPassword = async (req, res) => {
   const { email } = req.body;
   let errorMessage = ""
+  const isEmailValid=validator.isEmail(email)
+  let Vemail
+  if (isEmailValid) {
+    Vemail=email
+  } else {
+    errorMessage= "El correo es inválido";
+    req.flash('error', errorMessage);
+    res.render("password");
+  }
   try {
-    const token = await generateResetPasswordToken(email); // generate reset password token
-    const user = await User.findOne({ email: email });
+    const token = await generateResetPasswordToken(Vemail); // generate reset password token
+    const user = await User.findOne({ email: Vemail });
     if (!user) {
       errorMessage= "No se encontró ningún usuario con el correo electrónico proporcionado"
       req.flash('error', errorMessage);
@@ -203,9 +234,13 @@ export const restablecerPassword = async (req, res) => {
 
     const mailOptions = {
       from: MAIL_USER,
-      to: email,
+      to: Vemail,
       subject: "Restablecimiento de contraseña RePA - IAAviM",
-      html: `  <h2 class="mb-4">Estimado/a</h2>
+      html: "",
+    };
+
+    if(user.rol === "normal" || user.rol === "admin"){
+      mailOptions.html=`  <h2 class="mb-4">Estimado/a ${user.nombre} ${user.apellido}</h2>
       <p>El proceso de cambio de contraseña, se ha iniciado. Haga click en el siguiente link para cambiar su contraseña.</p>
       <p><a href="http://${DOMINIO}/reset-password/${token}">CLICKEE AQUI</a></p>
       <pre>
@@ -216,14 +251,29 @@ export const restablecerPassword = async (req, res) => {
       </pre>
       <p><strong>Silvana Gonzalez Gregori</strong></p> 
       <p>Responsable del Registro Provincial del Audiovisual -RePA-</p>
-      <p>Instituto de Artes Audiovisuales de Misiones -IAAviM-</p>`, // include reset password token in link
-    };
+      <p>Instituto de Artes Audiovisuales de Misiones -IAAviM-</p>`
+    } else if (user.rol === "perJur") {
+      mailOptions.html = `<h2 class="mb-4">Estimado/a ${user.nombreEmpresa}</h2>
+      <p>El proceso de cambio de contraseña, se ha iniciado. Haga click en el siguiente link para cambiar su contraseña.</p>
+      <p><a href="http://${DOMINIO}/reset-password/${token}">CLICKEE AQUI</a></p>
+      <pre>
+      </pre>
+      <p>Si tiene alguna pregunta o necesita ayuda adicional, no dude en contactarnos por correo electrónico a <a href="mailto:repa@iaavim.gob.ar">repa@iaavim.gob.ar<a></a>.</strong></p>
+      <p>Este es un mensaje automático generado por nuestro sistema.</p><p><strong> Por favor, no responda a este correo electrónico.</strong></p>
+      <p>Atentamente,</p><pre>
+      </pre>
+      <p><strong>Silvana Gonzalez Gregori</strong></p> 
+      <p>Responsable del Registro Provincial del Audiovisual -RePA-</p>
+      <p>Instituto de Artes Audiovisuales de Misiones -IAAviM-</p>`;
+    } else {
+      mailOptions.html = ""
+    }
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.log(error);
       } else {
-        const successMessage = `Correo electrónico enviado a ${email}`;
+        const successMessage = `Correo electrónico enviado a ${Vemail}`;
         req.flash('success', successMessage);
         return res.redirect(`/`);
       }
@@ -234,18 +284,15 @@ export const restablecerPassword = async (req, res) => {
   }
 };
 
-
 export const resetPasswordController = async (req, res) => {
   let errorMessage = ""
   try {
     const token = req.params.token; // obtener el token desde la URL
     const user = await verifyResetPasswordToken(token); // verificar el token
-    // Si el token es válido, renderizar la pantalla de creación de contraseñas
-    console.log(user.email);
     res.render("reset-password", { user: user, email: user.email, token });
   } catch (error) {
-    // Si el token no es válido, redirigir al usuario a una página de error
-    req.flash('error', error.message);
+    errorMessage= "El link ya ha vencido. Intente reestablecer la contraseña nuevamente."
+    req.flash('error', errorMessage);
     return res.redirect(`/`);
   }
 };
@@ -253,10 +300,19 @@ export const resetPasswordController = async (req, res) => {
 export const updatePasswordController = async (req, res) => {
   const token = req.params.token;
   const { email, password, confirm_password } = req.body;
+  let errorMessage = ""
+  const isEmailValid=validator.isEmail(email)
+  let Vemail
+  if (isEmailValid) {
+    Vemail=email
+  } else {
+    errorMessage= "El correo es inválido";
+    const user = await verifyResetPasswordToken(token);
+    req.flash('error', errorMessage);
+    res.render("reset-password", { user: user, email: user.email, token });
+  }
   let user = null;
   let successMessage = "";
-  console.log(token);
-  console.log(email);
   try {
     if (password !== confirm_password) {
       throw new Error("Las contraseñas no coinciden");
@@ -264,7 +320,7 @@ export const updatePasswordController = async (req, res) => {
     if (password.length < 4) {
       throw new Error("La contraseña debe tener al menos 4 caracteres");
     }
-    user = await User.findOne({ email: email });
+    user = await User.findOne({ email: Vemail });
     if (!user) {
       throw new Error(
         "No se encontró ningún usuario con el correo electrónico proporcionado"
@@ -278,7 +334,6 @@ export const updatePasswordController = async (req, res) => {
     req.flash('success', successMessage);
     return res.redirect("/");
   } catch (error) {
-    console.log(error.message);
     return res.render("reset-password", {
       user,
       email,
@@ -301,21 +356,33 @@ export const signUpUserApi = async (req, res) => {
       opcionPerJur,
       confirm_password,
     } = req.body;
-    const codigoRepa = await codRepa(opcionPerJur);
-
-    // Create directory for the user on the server
+    const Vopcion=validator.escape(opcion)
+    const Vnombre=validator.escape(nombre)
+    const Vapellido=validator.escape(apellido)
+    const Vusuario=validator.escape(usuario)
+    const isEmailValid=validator.isEmail(email)
+    const VopcionPerJur=validator.escape(opcionPerJur)
+    let Vemail
+    if (isEmailValid) {
+      Vemail=email
+    } else {
+      errors.push({ text: "El correo es inválido" });
+      const user = { Vopcion, Vnombre, Vapellido, Vusuario };
+      res.render("registro", {
+        errors,
+        user: user,
+      });
+    }
+    const codigoRepa = await codRepa(VopcionPerJur);
     const userDirectory = path.join(__dirname, "..", "files", codigoRepa);
     fs.mkdirSync(userDirectory, { recursive: true });
-
-    const user = { opcion, nombre, apellido, usuario, email };
-
+    const user = { Vopcion, Vnombre, Vapellido, Vusuario, Vemail };
     let rol = "normal";
-
     if (opcionPerJur === "SI") {
       rol = "perJur";
     }
-    const emailUser = await User.findOne({ email: email });
-    const dniUser = await User.findOne({ usuario: usuario });
+    const emailUser = await User.findOne({ email: Vemail });
+    const dniUser = await User.findOne({ usuario: Vusuario });
     if (dniUser) {
       errors.push({ text: "El DNI ya ha sido registrado" });
     }
@@ -337,14 +404,14 @@ export const signUpUserApi = async (req, res) => {
         user: user,
       });
     } else {
-      const tipoDoc = opcion;
+      const tipoDoc = Vopcion;
       const newUser = new User({
         tipoDoc,
-        usuario,
+        usuario: Vusuario,
         password,
-        nombre,
-        apellido,
-        email,
+        nombre: Vnombre,
+        apellido: Vapellido,
+        email: Vemail,
         rol,
         codigoRepa,
       });
@@ -365,25 +432,34 @@ export const signUpPJ = async (req, res) => {
       password, //si
       confirm_password,
     } = req.body;
+    const VnombreEmpresa=validator.escape(nombreEmpresa)
+    const Vusuario=validator.escape(usuario)
+    const isEmailValid=validator.isEmail(email)
+    let Vemail
+    if (isEmailValid) {
+      Vemail=email
+    } else {
+      errors.push({ text: "El correo es inválido" });
+      const user = { VnombreEmpresa, Vusuario };
+      res.render("registroPJ", {
+        errors,
+        user: user,
+      });
+    }
     const opcionPerJur = "SI"
     const opcion = "DNI"
     const nombre = " "
     const apellido = " "
     const codigoRepa = await codRepa(opcionPerJur);
-
-    // Create directory for the user on the server
     const userDirectory = path.join(__dirname, "..", "files", codigoRepa);
     fs.mkdirSync(userDirectory, { recursive: true });
-
-    const user = { opcion, nombre, apellido, usuario, email, nombreEmpresa };
-
+    const user = { opcion, nombre, apellido, Vusuario, Vemail, VnombreEmpresa };
     let rol = "normal";
-
     if (opcionPerJur === "SI") {
       rol = "perJur";
     }
-    const emailUser = await User.findOne({ email: email });
-    const dniUser = await User.findOne({ usuario: usuario });
+    const emailUser = await User.findOne({ email: Vemail });
+    const dniUser = await User.findOne({ usuario: Vusuario });
     if (dniUser) {
       errors.push({ text: "El CUIL ya ha sido registrado" });
     }
@@ -408,14 +484,14 @@ export const signUpPJ = async (req, res) => {
       const tipoDoc = opcion;
       const newUser = new User({
         tipoDoc,
-        usuario,
+        usuario: Vusuario,
         password,
         nombre,
         apellido,
-        email,
+        email: Vemail,
         rol,
         codigoRepa,
-        nombreEmpresa,
+        nombreEmpresa: VnombreEmpresa,
       });
       await newUser.save();
       res.redirect("/");

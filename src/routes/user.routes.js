@@ -11,6 +11,7 @@ import {
   updatePasswordController,
   renderSignUpPJ,
   signUpPJ,
+  mostrarErroresFlash,
 } from "../controllers/user.controller";
 import helpers from "../helpers/auth";
 import { cargaInicial } from "../libs/carga-inicial";
@@ -27,7 +28,7 @@ router.post("/signupPJ", signUpPJ);
 
 router.get("/", renderSignIn);
 
-router.post("/", autenticacion);
+router.post("/", autenticacion, mostrarErroresFlash);
 
 router.get("/logout", helpers.isAuthenticated, logOut);
 

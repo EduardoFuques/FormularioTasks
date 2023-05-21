@@ -9,12 +9,13 @@ import {
   domiciliosOpc,
 } from "../helpers/arrays";
 import { format } from "date-fns";
+import validator from "validator";
 
 export const renderForm = async (req, res) => {
   try {
     const userID = req.session.passport.user;
     const { tipoDoc, usuario, nombre, apellido, email, codigoRepa } = req.user;
-    const usuarioEncontrado = await Form.findOne({ usuario }).lean();
+    const usuarioEncontrado = await Form.findOne({ usuario: usuario }).lean();
     if (!usuarioEncontrado) {
       const datos = {
         userID,
@@ -49,8 +50,8 @@ export const renderForm = async (req, res) => {
       const editar = true;
       const perJur = false;
       const calle = datos.domicilio[0].calle.toString();
-      const formattedDNIDate = format(datos.dniFileDate, 'dd/MM/yyyy');
-      const formattedCVDate = format(datos.cvFileDate, 'dd/MM/yyyy')
+      const formattedDNIDate = format(datos.dniFileDate, "dd/MM/yyyy");
+      const formattedCVDate = format(datos.cvFileDate, "dd/MM/yyyy");
       res.render("edit", {
         datos: datos,
         codigoRepa: codigoRepa,
@@ -63,7 +64,7 @@ export const renderForm = async (req, res) => {
         editar: editar,
         perJur: perJur,
         formattedDNIDate: formattedDNIDate,
-        formattedCVDate: formattedCVDate
+        formattedCVDate: formattedCVDate,
       });
     }
   } catch (error) {
@@ -91,47 +92,110 @@ export const captureForm = async (req, res) => {
       areaComp,
     } = req.body;
     const { tipoDoc, usuario, nombre, apellido, email } = req.user;
-    const cvFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.cvFile[0].filename}`;
-    const dniFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.dniFile[0].filename}`;
-
-    const cvFilename = req.files.cvFile[0].filename;
-    const cvFileDate = cvFilename.substring(cvFilename.lastIndexOf("-") + 1, cvFilename.lastIndexOf("."));
-    const cvFileDateISO = cvFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1-$2-$3T$4:$5:00Z');
-
-    const dniFilename = req.files.dniFile[0].filename;
-    const dniFileDate = dniFilename.substring(dniFilename.lastIndexOf("-") + 1, dniFilename.lastIndexOf("."));
-    const dniFileDateISO = dniFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1-$2-$3T$4:$5:00Z');
-    
+    const VtipoDoc = validator.escape(tipoDoc);
+    const Vusuario = validator.escape(usuario);
+    const Vnombre = validator.escape(nombre);
+    const Vapellido = validator.escape(apellido);
+    const Vcuil = validator.escape(cuil);
+    const Vsexo = validator.escape(sexo);
+    const VsitAfip = validator.escape(sitAfip);
+    const VtelFijo = telFijo === "/" ? telFijo : validator.escape(telFijo);
+    const VmovilPpal = movilPpal === "/" ? movilPpal : validator.escape(movilPpal);
+    const VmovilAlt = movilAlt === "/" ? movilAlt : validator.escape(movilAlt);
+    const Vlocalidad = validator.escape(localidad);
+    const Vcp = validator.escape(cp);
+    const Vcalle = calle === "/" ? calle : validator.escape(calle);
+    const Vnumero = numero === "/" ? numero : validator.escape(numero);
+    const Vpiso = piso === "/" ? piso : validator.escape(piso);
+    const Vdpto = dpto === "/" ? dpto : validator.escape(dpto);
+    const isEmailValid=validator.isEmail(email)
+    let Vmedios;
+    if (Array.isArray(medios)) {
+      Vmedios = medios.map((medio) => validator.escape(medio));
+    } else {
+      Vmedios=validator.escape(medios)
+    }
+    let VareaDes;
+    if (Array.isArray(areaDes)) {
+      VareaDes = areaDes.map((areaDes) => validator.escape(areaDes));
+    } else {
+      VareaDes = validator.escape(areaDes)
+    }
+    let VareaComp;
+    if (Array.isArray(areaComp)){
+      VareaComp = areaComp.map((areaComp) => validator.escape(areaComp));
+    } else if (typeof areaComp === "string") {
+      VareaComp = validator.escape(areaComp);
+    } else {
+      VareaComp = areaComp;
+    }
+    let Vemail;
+    let errorMessage="";
+    if (isEmailValid) {
+      Vemail = email;
+    } else {
+      errorMessage="Ha ocurrido un error. Póngase en contacto con administración"
+      req.flash("error", errorMessage);
+      return res.redirect("/logout");
+    }
+    const cvFileUrl = `${encodeURIComponent(
+      req.protocol
+    )}://${encodeURIComponent(req.get("host"))}/files/${encodeURIComponent(
+      req.user.codigoRepa
+    )}/${encodeURIComponent(req.files.cvFile[0].filename)}`;
+    const dniFileUrl = `${encodeURIComponent(
+      req.protocol
+    )}://${encodeURIComponent(req.get("host"))}/files/${encodeURIComponent(
+      req.user.codigoRepa
+    )}/${encodeURIComponent(req.files.dniFile[0].filename)}`;
+    const cvFilename = encodeURIComponent(req.files.cvFile[0].filename);
+    const cvFileDate = cvFilename.substring(
+      cvFilename.lastIndexOf("-") + 1,
+      cvFilename.lastIndexOf(".")
+    );
+    const cvFileDateISO = cvFileDate.replace(
+      /(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/,
+      "$1-$2-$3T$4:$5:00Z"
+    );
+    const dniFilename = encodeURIComponent(req.files.dniFile[0].filename);
+    const dniFileDate = dniFilename.substring(
+      dniFilename.lastIndexOf("-") + 1,
+      dniFilename.lastIndexOf(".")
+    );
+    const dniFileDateISO = dniFileDate.replace(
+      /(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/,
+      "$1-$2-$3T$4:$5:00Z"
+    );
     const newForm = new Form({
-      tipoDoc,
-      usuario,
-      nombre,
-      apellido,
-      email,
-      cuil, //ok
-      sexo, //ok
-      sitAfip, //ok
+      tipoDoc: VtipoDoc,
+      usuario: Vusuario,
+      nombre: Vnombre,
+      apellido: Vapellido,
+      email: Vemail,
+      cuil: Vcuil, //ok
+      sexo: Vsexo, //ok
+      sitAfip: VsitAfip, //ok
       sitIaavim: false,
       domicilio: {
-        calle: calle, //ok
-        numero: numero, //ok
-        piso: piso, //ok
-        depto: dpto, //ok
-        localidad: localidad,
-        cp: cp, //ok
+        calle: Vcalle, //ok
+        numero: Vnumero, //ok
+        piso: Vpiso, //ok
+        depto: Vdpto, //ok
+        localidad: Vlocalidad,
+        cp: Vcp, //ok
       }, //ok
       telefono: {
-        fijo: telFijo,
-        movil: movilPpal,
-        alternativo: movilAlt,
+        fijo: VtelFijo,
+        movil: VmovilPpal,
+        alternativo: VmovilAlt,
       }, //ok
-      medios, //ok
-      areaDes, //ok
-      areaComp, //ok
+      medios: Vmedios, //ok
+      areaDes: VareaDes, //ok
+      areaComp: VareaComp, //ok
       cvFileUrl,
       cvFileDate: new Date(cvFileDateISO),
       dniFileUrl,
-      dniFileDate: new Date(dniFileDateISO)
+      dniFileDate: new Date(dniFileDateISO),
     });
     await newForm.save();
     res.render("pantalla-ok");
@@ -159,17 +223,67 @@ export const captureEditForm = async (req, res) => {
       areaDes,
       areaComp,
     } = req.body;
-    const { tipoDoc, usuario, nombre, apellido, email } = req.user;
-    const usuarioEncontrado = await Form.findOne({ usuario }).lean();
+    const { usuario } = req.user;
+    const Vusuario = validator.escape(usuario);
+    const Vcuil = validator.escape(cuil);
+    const Vsexo = validator.escape(sexo);
+    const VsitAfip = validator.escape(sitAfip);
+    const VtelFijo = telFijo === "/" ? telFijo : validator.escape(telFijo);
+    const VmovilPpal =
+      movilPpal === "/" ? movilPpal : validator.escape(movilPpal);
+    const VmovilAlt = movilAlt === "/" ? movilAlt : validator.escape(movilAlt);
+    const Vlocalidad = validator.escape(localidad);
+    const Vcp = validator.escape(cp);
+    const Vcalle = calle === "/" ? calle : validator.escape(calle);
+    const Vnumero = numero === "/" ? numero : validator.escape(numero);
+    const Vpiso = piso === "/" ? piso : validator.escape(piso);
+    const Vdpto = dpto === "/" ? dpto : validator.escape(dpto);
+    let Vmedios;
+    if (Array.isArray(medios)) {
+      Vmedios = medios.map((medio) => validator.escape(medio));
+    } else {
+      Vmedios=validator.escape(medios)
+    }
+    let VareaDes;
+    if (Array.isArray(areaDes)) {
+      VareaDes = areaDes.map((areaDes) => validator.escape(areaDes));
+    } else {
+      VareaDes = validator.escape(areaDes)
+    }
+    let VareaComp;
+    if (Array.isArray(areaComp)){
+      VareaComp = areaComp.map((areaComp) => validator.escape(areaComp));
+    } else if (typeof areaComp === "string") {
+      VareaComp = validator.escape(areaComp);
+    } else {
+      VareaComp = areaComp;
+    }
+    const usuarioEncontrado = await Form.findOne({ Vusuario }).lean();
     let cvFileUrl;
     let cvFilename;
     let cvFileDate;
     let cvFileDateISO;
-    if (req.files.cvFile && req.files.cvFile.length > 0 && req.files.cvFile[0].filename) {
-      cvFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.cvFile[0].filename}`;
-      cvFilename = req.files.cvFile[0].filename;
-      cvFileDate = cvFilename.substring(cvFilename.lastIndexOf("-") + 1, cvFilename.lastIndexOf("."));
-      cvFileDateISO = new Date(cvFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1-$2-$3T$4:$5:00Z'));
+    if (
+      req.files.cvFile &&
+      req.files.cvFile.length > 0 &&
+      req.files.cvFile[0].filename
+    ) {
+      cvFileUrl = `${encodeURIComponent(req.protocol)}://${encodeURIComponent(
+        req.get("host")
+      )}/files/${encodeURIComponent(req.user.codigoRepa)}/${encodeURIComponent(
+        req.files.cvFile[0].filename
+      )}`;
+      cvFilename = encodeURIComponent(req.files.cvFile[0].filename);
+      cvFileDate = cvFilename.substring(
+        cvFilename.lastIndexOf("-") + 1,
+        cvFilename.lastIndexOf(".")
+      );
+      cvFileDateISO = new Date(
+        cvFileDate.replace(
+          /(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/,
+          "$1-$2-$3T$4:$5:00Z"
+        )
+      );
     } else {
       cvFileUrl = usuarioEncontrado.cvFileUrl;
       cvFileDateISO = usuarioEncontrado.cvFileDate;
@@ -178,42 +292,56 @@ export const captureEditForm = async (req, res) => {
     let dniFilename;
     let dniFileDate;
     let dniFileDateISO;
-    if (req.files.dniFile && req.files.dniFile.length > 0 && req.files.dniFile[0].filename) {
-      dniFileUrl = `${req.protocol}://${req.get("host")}/files/${req.user.codigoRepa}/${req.files.dniFile[0].filename}`;
-      dniFilename = req.files.dniFile[0].filename;
-      dniFileDate = dniFilename.substring(dniFilename.lastIndexOf("-") + 1, dniFilename.lastIndexOf("."));
-      dniFileDateISO = new Date(dniFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1-$2-$3T$4:$5:00Z'));
+    if (
+      req.files.dniFile &&
+      req.files.dniFile.length > 0 &&
+      req.files.dniFile[0].filename
+    ) {
+      dniFileUrl = `${encodeURIComponent(req.protocol)}://${encodeURIComponent(
+        req.get("host")
+      )}/files/${encodeURIComponent(req.user.codigoRepa)}/${encodeURIComponent(
+        req.files.dniFile[0].filename
+      )}`;
+      dniFilename = encodeURIComponent(req.files.dniFile[0].filename);
+      dniFileDate = dniFilename.substring(
+        dniFilename.lastIndexOf("-") + 1,
+        dniFilename.lastIndexOf(".")
+      );
+      dniFileDateISO = new Date(
+        dniFileDate.replace(
+          /(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/,
+          "$1-$2-$3T$4:$5:00Z"
+        )
+      );
     } else {
       dniFileUrl = usuarioEncontrado.dniFileUrl;
       dniFileDateISO = usuarioEncontrado.dniFileDate;
     }
 
     const editForm = {
-      cuil, //ok
-      sexo, //ok
-      sitAfip, //ok
+      cuil: Vcuil, //ok
+      sexo: Vsexo, //ok
+      sitAfip: VsitAfip, //ok
       domicilio: {
-        calle: calle, //ok
-        numero: numero, //ok
-        piso: piso, //ok
-        depto: dpto, //ok
-        localidad: localidad,
-        cp: cp, //ok
-        //departamento,
-        //distrito
+        calle: Vcalle, //ok
+        numero: Vnumero, //ok
+        piso: Vpiso, //ok
+        depto: Vdpto, //ok
+        localidad: Vlocalidad,
+        cp: Vcp, //ok
       }, //ok
       telefono: {
-        fijo: telFijo,
-        movil: movilPpal,
-        alternativo: movilAlt,
+        fijo: VtelFijo,
+        movil: VmovilPpal,
+        alternativo: VmovilAlt,
       }, //ok
-      medios, //ok
-      areaDes, //ok
-      areaComp, //ok
+      medios: Vmedios, //ok
+      areaDes: VareaDes, //ok
+      areaComp: VareaComp, //ok
       cvFileUrl,
       cvFileDate: new Date(cvFileDateISO),
       dniFileUrl,
-      dniFileDate: new Date(dniFileDateISO)
+      dniFileDate: new Date(dniFileDateISO),
     };
     await Form.updateOne({ usuario: usuario }, { $set: editForm }, (error) => {
       if (error) {

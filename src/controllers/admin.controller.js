@@ -397,7 +397,9 @@ export const updateAdminiaavim = async (req, res) => {
       usuario,
       sitIaavim
     } = req.body;
-    await Form.updateOne({usuario: usuario}, { $set: { sitIaavim: sitIaavim } })
+    const Vusuario = validator.escape(usuario);
+    const VsitIaavim = validator.escape(sitIaavim);
+    await Form.updateOne({usuario: Vusuario}, { $set: { sitIaavim: VsitIaavim } })    
   } catch (error) {
     console.log(error.message);
   }

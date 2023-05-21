@@ -5,7 +5,7 @@ const formSchema = new Schema(
     apellido: { ref: "Usuario", type: Schema.Types.String },
     nombre: { ref: "Usuario", type: Schema.Types.String},
     tipoDoc: { ref: "Usuario", type: Schema.Types.String },
-    usuario: { ref: "Usuario", type: Schema.Types.Number },
+    usuario: { ref: "Usuario", type: Schema.Types.String },
     cuil: { type: String },
     sexo: { type: String },
     sitAfip: { type: String },
