@@ -59,7 +59,7 @@ var filtroBuscadorPersonas = /*#__PURE__*/function () {
 exports.filtroBuscadorPersonas = filtroBuscadorPersonas;
 var renderBuscadorPersonas = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(req, res) {
-    var usersWithForms;
+    var usersWithForms, filteredUsersWithForms;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -69,22 +69,25 @@ var renderBuscadorPersonas = /*#__PURE__*/function () {
             return (0, _buscador.getUsersWithForms)();
           case 3:
             usersWithForms = _context2.sent;
-            res.render("buscadorPersonas", {
-              usersWithForms: usersWithForms
+            filteredUsersWithForms = usersWithForms.filter(function (user) {
+              return user.sitIaavim === true;
             });
-            _context2.next = 11;
+            res.render("buscadorPersonas", {
+              usersWithForms: filteredUsersWithForms
+            });
+            _context2.next = 12;
             break;
-          case 7:
-            _context2.prev = 7;
+          case 8:
+            _context2.prev = 8;
             _context2.t0 = _context2["catch"](0);
             console.error(_context2.t0);
             res.render("error");
-          case 11:
+          case 12:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 7]]);
+    }, _callee2, null, [[0, 8]]);
   }));
   return function renderBuscadorPersonas(_x3, _x4) {
     return _ref2.apply(this, arguments);
@@ -93,7 +96,7 @@ var renderBuscadorPersonas = /*#__PURE__*/function () {
 exports.renderBuscadorPersonas = renderBuscadorPersonas;
 var renderBuscadorEmpresas = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res) {
-    var usersWithForms;
+    var usersWithForms, filteredUsersWithForms;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
@@ -103,22 +106,25 @@ var renderBuscadorEmpresas = /*#__PURE__*/function () {
             return (0, _buscador.getEmpresasWithForms)();
           case 3:
             usersWithForms = _context3.sent;
-            res.render("buscadorEmpresas", {
-              usersWithForms: usersWithForms
+            filteredUsersWithForms = usersWithForms.filter(function (user) {
+              return user.sitIaavim === true;
             });
-            _context3.next = 11;
+            res.render("buscadorEmpresas", {
+              usersWithForms: filteredUsersWithForms
+            });
+            _context3.next = 12;
             break;
-          case 7:
-            _context3.prev = 7;
+          case 8:
+            _context3.prev = 8;
             _context3.t0 = _context3["catch"](0);
             console.error(_context3.t0);
             res.render("error");
-          case 11:
+          case 12:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, null, [[0, 7]]);
+    }, _callee3, null, [[0, 8]]);
   }));
   return function renderBuscadorEmpresas(_x5, _x6) {
     return _ref3.apply(this, arguments);

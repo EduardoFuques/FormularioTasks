@@ -28,8 +28,9 @@ export const filtroBuscadorPersonas = async (req, res) => {
 export const renderBuscadorPersonas = async (req, res) => {
   try {
     let usersWithForms = await getUsersWithForms();
+    let filteredUsersWithForms = usersWithForms.filter(user => user.sitIaavim === true);
     res.render("buscadorPersonas", {
-      usersWithForms: usersWithForms,
+      usersWithForms: filteredUsersWithForms,
     });
   } catch (error) {
     console.error(error);
@@ -40,8 +41,9 @@ export const renderBuscadorPersonas = async (req, res) => {
 export const renderBuscadorEmpresas = async (req, res) => {
   try {
     let usersWithForms = await getEmpresasWithForms();
+    let filteredUsersWithForms = usersWithForms.filter(user => user.sitIaavim === true);
     res.render("buscadorEmpresas", {
-      usersWithForms: usersWithForms,
+      usersWithForms: filteredUsersWithForms,
     });
   } catch (error) {
     console.error(error);

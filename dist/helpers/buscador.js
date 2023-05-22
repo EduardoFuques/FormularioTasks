@@ -50,6 +50,7 @@ var getUsersWithForms = /*#__PURE__*/function () {
                 userWithForms.medios = userWithForms.form[0].medios;
                 userWithForms.areaDes = userWithForms.form[0].areaDes;
                 userWithForms.areaComp = userWithForms.form[0].areaComp;
+                userWithForms.sitIaavim = userWithForms.form[0].sitIaavim;
                 delete userWithForms._id;
                 delete userWithForms.tipoDoc;
                 delete userWithForms.usuario;
@@ -137,6 +138,7 @@ var getEmpresasWithForms = /*#__PURE__*/function () {
                 userWithForms.razonSocial = userWithForms.form[0].razonSocial;
                 userWithForms.nombreFantasia = userWithForms.form[0].nombreFantasia;
                 userWithForms.nombreEmpresa = userWithForms.form[0].nombreEmpresa;
+                userWithForms.sitIaavim = userWithForms.form[0].sitIaavim;
                 delete userWithForms._id;
                 delete userWithForms.tipoDoc;
                 delete userWithForms.usuario;
