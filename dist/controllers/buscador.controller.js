@@ -72,22 +72,25 @@ var renderBuscadorPersonas = /*#__PURE__*/function () {
             filteredUsersWithForms = usersWithForms.filter(function (user) {
               return user.sitIaavim === true;
             });
+            filteredUsersWithForms.sort(function (a, b) {
+              return a.codigoRepa > b.codigoRepa ? 1 : -1;
+            });
             res.render("buscadorPersonas", {
               usersWithForms: filteredUsersWithForms
             });
-            _context2.next = 12;
+            _context2.next = 13;
             break;
-          case 8:
-            _context2.prev = 8;
+          case 9:
+            _context2.prev = 9;
             _context2.t0 = _context2["catch"](0);
             console.error(_context2.t0);
             res.render("error");
-          case 12:
+          case 13:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 8]]);
+    }, _callee2, null, [[0, 9]]);
   }));
   return function renderBuscadorPersonas(_x3, _x4) {
     return _ref2.apply(this, arguments);
@@ -109,22 +112,25 @@ var renderBuscadorEmpresas = /*#__PURE__*/function () {
             filteredUsersWithForms = usersWithForms.filter(function (user) {
               return user.sitIaavim === true;
             });
+            filteredUsersWithForms.sort(function (a, b) {
+              return a.codigoRepa > b.codigoRepa ? 1 : -1;
+            });
             res.render("buscadorEmpresas", {
               usersWithForms: filteredUsersWithForms
             });
-            _context3.next = 12;
+            _context3.next = 13;
             break;
-          case 8:
-            _context3.prev = 8;
+          case 9:
+            _context3.prev = 9;
             _context3.t0 = _context3["catch"](0);
             console.error(_context3.t0);
             res.render("error");
-          case 12:
+          case 13:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, null, [[0, 8]]);
+    }, _callee3, null, [[0, 9]]);
   }));
   return function renderBuscadorEmpresas(_x5, _x6) {
     return _ref3.apply(this, arguments);

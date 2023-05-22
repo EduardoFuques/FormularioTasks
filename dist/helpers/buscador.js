@@ -51,6 +51,8 @@ var getUsersWithForms = /*#__PURE__*/function () {
                 userWithForms.areaDes = userWithForms.form[0].areaDes;
                 userWithForms.areaComp = userWithForms.form[0].areaComp;
                 userWithForms.sitIaavim = userWithForms.form[0].sitIaavim;
+                userWithForms.cvFileUrl = userWithForms.form[0].cvFileUrl;
+                userWithForms.dniFileUrl = userWithForms.form[0].dniFileUrl;
                 delete userWithForms._id;
                 delete userWithForms.tipoDoc;
                 delete userWithForms.usuario;

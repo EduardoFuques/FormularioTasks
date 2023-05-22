@@ -29,6 +29,7 @@ export const renderBuscadorPersonas = async (req, res) => {
   try {
     let usersWithForms = await getUsersWithForms();
     let filteredUsersWithForms = usersWithForms.filter(user => user.sitIaavim === true);
+    filteredUsersWithForms.sort((a, b) => (a.codigoRepa > b.codigoRepa) ? 1 : -1);
     res.render("buscadorPersonas", {
       usersWithForms: filteredUsersWithForms,
     });
@@ -42,6 +43,7 @@ export const renderBuscadorEmpresas = async (req, res) => {
   try {
     let usersWithForms = await getEmpresasWithForms();
     let filteredUsersWithForms = usersWithForms.filter(user => user.sitIaavim === true);
+    filteredUsersWithForms.sort((a, b) => (a.codigoRepa > b.codigoRepa) ? 1 : -1);
     res.render("buscadorEmpresas", {
       usersWithForms: filteredUsersWithForms,
     });

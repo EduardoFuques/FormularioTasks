@@ -20,6 +20,8 @@
                 <th scope="col">DNI</th>
                 <th scope="col">Email</th>
                 <th scope="col">Situación IAAVIM</th>
+                <th scope="col">DNI</th>
+                <th scope="col">CV</th>
               </tr>
             </thead>
             <tbody>
@@ -42,6 +44,21 @@
                       </label>
                     </div>
                   </td>
+                  <td class="flex-row align-items-center">
+                    <div class="d-flex">
+                      <a href={{this.dniFileUrl}} class="btn btn-secondary btn-sm d-flex justify-content-center">
+                        <i class="bi bi-file-earmark-pdf-fill"></i>
+                      </a>
+                    </div>
+                  </td>
+                  <td class="flex-row align-items-center">
+                    <div class="d-flex">
+                      <a href={{this.cvFileUrl}} class="btn btn-secondary btn-sm d-flex justify-content-center">
+                        <i class="bi bi-file-earmark-pdf-fill"></i>
+                      </a>
+                    </div>
+                  </td>
+
                 </tr>
               {{/each}}
             </tbody>
