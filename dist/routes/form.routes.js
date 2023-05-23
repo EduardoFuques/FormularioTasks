@@ -32,6 +32,7 @@ router.get("/administracion", (0, _roles.verifyRole)("admin"), _admin.renderAdmi
 router.post("/administracion/PJ", (0, _roles.verifyRole)("admin"), _admin.adminPJ);
 router.post("/administracion/PF", (0, _roles.verifyRole)("admin"), _admin.adminPF);
 router.post("/administracion/update/sitiaavim", (0, _roles.verifyRole)("admin"), _admin.updateAdminiaavim);
+router.post("/administracion/update/email", (0, _roles.verifyRole)("admin"), _admin.updateAdminEmail);
 
 // BUSCADOR
 router.get("/buscador/PF", _buscador.renderBuscadorPersonas);

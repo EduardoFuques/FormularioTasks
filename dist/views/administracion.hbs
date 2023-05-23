@@ -19,6 +19,7 @@
                 <th scope="col">Apellido</th>
                 <th scope="col">DNI</th>
                 <th scope="col">Email</th>
+                <th></th>
                 <th scope="col">Situación IAAVIM</th>
                 <th scope="col">DNI</th>
                 <th scope="col">CV</th>
@@ -27,13 +28,21 @@
             <tbody>
               {{#each usersWithForms}}
                 <tr>
-                  <td>{{this.codigoRepa}}</td>
-                  <td>{{this.nombre}}</td>
-                  <td>{{this.apellido}}</td>
-                  <th>{{this.form.[0].usuario}}</th>
-                  <td>{{this.email}}</td>
-                  <td>
-                    <div class="form-check form-switch">
+                  <td class="flex-row align-items-center">{{this.codigoRepa}}</td>
+                  <td class="flex-row align-items-center">{{this.nombre}}</td>
+                  <td class="flex-row align-items-center">{{this.apellido}}</td>
+                  <th class="flex-row align-items-center">{{this.form.[0].usuario}}</th>
+                  <td class="flex-row align-items-center" id="emailCell" data-userid="{{this.form.[0].usuario}}">{{this.email}}</td>
+                  <td class="flex-row align-items-center">
+                    <div class="d-flex">
+                      <a class="btn btn-secondary btn-sm d-flex justify-content-center" id="mailBtn" onclick="toggleEditEmail(event)">
+                        <i class="bi bi-pencil-fill" id="editIcon"></i>
+                        <i class="bi bi-check-square" id="checkIcon" style="display: none;"></i>
+                      </a>
+                    </div>
+                  </td>
+                  <td class="flex-row align-items-center">
+                    <div class="form-check form-switch d-flex justify-content-start">
                       <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault{{this.form.[0].usuario}}"{{#if this.form.[0].sitIaavim}} checked{{/if}} onchange="updateSitIaavim(this)" data-id="{{this.form.[0].usuario}}">
                       <label class="form-check-label" for="flexSwitchCheckDefault{{this.form.[0].usuario}}">
                         {{#if this.form.[0].sitIaavim}}
@@ -106,4 +115,119 @@
       console.error('Error al realizar la solicitud:', error);
     }
   }
+
+  var isEditing = false;
+  var originalEmail = "";
+
+  function toggleEditEmail(event) {
+    event.stopPropagation(); // Detener la propagación del evento para evitar conflictos
+
+    var emailCell = document.getElementById("emailCell");
+    var email = emailCell.innerText;
+
+    // Si no está en modo de edición, entra en modo de edición
+    if (!isEditing) {
+      // Almacena el valor original del email
+      originalEmail = email;
+
+      // Crea un elemento de entrada tipo texto y asigna el valor actual del email
+      var input = document.createElement("input");
+      input.type = "text";
+      input.value = email;
+
+      // Borra el contenido actual de emailCell
+      emailCell.innerHTML = "";
+
+      // Agrega el campo de entrada como un hijo de emailCell
+      emailCell.appendChild(input);
+
+      // Establece el enfoque en el campo de entrada
+      input.focus();
+
+      // Agrega un controlador de eventos para manejar la tecla Enter
+      input.addEventListener("keydown", function(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault(); // Evita que se envíe el formulario o se recargue la página
+          toggleEditEmail(event); // Simula un clic en el botón de guardar cambios
+        }
+      });
+    } else {
+      // Si ya está en modo de edición, guarda el nuevo valor
+      var input = emailCell.querySelector("input");
+      var newEmail = input.value;
+
+      // Compara el nuevo valor con el valor original
+      if (newEmail === originalEmail) {
+        // El usuario no realizó cambios, se restaura el valor original
+        emailCell.innerText = originalEmail;
+      } else {
+        // El usuario realizó cambios, se guarda el nuevo valor
+        emailCell.innerText = newEmail;
+        saveChanges(); // Llama a una función para guardar los cambios
+      }
+    }
+
+    // Cambia el estado de edición
+    isEditing = !isEditing;
+
+    // Obtén los elementos de los íconos
+    var editIcon = document.getElementById("editIcon");
+    var checkIcon = document.getElementById("checkIcon");
+    var emailBtn = document.getElementById("mailBtn")
+
+    // Muestra u oculta los íconos según el estado de edición
+    if (isEditing) {
+      editIcon.style.display = "none";
+      checkIcon.style.display = "inline";
+      emailBtn.classList.remove("btn-secondary");
+      emailBtn.classList.add("btn-success");
+    } else {
+      editIcon.style.display = "inline";
+      checkIcon.style.display = "none";
+      emailBtn.classList.remove("btn-success");
+      emailBtn.classList.add("btn-secondary");
+    }
+  }
+
+  // Agrega un controlador de eventos para manejar el clic fuera del campo de entrada
+  document.addEventListener("click", function(event) {
+    var emailCell = document.getElementById("emailCell");
+    var input = emailCell.querySelector("input");
+
+    if (isEditing && event.target !== input) {
+      // Si está en modo de edición y el clic no fue en el campo de entrada,
+      // se restaura el valor original y se sale del modo de edición
+      emailCell.innerText = originalEmail;
+      isEditing = false;
+    }
+  });
+
+  async function saveChanges() {
+    var emailCell = document.getElementById("emailCell");
+    var newEmail = emailCell.textContent;
+    var userId = emailCell.getAttribute("data-userid");
+
+    try {
+      // Realizar una solicitud HTTP POST al servidor
+      const response = await fetch('/administracion/update/email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ usuario: userId, email: newEmail })
+      });
+
+      // Manejar la respuesta
+      if (response.status === 200) {
+        emailCell.innerText = newEmail;
+        isEditing = false;
+      } else {
+        console.error('Error al guardar los cambios');
+      }
+    } catch (error) {
+      // Capturar cualquier error durante la solicitud
+      console.error('Error al realizar la solicitud:', error);
+    }
+  }
+
 </script>

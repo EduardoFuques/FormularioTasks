@@ -4,7 +4,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateAdminiaavim = exports.renderAdmin = exports.adminPJ = exports.adminPF = void 0;
+exports.updateAdminiaavim = exports.updateAdminEmail = exports.renderAdmin = exports.adminPJ = exports.adminPF = void 0;
 var _arrays = require("../helpers/arrays");
 var _buscador = require("../helpers/buscador");
 var _Formulario = _interopRequireDefault(require("../models/Formulario"));
@@ -507,3 +507,61 @@ exports.updateAdminiaavim = updateAdminiaavim;
 function isBoolean(value) {
   return typeof value === 'boolean';
 }
+var updateAdminEmail = /*#__PURE__*/function () {
+  var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(req, res) {
+    var _req$body2, usuario, email, Vusuario, isEmailValid, Vemail;
+    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.prev = 0;
+            _req$body2 = req.body, usuario = _req$body2.usuario, email = _req$body2.email;
+            Vusuario = _validator["default"].escape(usuario);
+            isEmailValid = _validator["default"].isEmail(email);
+            if (!isEmailValid) {
+              _context5.next = 8;
+              break;
+            }
+            Vemail = email;
+            _context5.next = 10;
+            break;
+          case 8:
+            req.flash("error_msg", "El correo introducido es inválido");
+            return _context5.abrupt("return", res.redirect(req.headers.referer));
+          case 10:
+            _context5.next = 12;
+            return _Usuarios["default"].updateOne({
+              usuario: Vusuario
+            }, {
+              $set: {
+                email: Vemail
+              }
+            });
+          case 12:
+            _context5.next = 14;
+            return _Formulario["default"].updateOne({
+              usuario: Vusuario
+            }, {
+              $set: {
+                email: Vemail
+              }
+            });
+          case 14:
+            _context5.next = 19;
+            break;
+          case 16:
+            _context5.prev = 16;
+            _context5.t0 = _context5["catch"](0);
+            console.log(_context5.t0.message);
+          case 19:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5, null, [[0, 16]]);
+  }));
+  return function updateAdminEmail(_x9, _x10) {
+    return _ref5.apply(this, arguments);
+  };
+}();
+exports.updateAdminEmail = updateAdminEmail;

@@ -414,3 +414,23 @@ export const updateAdminiaavim = async (req, res) => {
 function isBoolean(value) {
   return typeof value === 'boolean';
 }
+
+export const updateAdminEmail = async (req, res) => {
+  try {
+    const {usuario, email} = req.body;
+    const Vusuario = validator.escape(usuario);
+    const isEmailValid=validator.isEmail(email)
+    let Vemail
+    if (isEmailValid) {
+      Vemail=email
+    } else {
+      req.flash("error_msg", "El correo introducido es inválido")
+      return res.redirect(req.headers.referer);
+    }
+    await User.updateOne({usuario: Vusuario}, { $set: { email: Vemail } })
+    await Form.updateOne({usuario: Vusuario}, { $set: { email: Vemail } })    
+
+  } catch (error) {
+    console.log(error.message);
+  }
+}
