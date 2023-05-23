@@ -6,8 +6,10 @@ export const filtroBuscadorPersonas = async (req, res) => {
     const query = req.body.q.toLowerCase();
     const Vquery = validator.escape(query);
     let usersWithForms = await getUsersWithForms();
+    let filteredUsersWithForms = usersWithForms.filter(user => user.sitIaavim === true);
+    filteredUsersWithForms.sort((a, b) => (a.codigoRepa > b.codigoRepa) ? 1 : -1);
 
-    let filteredUsers = usersWithForms.filter((user) => {
+    let filteredUsers = filteredUsersWithForms.filter((user) => {
       return (
         user.nombre.toLowerCase().includes(Vquery) ||
         user.apellido.toLowerCase().includes(Vquery) ||
@@ -58,8 +60,10 @@ export const filtroBuscadorEmpresas = async (req, res) => {
       const query = req.body.q.toLowerCase();
       const Vquery = validator.escape(query);
       let usersWithForms = await getEmpresasWithForms();
+      let filteredUsersWithForms = usersWithForms.filter(user => user.sitIaavim === true);
+      filteredUsersWithForms.sort((a, b) => (a.codigoRepa > b.codigoRepa) ? 1 : -1);
   
-      let filteredUsers = usersWithForms.filter((user) => {
+      let filteredUsers = filteredUsersWithForms.filter((user) => {
         return (
           user.nombre.toLowerCase().includes(Vquery) ||
           user.apellido.toLowerCase().includes(Vquery) ||

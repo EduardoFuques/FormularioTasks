@@ -29,6 +29,7 @@ router.get("/pdfEm", _auth["default"].isAuthenticated, (0, _roles.verifyRole)("p
 
 // ADMINISTRACION
 router.get("/administracion", (0, _roles.verifyRole)("admin"), _admin.renderAdmin);
+router.post("/administracion", (0, _roles.verifyRole)("admin"), _admin.filtroBuscadorAdmin);
 router.post("/administracion/PJ", (0, _roles.verifyRole)("admin"), _admin.adminPJ);
 router.post("/administracion/PF", (0, _roles.verifyRole)("admin"), _admin.adminPF);
 router.post("/administracion/update/sitiaavim", (0, _roles.verifyRole)("admin"), _admin.updateAdminiaavim);

@@ -13,7 +13,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var filtroBuscadorPersonas = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(req, res) {
-    var query, Vquery, usersWithForms, filteredUsers;
+    var query, Vquery, usersWithForms, filteredUsersWithForms, filteredUsers;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -25,7 +25,13 @@ var filtroBuscadorPersonas = /*#__PURE__*/function () {
             return (0, _buscador.getUsersWithForms)();
           case 5:
             usersWithForms = _context.sent;
-            filteredUsers = usersWithForms.filter(function (user) {
+            filteredUsersWithForms = usersWithForms.filter(function (user) {
+              return user.sitIaavim === true;
+            });
+            filteredUsersWithForms.sort(function (a, b) {
+              return a.codigoRepa > b.codigoRepa ? 1 : -1;
+            });
+            filteredUsers = filteredUsersWithForms.filter(function (user) {
               return user.nombre.toLowerCase().includes(Vquery) || user.apellido.toLowerCase().includes(Vquery) || user.localidad.toLowerCase().includes(Vquery) || user.medios.some(function (medio) {
                 return medio.toLowerCase().includes(Vquery);
               }) || user.areaDes.some(function (area) {
@@ -38,19 +44,19 @@ var filtroBuscadorPersonas = /*#__PURE__*/function () {
               usersWithForms: filteredUsers,
               criterioDeBusqueda: Vquery
             });
-            _context.next = 14;
+            _context.next = 16;
             break;
-          case 10:
-            _context.prev = 10;
+          case 12:
+            _context.prev = 12;
             _context.t0 = _context["catch"](0);
             console.error(_context.t0);
             res.render("error");
-          case 14:
+          case 16:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 10]]);
+    }, _callee, null, [[0, 12]]);
   }));
   return function filtroBuscadorPersonas(_x, _x2) {
     return _ref.apply(this, arguments);
@@ -139,7 +145,7 @@ var renderBuscadorEmpresas = /*#__PURE__*/function () {
 exports.renderBuscadorEmpresas = renderBuscadorEmpresas;
 var filtroBuscadorEmpresas = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(req, res) {
-    var query, Vquery, usersWithForms, filteredUsers;
+    var query, Vquery, usersWithForms, filteredUsersWithForms, filteredUsers;
     return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
@@ -151,26 +157,32 @@ var filtroBuscadorEmpresas = /*#__PURE__*/function () {
             return (0, _buscador.getEmpresasWithForms)();
           case 5:
             usersWithForms = _context4.sent;
-            filteredUsers = usersWithForms.filter(function (user) {
+            filteredUsersWithForms = usersWithForms.filter(function (user) {
+              return user.sitIaavim === true;
+            });
+            filteredUsersWithForms.sort(function (a, b) {
+              return a.codigoRepa > b.codigoRepa ? 1 : -1;
+            });
+            filteredUsers = filteredUsersWithForms.filter(function (user) {
               return user.nombre.toLowerCase().includes(Vquery) || user.apellido.toLowerCase().includes(Vquery) || user.localidad.toLowerCase().includes(Vquery) || user.razonSocial.toLowerCase().includes(Vquery) || user.nombreEmpresa.toLowerCase().includes(Vquery) || user.nombreFantasia.toLowerCase().includes(Vquery);
             });
             res.render("buscadorEmpresas", {
               usersWithForms: filteredUsers,
               criterioDeBusqueda: Vquery
             });
-            _context4.next = 14;
+            _context4.next = 16;
             break;
-          case 10:
-            _context4.prev = 10;
+          case 12:
+            _context4.prev = 12;
             _context4.t0 = _context4["catch"](0);
             console.error(_context4.t0);
             res.render("error");
-          case 14:
+          case 16:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, null, [[0, 10]]);
+    }, _callee4, null, [[0, 12]]);
   }));
   return function filtroBuscadorEmpresas(_x7, _x8) {
     return _ref4.apply(this, arguments);

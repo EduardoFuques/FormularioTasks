@@ -10,6 +10,28 @@
         </div>
       </div>
       <div>
+        <form class="form-inline mb-4" action="/administracion" method="post">
+          <div class="row">
+            <div class="col mr-1">
+              <div class="form-group align-items-center mr-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  style="background-color: #fff;"
+                  name="q"
+                  id="q"
+                />
+              </div>
+            </div>
+            <div class="col-1">
+              <div class="form-group align-items-center ml-auto">
+                <button type="submit" class="btn btn-secondary">Buscar</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div>
         {{#if usersWithForms.length}}
           <table class="table">
             <thead>
@@ -228,6 +250,27 @@
       // Capturar cualquier error durante la solicitud
       console.error('Error al realizar la solicitud:', error);
     }
+  }
+
+  window.onload = function() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/administracion');
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        // Actualizar la tabla con los datos de búsqueda
+        // Utiliza el objeto response que contiene los datos
+      } else {
+        console.error('Error en la solicitud de búsqueda');
+      }
+    };
+    xhr.send();
+  };
+  document.body.onload = function() {
+    setearOpciones();
+  }
+  function setearOpciones() {
+    document.getElementById("q").value = `{{criterioDeBusqueda}}`;
   }
 
 </script>

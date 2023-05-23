@@ -17,12 +17,32 @@ import validator from "validator";
 
 export const renderAdmin = async (req, res) => {
   let usersWithForms = await getUsersWithForms();
+  usersWithForms.sort((a, b) => (a.codigoRepa > b.codigoRepa) ? 1 : -1);
   const admin = true;
   res.render("administracion", {
     admin: admin,
     usersWithForms: usersWithForms,
   });
 };
+
+export const filtroBuscadorAdmin = async (req, res) => {
+  const query = req.body.q.toLowerCase();
+  const Vquery = validator.escape(query);
+  let usersWithForms = await getUsersWithForms();
+  usersWithForms.sort((a, b) => (a.codigoRepa > b.codigoRepa) ? 1 : -1);
+  const admin = true;
+  let filteredUsers = usersWithForms.filter((user) => {
+    return (
+      user.nombre.toLowerCase().includes(Vquery) ||
+      user.apellido.toLowerCase().includes(Vquery) ||
+      user.email.toLowerCase().includes(Vquery) ||
+      user.usuario.toLowerCase().includes(Vquery) ||
+      user.codigoRepa.toLowerCase().includes(Vquery)
+    );
+  });
+
+  res.render("administracion", { admin: admin, usersWithForms: filteredUsers, criterioDeBusqueda: Vquery});
+}
 
 export const adminPJ = async (req, res) => {
   try {

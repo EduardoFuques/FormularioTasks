@@ -55,7 +55,6 @@ var getUsersWithForms = /*#__PURE__*/function () {
                 userWithForms.dniFileUrl = userWithForms.form[0].dniFileUrl;
                 delete userWithForms._id;
                 delete userWithForms.tipoDoc;
-                delete userWithForms.usuario;
                 delete userWithForms.password;
                 delete userWithForms.rol;
                 //delete userWithForms.codigoRepa;

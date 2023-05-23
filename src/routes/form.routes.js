@@ -11,7 +11,7 @@ import {
   captureEditForm,
   renderPDF,
 } from "../controllers/form.controller";
-import { adminPF, adminPJ, renderAdmin, updateAdminEmail, updateAdminiaavim } from "../controllers/admin.controller";
+import { adminPF, adminPJ, filtroBuscadorAdmin, renderAdmin, updateAdminEmail, updateAdminiaavim } from "../controllers/admin.controller";
 import helpers from "../helpers/auth";
 import { uploadFile, uploadFileEm } from "../helpers/multer";
 import { verifyRole } from "../helpers/roles";
@@ -73,6 +73,8 @@ router.get(
 
 // ADMINISTRACION
 router.get("/administracion", verifyRole("admin"), renderAdmin);
+
+router.post("/administracion", verifyRole("admin"), filtroBuscadorAdmin)
 
 router.post("/administracion/PJ", verifyRole("admin"), adminPJ);
 

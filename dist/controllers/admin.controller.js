@@ -4,7 +4,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateAdminiaavim = exports.updateAdminEmail = exports.renderAdmin = exports.adminPJ = exports.adminPF = void 0;
+exports.updateAdminiaavim = exports.updateAdminEmail = exports.renderAdmin = exports.filtroBuscadorAdmin = exports.adminPJ = exports.adminPF = void 0;
 var _arrays = require("../helpers/arrays");
 var _buscador = require("../helpers/buscador");
 var _Formulario = _interopRequireDefault(require("../models/Formulario"));
@@ -29,12 +29,15 @@ var renderAdmin = /*#__PURE__*/function () {
             return (0, _buscador.getUsersWithForms)();
           case 2:
             usersWithForms = _context.sent;
+            usersWithForms.sort(function (a, b) {
+              return a.codigoRepa > b.codigoRepa ? 1 : -1;
+            });
             admin = true;
             res.render("administracion", {
               admin: admin,
               usersWithForms: usersWithForms
             });
-          case 5:
+          case 6:
           case "end":
             return _context.stop();
         }
@@ -46,21 +49,58 @@ var renderAdmin = /*#__PURE__*/function () {
   };
 }();
 exports.renderAdmin = renderAdmin;
-var adminPJ = /*#__PURE__*/function () {
+var filtroBuscadorAdmin = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(req, res) {
-    var usuarios, datitos, datitosPorUsuario, usuariosConDatitos, workbook, worksheet;
+    var query, Vquery, usersWithForms, admin, filteredUsers;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            _context2.prev = 0;
-            _context2.next = 3;
+            query = req.body.q.toLowerCase();
+            Vquery = _validator["default"].escape(query);
+            _context2.next = 4;
+            return (0, _buscador.getUsersWithForms)();
+          case 4:
+            usersWithForms = _context2.sent;
+            usersWithForms.sort(function (a, b) {
+              return a.codigoRepa > b.codigoRepa ? 1 : -1;
+            });
+            admin = true;
+            filteredUsers = usersWithForms.filter(function (user) {
+              return user.nombre.toLowerCase().includes(Vquery) || user.apellido.toLowerCase().includes(Vquery) || user.email.toLowerCase().includes(Vquery) || user.usuario.toLowerCase().includes(Vquery) || user.codigoRepa.toLowerCase().includes(Vquery);
+            });
+            res.render("administracion", {
+              admin: admin,
+              usersWithForms: filteredUsers,
+              criterioDeBusqueda: Vquery
+            });
+          case 9:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+  return function filtroBuscadorAdmin(_x3, _x4) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+exports.filtroBuscadorAdmin = filtroBuscadorAdmin;
+var adminPJ = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res) {
+    var usuarios, datitos, datitosPorUsuario, usuariosConDatitos, workbook, worksheet;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.prev = 0;
+            _context3.next = 3;
             return _Usuarios["default"].find({
               rol: "perJur"
             }, "usuario rol codigoRepa").lean();
           case 3:
-            usuarios = _context2.sent;
-            _context2.next = 6;
+            usuarios = _context3.sent;
+            _context3.next = 6;
             return _Formulario["default"].find({
               usuario: {
                 $in: usuarios.map(function (u) {
@@ -69,7 +109,7 @@ var adminPJ = /*#__PURE__*/function () {
               }
             }, "razonSocial nombreFantasia tipoDoc usuario nombre apellido cuil sexo email sitAfip sitIaavim domicilio telefono createdAt updatedAt dniFileUrl cvFileUrl").lean();
           case 6:
-            datitos = _context2.sent;
+            datitos = _context3.sent;
             datitosPorUsuario = datitos.reduce(function (acc, item) {
               acc[item.usuario] = item;
               return acc;
@@ -225,45 +265,45 @@ var adminPJ = /*#__PURE__*/function () {
             // Establece el tipo de contenido de la respuesta y envía el archivo Excel
             res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             res.setHeader("Content-Disposition", "attachment; filename=REPA-PerJur.xlsx");
-            _context2.next = 20;
+            _context3.next = 20;
             return workbook.xlsx.write(res);
           case 20:
-            _context2.next = 26;
+            _context3.next = 26;
             break;
           case 22:
-            _context2.prev = 22;
-            _context2.t0 = _context2["catch"](0);
-            console.error(_context2.t0);
+            _context3.prev = 22;
+            _context3.t0 = _context3["catch"](0);
+            console.error(_context3.t0);
             res.status(500).json({
               message: "Error al obtener los datos"
             });
           case 26:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
       }
-    }, _callee2, null, [[0, 22]]);
+    }, _callee3, null, [[0, 22]]);
   }));
-  return function adminPJ(_x3, _x4) {
-    return _ref2.apply(this, arguments);
+  return function adminPJ(_x5, _x6) {
+    return _ref3.apply(this, arguments);
   };
 }();
 exports.adminPJ = adminPJ;
 var adminPF = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res) {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(req, res) {
     var usuarios, datitos, datitosPorUsuario, workbook, worksheet;
-    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
-            _context3.prev = 0;
-            _context3.next = 3;
+            _context4.prev = 0;
+            _context4.next = 3;
             return _Usuarios["default"].find({
               rol: "normal"
             }, "usuario rol codigoRepa").lean();
           case 3:
-            usuarios = _context3.sent;
-            _context3.next = 6;
+            usuarios = _context4.sent;
+            _context4.next = 6;
             return _Formulario["default"].find({
               usuario: {
                 $in: usuarios.map(function (u) {
@@ -272,7 +312,7 @@ var adminPF = /*#__PURE__*/function () {
               }
             }, "apellido nombre tipoDoc usuario cuil sexo sitAfip sitIaavim domicilio telefono email medios areaDes areaComp createdAt updatedAt dniFileUrl cvFileUrl").lean();
           case 6:
-            datitos = _context3.sent;
+            datitos = _context4.sent;
             //
             // datitos.forEach((dato) => {
             //   const fechaCreatedISO = dato.createdAt.toISOString();
@@ -438,38 +478,38 @@ var adminPF = /*#__PURE__*/function () {
             // Establece el tipo de contenido de la respuesta y envía el archivo Excel
             res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             res.setHeader("Content-Disposition", "attachment; filename=REPA-PerFis.xlsx");
-            _context3.next = 18;
+            _context4.next = 18;
             return workbook.xlsx.write(res);
           case 18:
-            _context3.next = 24;
+            _context4.next = 24;
             break;
           case 20:
-            _context3.prev = 20;
-            _context3.t0 = _context3["catch"](0);
-            console.error(_context3.t0);
+            _context4.prev = 20;
+            _context4.t0 = _context4["catch"](0);
+            console.error(_context4.t0);
             res.status(500).json({
               message: "Error al obtener los datos"
             });
           case 24:
           case "end":
-            return _context3.stop();
+            return _context4.stop();
         }
       }
-    }, _callee3, null, [[0, 20]]);
+    }, _callee4, null, [[0, 20]]);
   }));
-  return function adminPF(_x5, _x6) {
-    return _ref3.apply(this, arguments);
+  return function adminPF(_x7, _x8) {
+    return _ref4.apply(this, arguments);
   };
 }();
 exports.adminPF = adminPF;
 var updateAdminiaavim = /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(req, res) {
+  var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(req, res) {
     var _req$body, usuario, sitIaavim, Vusuario, VsitIaavim;
-    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
       while (1) {
-        switch (_context4.prev = _context4.next) {
+        switch (_context5.prev = _context5.next) {
           case 0:
-            _context4.prev = 0;
+            _context5.prev = 0;
             _req$body = req.body, usuario = _req$body.usuario, sitIaavim = _req$body.sitIaavim;
             Vusuario = _validator["default"].escape(usuario);
             if (isBoolean(sitIaavim)) {
@@ -477,7 +517,7 @@ var updateAdminiaavim = /*#__PURE__*/function () {
             } else {
               VsitIaavim = false;
             }
-            _context4.next = 6;
+            _context5.next = 6;
             return _Formulario["default"].updateOne({
               usuario: Vusuario
             }, {
@@ -486,21 +526,21 @@ var updateAdminiaavim = /*#__PURE__*/function () {
               }
             });
           case 6:
-            _context4.next = 11;
+            _context5.next = 11;
             break;
           case 8:
-            _context4.prev = 8;
-            _context4.t0 = _context4["catch"](0);
-            console.log(_context4.t0.message);
+            _context5.prev = 8;
+            _context5.t0 = _context5["catch"](0);
+            console.log(_context5.t0.message);
           case 11:
           case "end":
-            return _context4.stop();
+            return _context5.stop();
         }
       }
-    }, _callee4, null, [[0, 8]]);
+    }, _callee5, null, [[0, 8]]);
   }));
-  return function updateAdminiaavim(_x7, _x8) {
-    return _ref4.apply(this, arguments);
+  return function updateAdminiaavim(_x9, _x10) {
+    return _ref5.apply(this, arguments);
   };
 }();
 exports.updateAdminiaavim = updateAdminiaavim;
@@ -508,28 +548,28 @@ function isBoolean(value) {
   return typeof value === 'boolean';
 }
 var updateAdminEmail = /*#__PURE__*/function () {
-  var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(req, res) {
+  var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(req, res) {
     var _req$body2, usuario, email, Vusuario, isEmailValid, Vemail;
-    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
       while (1) {
-        switch (_context5.prev = _context5.next) {
+        switch (_context6.prev = _context6.next) {
           case 0:
-            _context5.prev = 0;
+            _context6.prev = 0;
             _req$body2 = req.body, usuario = _req$body2.usuario, email = _req$body2.email;
             Vusuario = _validator["default"].escape(usuario);
             isEmailValid = _validator["default"].isEmail(email);
             if (!isEmailValid) {
-              _context5.next = 8;
+              _context6.next = 8;
               break;
             }
             Vemail = email;
-            _context5.next = 10;
+            _context6.next = 10;
             break;
           case 8:
             req.flash("error_msg", "El correo introducido es inválido");
-            return _context5.abrupt("return", res.redirect(req.headers.referer));
+            return _context6.abrupt("return", res.redirect(req.headers.referer));
           case 10:
-            _context5.next = 12;
+            _context6.next = 12;
             return _Usuarios["default"].updateOne({
               usuario: Vusuario
             }, {
@@ -538,7 +578,7 @@ var updateAdminEmail = /*#__PURE__*/function () {
               }
             });
           case 12:
-            _context5.next = 14;
+            _context6.next = 14;
             return _Formulario["default"].updateOne({
               usuario: Vusuario
             }, {
@@ -547,21 +587,21 @@ var updateAdminEmail = /*#__PURE__*/function () {
               }
             });
           case 14:
-            _context5.next = 19;
+            _context6.next = 19;
             break;
           case 16:
-            _context5.prev = 16;
-            _context5.t0 = _context5["catch"](0);
-            console.log(_context5.t0.message);
+            _context6.prev = 16;
+            _context6.t0 = _context6["catch"](0);
+            console.log(_context6.t0.message);
           case 19:
           case "end":
-            return _context5.stop();
+            return _context6.stop();
         }
       }
-    }, _callee5, null, [[0, 16]]);
+    }, _callee6, null, [[0, 16]]);
   }));
-  return function updateAdminEmail(_x9, _x10) {
-    return _ref5.apply(this, arguments);
+  return function updateAdminEmail(_x11, _x12) {
+    return _ref6.apply(this, arguments);
   };
 }();
 exports.updateAdminEmail = updateAdminEmail;
