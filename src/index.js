@@ -1,6 +1,17 @@
 import app from "./app";
 import "./database";
-import { PORT } from "./config";
+import { PORT, KEY, CERT } from "./config";
 
-app.listen(PORT);
-console.log("Servidor en puerto", PORT);
+import https from "https";
+import fs from "fs";
+
+// Configuración del servidor HTTPS con los certificados
+const options = {
+  key: fs.readFileSync(KEY),
+  cert: fs.readFileSync(CERT),
+};
+
+https.createServer(options, app).listen(PORT, () => {
+  console.log("Servidor HTTPS en ejecución en el puerto", PORT);
+});
+

@@ -8,12 +8,11 @@ import flash from "connect-flash";
 import session from "express-session";
 import passport from "./config/passport";
 import { SESSION_SECRET } from "./config";
-
   
 //inicializacion
 const app = express();
 
-//settings
+// Configuración de las vistas
 app.set("views", path.join(__dirname, "views"));
 
 const exphbs = create({
@@ -39,10 +38,14 @@ app.set("view engine", ".hbs");
 
 
 
-//midlewares
+// Middleware de registro de solicitudes
 app.use(morgan("dev"));
+
+// Middleware de análisis de datos
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Middleware de sesión
 app.use(
   session({
     secret: SESSION_SECRET,
@@ -50,15 +53,19 @@ app.use(
     saveUninitialized: true,
     cookie: { maxAge: 60 * 60 * 1000,
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: 'none' }
   })
 );
+
+// Inicialización de Passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Middleware de mensajes flash
 app.use(flash()); 
 
-//global variables
+// Variables globales para las vistas
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
@@ -67,11 +74,11 @@ app.use((req, res, next) => {
   next();
 });
 
-//routes
+// Rutas
 app.use(formRoutes);
 app.use(userRoutes);
 
-//static files
+// Archivos estáticos
 app.use(express.static(path.join(__dirname, "public")));
 app.use('/files', express.static(path.join(__dirname, 'files')));
 

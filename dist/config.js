@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.SESSION_SECRET = exports.SESSION_MAX_AGE = exports.PORT = exports.MONGODB_URI = exports.MAIL_USER = exports.MAIL_PORT = exports.MAIL_PASS = exports.MAIL_HOST = exports.JWT_SECRET = exports.FILE_SIZE = exports.DOMINIO = void 0;
+exports.SESSION_SECRET = exports.SESSION_MAX_AGE = exports.PORT = exports.MONGODB_URI = exports.MAIL_USER = exports.MAIL_PORT = exports.MAIL_PASS = exports.MAIL_HOST = exports.KEY = exports.JWT_SECRET = exports.FILE_SIZE = exports.DOMINIO = exports.CERT = void 0;
 var _dotenv = _interopRequireDefault(require("dotenv"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 _dotenv["default"].config();
@@ -38,4 +38,10 @@ exports.MAIL_PASS = MAIL_PASS;
 var MAIL_HOST = process.env.MAIL_HOST;
 exports.MAIL_HOST = MAIL_HOST;
 var MAIL_PORT = process.env.MAIL_PORT;
+
+//CERTS
 exports.MAIL_PORT = MAIL_PORT;
+var KEY = process.env.KEY;
+exports.KEY = KEY;
+var CERT = process.env.CERT;
+exports.CERT = CERT;

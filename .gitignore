@@ -21,3 +21,8 @@ PerFis.xls
 cargainicial.xlsx
 cargainicial.xlsx
 .~lock.cargainicial.xlsx#
+
+# Certificados
+cert.pem
+csr.pem
+key.pem

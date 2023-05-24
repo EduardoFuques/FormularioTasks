@@ -18,7 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 //inicializacion
 var app = (0, _express["default"])();
 
-//settings
+// Configuración de las vistas
 app.set("views", _path["default"].join(__dirname, "views"));
 var exphbs = (0, _expressHandlebars.create)({
   // Configura la ruta para los diseños y fragmentos
@@ -41,12 +41,16 @@ var exphbs = (0, _expressHandlebars.create)({
 app.engine(".hbs", exphbs.engine);
 app.set("view engine", ".hbs");
 
-//midlewares
+// Middleware de registro de solicitudes
 app.use((0, _morgan["default"])("dev"));
+
+// Middleware de análisis de datos
 app.use(_express["default"].json());
 app.use(_express["default"].urlencoded({
   extended: false
 }));
+
+// Middleware de sesión
 app.use((0, _expressSession["default"])({
   secret: _config.SESSION_SECRET,
   resave: true,
@@ -54,15 +58,19 @@ app.use((0, _expressSession["default"])({
   cookie: {
     maxAge: 60 * 60 * 1000,
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: 'none'
   }
 }));
+
+// Inicialización de Passport
 app.use(_passport["default"].initialize());
 app.use(_passport["default"].session());
+
+// Middleware de mensajes flash
 app.use((0, _connectFlash["default"])());
 
-//global variables
+// Variables globales para las vistas
 app.use(function (req, res, next) {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
@@ -71,11 +79,11 @@ app.use(function (req, res, next) {
   next();
 });
 
-//routes
+// Rutas
 app.use(_form["default"]);
 app.use(_user["default"]);
 
-//static files
+// Archivos estáticos
 app.use(_express["default"]["static"](_path["default"].join(__dirname, "public")));
 app.use('/files', _express["default"]["static"](_path["default"].join(__dirname, 'files')));
 var _default = app;
