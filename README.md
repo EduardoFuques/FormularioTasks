@@ -23,3 +23,7 @@ MAIL_PASS --> Cuenta no-reply
 MAIL_HOST --> Servidor SMTP
 <!--  -->
 MAIL_PORT --> Servidor SMTP
+<!--  -->
+KEY --> Nombre de archivo del key.pem
+<!--  -->
+CERT --> Nombre de archivo del cert.pem
