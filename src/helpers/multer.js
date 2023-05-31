@@ -42,7 +42,7 @@ const options = {
   limits: {
     fileSize: FILE_SIZE,
   },
-  fileFilter: fileFilter(/pdf|doc|docx|odt/),
+  fileFilter: fileFilter(/pdf|doc|docx|odt|PDF|DOC|DOCX|ODT/),
   dest: path.join(__dirname, "..", "files"),
 };
 

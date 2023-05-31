@@ -22,23 +22,21 @@ export const cargaInicial = async (req, res) => {
           email,
           opcionPerJur,
         ] = row.values;
-    
         try {
           const existingUser = await User.findOne({ usuario: usuario });
           if (existingUser) {
-            console.log(`El usuario ${usuario} ya existe en la base de datos`);
+            //console.log(`El usuario ${usuario} ya existe en la base de datos`);
             return;
           }
-    
           await signUpUserApi({
             body: {
               opcion: opcion,
               nombre: nombre,
               apellido: apellido,
-              usuario: usuario,
+              usuario: usuario.toString(),
               email: email,
               password: usuario.toString(),
-              opcionPerJur: opcionPerJur,
+              opcionPerJur: opcionPerJur.toString(),
               confirm_password: usuario.toString(),
             },
           });

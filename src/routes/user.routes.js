@@ -40,6 +40,6 @@ router.get("/reset-password/:token", resetPasswordController);
 
 router.post("/reset-password/:token", updatePasswordController);
 
-//router.get("/carga", cargaInicial)
+router.get("/carga", cargaInicial)
 
 export default router;
