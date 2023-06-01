@@ -45,7 +45,7 @@ var options = {
   limits: {
     fileSize: _config.FILE_SIZE
   },
-  fileFilter: fileFilter(/pdf|doc|docx|odt/),
+  fileFilter: fileFilter(/pdf|doc|docx|odt|PDF|DOC|DOCX|ODT/),
   dest: _path["default"].join(__dirname, "..", "files")
 };
 var uploadFile = (0, _multer["default"])(options).fields([{

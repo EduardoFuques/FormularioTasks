@@ -42,7 +42,7 @@ var cargaInicial = /*#__PURE__*/function () {
                     switch (_context.prev = _context.next) {
                       case 0:
                         if (!(rowNumber !== 1)) {
-                          _context.next = 17;
+                          _context.next = 16;
                           break;
                         }
                         // Saltar la primera fila si es un encabezado
@@ -55,39 +55,38 @@ var cargaInicial = /*#__PURE__*/function () {
                       case 5:
                         existingUser = _context.sent;
                         if (!existingUser) {
-                          _context.next = 9;
+                          _context.next = 8;
                           break;
                         }
-                        console.log("El usuario ".concat(usuario, " ya existe en la base de datos"));
                         return _context.abrupt("return");
-                      case 9:
-                        _context.next = 11;
+                      case 8:
+                        _context.next = 10;
                         return (0, _user.signUpUserApi)({
                           body: {
                             opcion: opcion,
                             nombre: nombre,
                             apellido: apellido,
-                            usuario: usuario,
+                            usuario: usuario.toString(),
                             email: email,
                             password: usuario.toString(),
-                            opcionPerJur: opcionPerJur,
+                            opcionPerJur: opcionPerJur.toString(),
                             confirm_password: usuario.toString()
                           }
                         });
-                      case 11:
+                      case 10:
                         console.log("El usuario ".concat(usuario, " fue registrado"));
-                        _context.next = 17;
+                        _context.next = 16;
                         break;
-                      case 14:
-                        _context.prev = 14;
+                      case 13:
+                        _context.prev = 13;
                         _context.t0 = _context["catch"](2);
                         console.log("Error al procesar el usuario ".concat(usuario, ": ").concat(_context.t0.message));
-                      case 17:
+                      case 16:
                       case "end":
                         return _context.stop();
                     }
                   }
-                }, _callee, null, [[2, 14]]);
+                }, _callee, null, [[2, 13]]);
               }));
               return function (_x3, _x4) {
                 return _ref2.apply(this, arguments);
