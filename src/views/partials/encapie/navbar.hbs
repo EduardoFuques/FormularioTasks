@@ -1,6 +1,21 @@
-<nav class="navbar navbar-dark bg-secondary">
-  <div class="container-fluid">
+<style>
+.navbar-custom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.navbar-custom .navbar-brand {
+  margin-right: auto;
+}
+
+.navbar-custom .navbar-toggler {
+  margin-left: auto;
+}
+</style>
+
+<nav class="navbar navbar-dark bg-secondary navbar-custom">
+  <div class="container-fluid">
     <a class="navbar-brand" href="/">
       <img
         src="/icons/logo_blanco_chico.png"
@@ -10,7 +25,10 @@
         class="d-inline-block align-text-top"
       />
     </a>
-
+    {{#if codigoRepa}}
+      <h4 class="text-white" style="margin-right: 10px;">Tu código RePA:</h4>
+      <h4 class="text-white" style="margin-left: 10px;"><strong>{{codigoRepa}}</strong></h4>
+    {{/if}}
     <button
       class="navbar-toggler"
       type="button"
@@ -20,137 +38,136 @@
     >
       <i class="bi bi-menu-up" style="font-size: 42px;"></i>
     </button>
-    <div
-      class="offcanvas offcanvas-end text-bg-secondary"
-      tabindex="-1"
-      id="offcanvasDarkNavbar"
-      aria-labelledby="offcanvasDarkNavbarLabel"
-    >
-      <div class="offcanvas-header">
-        <h5
-          class="offcanvas-title"
-          id="offcanvasDarkNavbarLabel"
-        >Operaciones</h5>
-        <button
-          type="button"
-          class="btn-close btn-close-white"
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li class="nav-item">
-            {{#if user}}
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="/form"
-              >Inicio</a>
-            {{/if}}
-            {{#unless user}}
-              <a class="nav-link active" aria-current="page" href="/">Inicio</a>
-            {{/unless}}
-          </li>
+  </div>
+  <div
+    class="offcanvas offcanvas-end text-bg-secondary"
+    tabindex="-1"
+    id="offcanvasDarkNavbar"
+    aria-labelledby="offcanvasDarkNavbarLabel"
+  >
+    <div class="offcanvas-header">
+      <h5
+        class="offcanvas-title"
+        id="offcanvasDarkNavbarLabel"
+      >Operaciones</h5>
+      <button
+        type="button"
+        class="btn-close btn-close-white"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        <li class="nav-item">
+          {{#if user}}
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="/form"
+            >Inicio</a>
+          {{/if}}
           {{#unless user}}
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                id="termsBtn"
-              >Registrarse</a>
-            </li>
+            <a class="nav-link active" aria-current="page" href="/">Inicio</a>
           {{/unless}}
-          {{#if user}}
-            {{#if editar}}
-              {{#if perJur}}
-                <li class="dropdown-item">
-                  <a class="nav-link" href="/pdfEm" target="_blank">Descargar formulario de
-                    registro</a>
-                </li>
-              {{else}}
-                <li class="dropdown-item">
-                  <a class="nav-link" href="/pdf" target="_blank">Descargar formulario de
-                    registro</a>
-                </li>
-              {{/if}}
+        </li>
+        {{#unless user}}
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              id="termsBtn"
+            >Registrarse</a>
+          </li>
+        {{/unless}}
+        {{#if user}}
+          {{#if editar}}
+            {{#if perJur}}
+              <li class="dropdown-item">
+                <a class="nav-link" href="/pdfEm" target="_blank">Descargar formulario de
+                  registro</a>
+              </li>
+            {{else}}
+              <li class="dropdown-item">
+                <a class="nav-link" href="/pdf" target="_blank">Descargar formulario de
+                  registro</a>
+              </li>
             {{/if}}
-
           {{/if}}
 
-          {{!-- ADMINISTRACION --}}
-          {{#if admin}}
-            <li>
-              <hr class="" />
-            </li>
-            <li>
-              <b>Descargar planillas de usuarios</b>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                href="#"
-                onclick="descargarPF(event)"
-              >Personas Físicas</a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                href="#"
-                onclick="descargarPJ(event)"
-              >Personas Jurídicas</a>
-            </li>
-          {{/if}}
+        {{/if}}
 
+        {{!-- ADMINISTRACION --}}
+        {{#if admin}}
           <li>
             <hr class="" />
+          </li>
+          <li>
+            <b>Descargar planillas de usuarios</b>
           </li>
           <li>
             <a
               class="dropdown-item"
-              target="_blank"
-              href="/nomenclador_iaavim.pdf"
-              download
-            >Nomenclador IAAviM Personas Físicas</a>
+              href="#"
+              onclick="descargarPF(event)"
+            >Personas Físicas</a>
           </li>
           <li>
             <a
               class="dropdown-item"
-              target="_blank"
-              href="/nomenclador_pj.pdf"
-              download
-            >Nomenclador IAAviM Personas Jurídicas</a>
+              href="#"
+              onclick="descargarPJ(event)"
+            >Personas Jurídicas</a>
           </li>
+        {{/if}}
+
+        <li>
+          <hr class="" />
+        </li>
+        <li>
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="/nomenclador_iaavim.pdf"
+            download
+          >Nomenclador IAAviM Personas Físicas</a>
+        </li>
+        <li>
+          <a
+            class="dropdown-item"
+            target="_blank"
+            href="/nomenclador_pj.pdf"
+            download
+          >Nomenclador IAAviM Personas Jurídicas</a>
+        </li>
+        <li>
+          <hr class="" />
+        </li>
+        <a class="dropdown-item" href="/buscador/PF">Buscador Personas REPA</a>
+        <li>
+        </li>
+        <a class="dropdown-item" href="/buscador/PJ">Buscador Empresas REPA</a>
+        <li>
+          <hr class="" />
+        </li>
+        <li>
+          <a
+              class="nav-link active"
+              aria-current="page"
+              id="pufBtn"
+            >Preguntas Frecuentes</a>
+        </li>
+        {{#if user}}
           <li>
             <hr class="" />
           </li>
-          <a class="dropdown-item" href="/buscador/PF">Buscador Personas REPA</a>
-          <li>
-          </li>
-          <a class="dropdown-item" href="/buscador/PJ">Buscador Empresas REPA</a>
-          <li>
-            <hr class="" />
-          </li>
-          <li>
-            <a
-                class="nav-link active"
-                aria-current="page"
-                id="pufBtn"
-              >Preguntas Frecuentes</a>
-          </li>
-          {{#if user}}
-            <li>
-              <hr class="" />
-            </li>
-            <li><a class="dropdown-item" href="/logout">Salir</a></li>
-          {{/if}}
-        </ul>
-      </div>
+          <li><a class="dropdown-item" href="/logout">Salir</a></li>
+        {{/if}}
+      </ul>
     </div>
   </div>
   {{> terminosycondiciones}}
   {{> preguntasfrecuentes}}
-  
 </nav>
 
 <script>
