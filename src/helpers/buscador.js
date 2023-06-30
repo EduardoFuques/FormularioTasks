@@ -39,6 +39,8 @@ export const getUsersWithForms = async () => {
         userWithForms.sitIaavim = userWithForms.form[0].sitIaavim;
         userWithForms.cvFileUrl = userWithForms.form[0].cvFileUrl;
         userWithForms.dniFileUrl = userWithForms.form[0].dniFileUrl;
+        userWithForms.fCreacion = userWithForms.form[0].createdAt;
+        userWithForms.fUpdate = userWithForms.form[0].updatedAt;
         delete userWithForms._id;
         delete userWithForms.tipoDoc;
         delete userWithForms.password;

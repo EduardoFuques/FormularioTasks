@@ -17,13 +17,51 @@ import validator from "validator";
 
 export const renderAdmin = async (req, res) => {
   let usersWithForms = await getUsersWithForms();
-  usersWithForms.sort((a, b) => (a.codigoRepa > b.codigoRepa) ? 1 : -1);
+  usersWithForms.sort((a, b) => (a.fUpdate < b.fUpdate) ? 1 : -1);
+  usersWithForms.forEach((datitos) => {
+    const fechaActual = new Date();
+    const fechaUpdatedAt = new Date(datitos.fUpdate);
+    const fechaCreatedAt = new Date(datitos.fCreacion);
+
+    let diasDesdeUpdated;
+    if (fechaUpdatedAt.getTime() === fechaCreatedAt.getTime()) {
+      diasDesdeUpdated = 0;
+    } else {
+      diasDesdeUpdated = Math.round(
+        (fechaActual - fechaUpdatedAt) / (1000 * 60 * 60 * 24)
+      );
+    }
+
+    let resultadoUpdated;
+    if (
+      diasDesdeUpdated === 0 &&
+      fechaUpdatedAt.getTime() !== fechaCreatedAt.getTime()
+    ) {
+      resultadoUpdated = "Hoy";
+    } else if (
+      diasDesdeUpdated === 0 &&
+      fechaUpdatedAt.getTime() === fechaCreatedAt.getTime()
+    ) {
+      const diasDesdeCreacion = Math.round(
+        (fechaActual - fechaCreatedAt) / (1000 * 60 * 60 * 24)
+      );
+      resultadoUpdated = `${diasDesdeCreacion} días`;
+    } else {
+      resultadoUpdated = `${diasDesdeUpdated} días`;
+    }
+    
+    const fechaCreatedISO = datitos.createdAt ? datitos.createdAt.toISOString() : '';
+    const fechaCreated = fechaCreatedISO.slice(0, 10);
+    datitos.createdAt = fechaCreated
+    datitos.updatedAt = resultadoUpdated
+  });
+
   const admin = true;
   res.render("administracion", {
     admin: admin,
     usersWithForms: usersWithForms,
   });
-};
+}; 
 
 export const filtroBuscadorAdmin = async (req, res) => {
   const query = req.body.q.toLowerCase();

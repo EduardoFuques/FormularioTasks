@@ -26,3 +26,6 @@ cargainicial.xlsx
 cert.pem
 csr.pem
 key.pem
+cert.crt
+priv.key
+solicitud.csr
