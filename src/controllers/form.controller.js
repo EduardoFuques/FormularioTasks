@@ -138,6 +138,9 @@ export const captureForm = async (req, res) => {
       req.flash("error", errorMessage);
       return res.redirect("/logout");
     }
+
+    //---------------------------------------------------------------------------
+
     const cvFileUrl = `${encodeURIComponent(
       req.protocol
     )}://${encodeURIComponent(req.get("host"))}/files/${encodeURIComponent(
@@ -166,6 +169,9 @@ export const captureForm = async (req, res) => {
       /(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/,
       "$1-$2-$3T$4:$5:00Z"
     );
+
+    //---------------------------------------------------------------------------
+
     const newForm = new Form({
       tipoDoc: VtipoDoc,
       usuario: Vusuario,
