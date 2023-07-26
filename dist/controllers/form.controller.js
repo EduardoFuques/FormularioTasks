@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.renderPDF = exports.renderForm = exports.captureForm = exports.captureEditForm = void 0;
 var _Formulario = _interopRequireDefault(require("../models/Formulario"));
+var _Usuarios = _interopRequireDefault(require("../models/Usuarios"));
 var _pdfLib = require("pdf-lib");
 var _fs = _interopRequireDefault(require("fs"));
 var _path = _interopRequireDefault(require("path"));
@@ -101,11 +102,12 @@ var renderForm = /*#__PURE__*/function () {
 exports.renderForm = renderForm;
 var captureForm = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(req, res) {
-    var _req$body, cuil, sexo, sitAfip, telFijo, movilPpal, movilAlt, localidad, cp, calle, numero, piso, dpto, medios, areaDes, areaComp, _req$user2, tipoDoc, usuario, nombre, apellido, email, VtipoDoc, Vusuario, Vnombre, Vapellido, Vcuil, Vsexo, VsitAfip, VtelFijo, VmovilPpal, VmovilAlt, Vlocalidad, Vcp, Vcalle, Vnumero, Vpiso, Vdpto, isEmailValid, Vmedios, VareaDes, VareaComp, Vemail, errorMessage, cvFileUrl, dniFileUrl, cvFilename, cvFileDate, cvFileDateISO, dniFilename, dniFileDate, dniFileDateISO, newForm;
+    var _req$body, cuil, sexo, sitAfip, telFijo, movilPpal, movilAlt, localidad, cp, calle, numero, piso, dpto, medios, areaDes, areaComp, _req$user2, tipoDoc, usuario, nombre, apellido, email, VtipoDoc, Vusuario, Vnombre, Vapellido, Vcuil, Vsexo, VsitAfip, VtelFijo, VmovilPpal, VmovilAlt, Vlocalidad, Vcp, Vcalle, Vnumero, Vpiso, Vdpto, isEmailValid, Vmedios, VareaDes, VareaComp, Vemail, errorMessage, obtCodigoRepa, codigoRepa, cvFileUrl, dniFileUrl, cvFilename, cvFileDate, cvFileDateISO, dniFilename, dniFileDate, dniFileDateISO, newForm;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
           _context2.prev = 0;
+          console.log(req.body);
           _req$body = req.body, cuil = _req$body.cuil, sexo = _req$body.sexo, sitAfip = _req$body.sitAfip, telFijo = _req$body.telFijo, movilPpal = _req$body.movilPpal, movilAlt = _req$body.movilAlt, localidad = _req$body.localidad, cp = _req$body.cp, calle = _req$body.calle, numero = _req$body.numero, piso = _req$body.piso, dpto = _req$body.dpto, medios = _req$body.medios, areaDes = _req$body.areaDes, areaComp = _req$body.areaComp;
           _req$user2 = req.user, tipoDoc = _req$user2.tipoDoc, usuario = _req$user2.usuario, nombre = _req$user2.nombre, apellido = _req$user2.apellido, email = _req$user2.email;
           VtipoDoc = _validator["default"].escape(tipoDoc);
@@ -150,25 +152,32 @@ var captureForm = /*#__PURE__*/function () {
           }
           errorMessage = "";
           if (!isEmailValid) {
-            _context2.next = 28;
+            _context2.next = 29;
             break;
           }
           Vemail = email;
-          _context2.next = 31;
+          _context2.next = 32;
           break;
-        case 28:
+        case 29:
           errorMessage = "Ha ocurrido un error. Póngase en contacto con administración";
           req.flash("error", errorMessage);
           return _context2.abrupt("return", res.redirect("/logout"));
-        case 31:
-          cvFileUrl = "".concat(encodeURIComponent(req.protocol), "://").concat(encodeURIComponent(req.get("host")), "/files/").concat(encodeURIComponent(req.user.codigoRepa), "/").concat(encodeURIComponent(req.files.cvFile[0].filename));
-          dniFileUrl = "".concat(encodeURIComponent(req.protocol), "://").concat(encodeURIComponent(req.get("host")), "/files/").concat(encodeURIComponent(req.user.codigoRepa), "/").concat(encodeURIComponent(req.files.dniFile[0].filename));
+        case 32:
+          _context2.next = 34;
+          return _Usuarios["default"].findOne({
+            usuario: Vusuario
+          }).lean();
+        case 34:
+          obtCodigoRepa = _context2.sent;
+          codigoRepa = obtCodigoRepa.codigoRepa;
+          cvFileUrl = "".concat(encodeURIComponent(req.protocol), "://").concat(encodeURIComponent(req.get("host")), "/files/").concat(codigoRepa, "/").concat(encodeURIComponent(req.files.cvFile[0].filename));
+          dniFileUrl = "".concat(encodeURIComponent(req.protocol), "://").concat(encodeURIComponent(req.get("host")), "/files/").concat(codigoRepa, "/").concat(encodeURIComponent(req.files.dniFile[0].filename));
           cvFilename = encodeURIComponent(req.files.cvFile[0].filename);
           cvFileDate = cvFilename.substring(cvFilename.lastIndexOf("-") + 1, cvFilename.lastIndexOf("."));
           cvFileDateISO = cvFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, "$1-$2-$3T$4:$5:00Z");
           dniFilename = encodeURIComponent(req.files.dniFile[0].filename);
           dniFileDate = dniFilename.substring(dniFilename.lastIndexOf("-") + 1, dniFilename.lastIndexOf("."));
-          dniFileDateISO = dniFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, "$1-$2-$3T$4:$5:00Z");
+          dniFileDateISO = dniFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, "$1-$2-$3T$4:$5:00Z"); //---------------------------------------------------------------------------
           newForm = new _Formulario["default"]({
             tipoDoc: VtipoDoc,
             usuario: Vusuario,
@@ -213,21 +222,21 @@ var captureForm = /*#__PURE__*/function () {
             dniFileUrl: dniFileUrl,
             dniFileDate: new Date(dniFileDateISO)
           });
-          _context2.next = 42;
+          _context2.next = 47;
           return newForm.save();
-        case 42:
+        case 47:
           res.render("pantalla-ok");
-          _context2.next = 48;
+          _context2.next = 53;
           break;
-        case 45:
-          _context2.prev = 45;
+        case 50:
+          _context2.prev = 50;
           _context2.t0 = _context2["catch"](0);
           console.log(_context2.t0.message);
-        case 48:
+        case 53:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[0, 45]]);
+    }, _callee2, null, [[0, 50]]);
   }));
   return function captureForm(_x3, _x4) {
     return _ref2.apply(this, arguments);
@@ -236,7 +245,7 @@ var captureForm = /*#__PURE__*/function () {
 exports.captureForm = captureForm;
 var captureEditForm = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res) {
-    var _req$body2, cuil, sexo, sitAfip, telFijo, movilPpal, movilAlt, localidad, cp, calle, numero, piso, dpto, medios, areaDes, areaComp, usuario, Vusuario, Vcuil, Vsexo, VsitAfip, VtelFijo, VmovilPpal, VmovilAlt, Vlocalidad, Vcp, Vcalle, Vnumero, Vpiso, Vdpto, Vmedios, VareaDes, VareaComp, usuarioEncontrado, cvFileUrl, cvFilename, cvFileDate, cvFileDateISO, dniFileUrl, dniFilename, dniFileDate, dniFileDateISO, editForm;
+    var _req$body2, cuil, sexo, sitAfip, telFijo, movilPpal, movilAlt, localidad, cp, calle, numero, piso, dpto, medios, areaDes, areaComp, usuario, Vusuario, Vcuil, Vsexo, VsitAfip, VtelFijo, VmovilPpal, VmovilAlt, Vlocalidad, Vcp, Vcalle, Vnumero, Vpiso, Vdpto, Vmedios, VareaDes, VareaComp, obtCodigoRepa, usuarioEncontrado, codigoRepa, cvFileUrl, cvFilename, cvFileDate, cvFileDateISO, dniFileUrl, dniFilename, dniFileDate, dniFileDateISO, editForm;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
@@ -280,13 +289,20 @@ var captureEditForm = /*#__PURE__*/function () {
             VareaComp = areaComp;
           }
           _context3.next = 21;
-          return _Formulario["default"].findOne({
-            Vusuario: Vusuario
+          return _Usuarios["default"].findOne({
+            usuario: Vusuario
           }).lean();
         case 21:
+          obtCodigoRepa = _context3.sent;
+          _context3.next = 24;
+          return _Formulario["default"].findOne({
+            usuario: Vusuario
+          }).lean();
+        case 24:
           usuarioEncontrado = _context3.sent;
+          codigoRepa = obtCodigoRepa.codigoRepa;
           if (req.files.cvFile && req.files.cvFile.length > 0 && req.files.cvFile[0].filename) {
-            cvFileUrl = "".concat(encodeURIComponent(req.protocol), "://").concat(encodeURIComponent(req.get("host")), "/files/").concat(encodeURIComponent(req.user.codigoRepa), "/").concat(encodeURIComponent(req.files.cvFile[0].filename));
+            cvFileUrl = "".concat(encodeURIComponent(req.protocol), "://").concat(encodeURIComponent(req.get("host")), "/files/").concat(codigoRepa, "/").concat(encodeURIComponent(req.files.cvFile[0].filename));
             cvFilename = encodeURIComponent(req.files.cvFile[0].filename);
             cvFileDate = cvFilename.substring(cvFilename.lastIndexOf("-") + 1, cvFilename.lastIndexOf("."));
             cvFileDateISO = new Date(cvFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, "$1-$2-$3T$4:$5:00Z"));
@@ -295,7 +311,7 @@ var captureEditForm = /*#__PURE__*/function () {
             cvFileDateISO = usuarioEncontrado.cvFileDate;
           }
           if (req.files.dniFile && req.files.dniFile.length > 0 && req.files.dniFile[0].filename) {
-            dniFileUrl = "".concat(encodeURIComponent(req.protocol), "://").concat(encodeURIComponent(req.get("host")), "/files/").concat(encodeURIComponent(req.user.codigoRepa), "/").concat(encodeURIComponent(req.files.dniFile[0].filename));
+            dniFileUrl = "".concat(encodeURIComponent(req.protocol), "://").concat(encodeURIComponent(req.get("host")), "/files/").concat(codigoRepa, "/").concat(encodeURIComponent(req.files.dniFile[0].filename));
             dniFilename = encodeURIComponent(req.files.dniFile[0].filename);
             dniFileDate = dniFilename.substring(dniFilename.lastIndexOf("-") + 1, dniFilename.lastIndexOf("."));
             dniFileDateISO = new Date(dniFileDate.replace(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/, "$1-$2-$3T$4:$5:00Z"));
@@ -340,32 +356,26 @@ var captureEditForm = /*#__PURE__*/function () {
             cvFileDate: new Date(cvFileDateISO),
             dniFileUrl: dniFileUrl,
             dniFileDate: new Date(dniFileDateISO)
-          };
-          _context3.next = 27;
-          return _Formulario["default"].updateOne({
-            usuario: usuario
-          }, {
-            $set: editForm
-          }, function (error) {
-            if (error) {
-              console.log(error);
-              res.send(error);
-            } else {
-              res.render("pantalla-ok");
-            }
-          });
-        case 27:
-          _context3.next = 32;
+          }; // await Form.updateOne({ usuario: usuario }, { $set: editForm }, (error) => {
+          //   if (error) {
+          //     console.log(error);
+          //     res.send(error);
+          //   } else {
+          //     res.render("pantalla-ok");
+          //   }
+          // });
+          res.send("ok");
+          _context3.next = 35;
           break;
-        case 29:
-          _context3.prev = 29;
+        case 32:
+          _context3.prev = 32;
           _context3.t0 = _context3["catch"](0);
           console.log(_context3.t0.message);
-        case 32:
+        case 35:
         case "end":
           return _context3.stop();
       }
-    }, _callee3, null, [[0, 29]]);
+    }, _callee3, null, [[0, 32]]);
   }));
   return function captureEditForm(_x5, _x6) {
     return _ref3.apply(this, arguments);
