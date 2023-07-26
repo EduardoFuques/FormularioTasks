@@ -1,4 +1,5 @@
 import Form from "../models/Formulario";
+import User from "../models/Usuarios";
 import { PDFDocument } from "pdf-lib";
 import fs from "fs";
 import path from "path";
@@ -74,6 +75,7 @@ export const renderForm = async (req, res) => {
 
 export const captureForm = async (req, res) => {
   try {
+    console.log(req.body)
     const {
       cuil,
       sexo,
@@ -140,17 +142,14 @@ export const captureForm = async (req, res) => {
     }
 
     //---------------------------------------------------------------------------
-
+    const obtCodigoRepa = await User.findOne({usuario: Vusuario}).lean();
+    let codigoRepa = obtCodigoRepa.codigoRepa
     const cvFileUrl = `${encodeURIComponent(
       req.protocol
-    )}://${encodeURIComponent(req.get("host"))}/files/${encodeURIComponent(
-      req.user.codigoRepa
-    )}/${encodeURIComponent(req.files.cvFile[0].filename)}`;
+    )}://${encodeURIComponent(req.get("host"))}/files/${codigoRepa}/${encodeURIComponent(req.files.cvFile[0].filename)}`;
     const dniFileUrl = `${encodeURIComponent(
       req.protocol
-    )}://${encodeURIComponent(req.get("host"))}/files/${encodeURIComponent(
-      req.user.codigoRepa
-    )}/${encodeURIComponent(req.files.dniFile[0].filename)}`;
+    )}://${encodeURIComponent(req.get("host"))}/files/${codigoRepa}/${encodeURIComponent(req.files.dniFile[0].filename)}`;
     const cvFilename = encodeURIComponent(req.files.cvFile[0].filename);
     const cvFileDate = cvFilename.substring(
       cvFilename.lastIndexOf("-") + 1,
@@ -264,7 +263,9 @@ export const captureEditForm = async (req, res) => {
     } else {
       VareaComp = areaComp;
     }
-    const usuarioEncontrado = await Form.findOne({ Vusuario }).lean();
+    const obtCodigoRepa = await User.findOne({usuario: Vusuario}).lean();
+    const usuarioEncontrado = await Form.findOne({ usuario: Vusuario }).lean();
+    let codigoRepa = obtCodigoRepa.codigoRepa
     let cvFileUrl;
     let cvFilename;
     let cvFileDate;
@@ -276,7 +277,7 @@ export const captureEditForm = async (req, res) => {
     ) {
       cvFileUrl = `${encodeURIComponent(req.protocol)}://${encodeURIComponent(
         req.get("host")
-      )}/files/${encodeURIComponent(req.user.codigoRepa)}/${encodeURIComponent(
+      )}/files/${codigoRepa}/${encodeURIComponent(
         req.files.cvFile[0].filename
       )}`;
       cvFilename = encodeURIComponent(req.files.cvFile[0].filename);
@@ -305,7 +306,7 @@ export const captureEditForm = async (req, res) => {
     ) {
       dniFileUrl = `${encodeURIComponent(req.protocol)}://${encodeURIComponent(
         req.get("host")
-      )}/files/${encodeURIComponent(req.user.codigoRepa)}/${encodeURIComponent(
+      )}/files/${codigoRepa}/${encodeURIComponent(
         req.files.dniFile[0].filename
       )}`;
       dniFilename = encodeURIComponent(req.files.dniFile[0].filename);
@@ -349,14 +350,15 @@ export const captureEditForm = async (req, res) => {
       dniFileUrl,
       dniFileDate: new Date(dniFileDateISO),
     };
-    await Form.updateOne({ usuario: usuario }, { $set: editForm }, (error) => {
-      if (error) {
-        console.log(error);
-        res.send(error);
-      } else {
-        res.render("pantalla-ok");
-      }
-    });
+    // await Form.updateOne({ usuario: usuario }, { $set: editForm }, (error) => {
+    //   if (error) {
+    //     console.log(error);
+    //     res.send(error);
+    //   } else {
+    //     res.render("pantalla-ok");
+    //   }
+    // });
+    res.send("ok")
   } catch (error) {
     console.log(error.message);
   }
