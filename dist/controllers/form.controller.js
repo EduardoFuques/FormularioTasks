@@ -356,26 +356,32 @@ var captureEditForm = /*#__PURE__*/function () {
             cvFileDate: new Date(cvFileDateISO),
             dniFileUrl: dniFileUrl,
             dniFileDate: new Date(dniFileDateISO)
-          }; // await Form.updateOne({ usuario: usuario }, { $set: editForm }, (error) => {
-          //   if (error) {
-          //     console.log(error);
-          //     res.send(error);
-          //   } else {
-          //     res.render("pantalla-ok");
-          //   }
-          // });
-          res.send("ok");
-          _context3.next = 35;
+          };
+          _context3.next = 31;
+          return _Formulario["default"].updateOne({
+            usuario: Vusuario
+          }, {
+            $set: editForm
+          }, function (error) {
+            if (error) {
+              console.log(error);
+              res.send(error);
+            } else {
+              res.render("pantalla-ok");
+            }
+          });
+        case 31:
+          _context3.next = 36;
           break;
-        case 32:
-          _context3.prev = 32;
+        case 33:
+          _context3.prev = 33;
           _context3.t0 = _context3["catch"](0);
           console.log(_context3.t0.message);
-        case 35:
+        case 36:
         case "end":
           return _context3.stop();
       }
-    }, _callee3, null, [[0, 32]]);
+    }, _callee3, null, [[0, 33]]);
   }));
   return function captureEditForm(_x5, _x6) {
     return _ref3.apply(this, arguments);

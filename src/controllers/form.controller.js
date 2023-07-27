@@ -110,12 +110,12 @@ export const captureForm = async (req, res) => {
     const Vnumero = numero === "/" ? numero : validator.escape(numero);
     const Vpiso = piso === "/" ? piso : validator.escape(piso);
     const Vdpto = dpto === "/" ? dpto : validator.escape(dpto);
-    const isEmailValid=validator.isEmail(email)
+    const isEmailValid = validator.isEmail(email)
     let Vmedios;
     if (Array.isArray(medios)) {
       Vmedios = medios.map((medio) => validator.escape(medio));
     } else {
-      Vmedios=validator.escape(medios)
+      Vmedios = validator.escape(medios)
     }
     let VareaDes;
     if (Array.isArray(areaDes)) {
@@ -124,7 +124,7 @@ export const captureForm = async (req, res) => {
       VareaDes = validator.escape(areaDes)
     }
     let VareaComp;
-    if (Array.isArray(areaComp)){
+    if (Array.isArray(areaComp)) {
       VareaComp = areaComp.map((areaComp) => validator.escape(areaComp));
     } else if (typeof areaComp === "string") {
       VareaComp = validator.escape(areaComp);
@@ -132,17 +132,17 @@ export const captureForm = async (req, res) => {
       VareaComp = areaComp;
     }
     let Vemail;
-    let errorMessage="";
+    let errorMessage = "";
     if (isEmailValid) {
       Vemail = email;
     } else {
-      errorMessage="Ha ocurrido un error. Póngase en contacto con administración"
+      errorMessage = "Ha ocurrido un error. Póngase en contacto con administración"
       req.flash("error", errorMessage);
       return res.redirect("/logout");
     }
 
     //---------------------------------------------------------------------------
-    const obtCodigoRepa = await User.findOne({usuario: Vusuario}).lean();
+    const obtCodigoRepa = await User.findOne({ usuario: Vusuario }).lean();
     let codigoRepa = obtCodigoRepa.codigoRepa
     const cvFileUrl = `${encodeURIComponent(
       req.protocol
@@ -247,7 +247,7 @@ export const captureEditForm = async (req, res) => {
     if (Array.isArray(medios)) {
       Vmedios = medios.map((medio) => validator.escape(medio));
     } else {
-      Vmedios=validator.escape(medios)
+      Vmedios = validator.escape(medios)
     }
     let VareaDes;
     if (Array.isArray(areaDes)) {
@@ -256,14 +256,14 @@ export const captureEditForm = async (req, res) => {
       VareaDes = validator.escape(areaDes)
     }
     let VareaComp;
-    if (Array.isArray(areaComp)){
+    if (Array.isArray(areaComp)) {
       VareaComp = areaComp.map((areaComp) => validator.escape(areaComp));
     } else if (typeof areaComp === "string") {
       VareaComp = validator.escape(areaComp);
     } else {
       VareaComp = areaComp;
     }
-    const obtCodigoRepa = await User.findOne({usuario: Vusuario}).lean();
+    const obtCodigoRepa = await User.findOne({ usuario: Vusuario }).lean();
     const usuarioEncontrado = await Form.findOne({ usuario: Vusuario }).lean();
     let codigoRepa = obtCodigoRepa.codigoRepa
     let cvFileUrl;
@@ -350,15 +350,14 @@ export const captureEditForm = async (req, res) => {
       dniFileUrl,
       dniFileDate: new Date(dniFileDateISO),
     };
-    // await Form.updateOne({ usuario: usuario }, { $set: editForm }, (error) => {
-    //   if (error) {
-    //     console.log(error);
-    //     res.send(error);
-    //   } else {
-    //     res.render("pantalla-ok");
-    //   }
-    // });
-    res.send("ok")
+    await Form.updateOne({ usuario: Vusuario }, { $set: editForm }, (error) => {
+      if (error) {
+        console.log(error);
+        res.send(error);
+      } else {
+        res.render("pantalla-ok");
+      }
+    });
   } catch (error) {
     console.log(error.message);
   }
