@@ -81,20 +81,21 @@
           </li>
         {{/unless}}
         {{#if user}}
-          {{#if editar}}
-            {{#if perJur}}
-              <li class="dropdown-item">
-                <a class="nav-link" href="/pdfEm" target="_blank">Descargar formulario de
-                  registro</a>
-              </li>
-            {{else}}
-              <li class="dropdown-item">
-                <a class="nav-link" href="/pdf" target="_blank">Descargar formulario de
-                  registro</a>
-              </li>
+          {{#if activo}}
+            {{#if editar}}
+              {{#if perJur}}
+                <li class="dropdown-item">
+                  <a class="dropdown-item" href="/pdfEm" target="_blank">Descargar formulario de
+                    registro</a>
+                </li>
+              {{else}}
+                <li class="dropdown-item">
+                  <a class="dropdown-item" href="/pdf" target="_blank">Descargar formulario de
+                    registro</a>
+                </li>
+              {{/if}}
             {{/if}}
           {{/if}}
-
         {{/if}}
 
         {{!-- ADMINISTRACION --}}
