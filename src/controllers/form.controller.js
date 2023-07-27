@@ -26,6 +26,7 @@ export const renderForm = async (req, res) => {
         apellido,
         email,
       };
+      const activo = false;
       const perJur = false;
       const editar = false;
       res.render("index", {
@@ -33,6 +34,7 @@ export const renderForm = async (req, res) => {
         codigoRepa: codigoRepa,
         editar: editar,
         perJur: perJur,
+        activo: activo,
       });
     } else {
       const datos = usuarioEncontrado;
@@ -50,11 +52,13 @@ export const renderForm = async (req, res) => {
       }
       const editar = true;
       const perJur = false;
+      const activo = datos.sitIaavim;
       const calle = datos.domicilio[0].calle.toString();
       const formattedDNIDate = format(datos.dniFileDate, "dd/MM/yyyy");
       const formattedCVDate = format(datos.cvFileDate, "dd/MM/yyyy");
       res.render("edit", {
         datos: datos,
+        activo: activo,
         codigoRepa: codigoRepa,
         domicilio: datos.domicilio[0],
         calle: calle,

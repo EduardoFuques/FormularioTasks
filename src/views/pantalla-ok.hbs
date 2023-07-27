@@ -5,12 +5,16 @@
         <div class="card-body">
           <h3 class="card-title align-items-center">Formulario de Registro
             IAAViM</h3>
-          <p class="card-text">El formulario fue completado exitosamente.
-            Gracias!</p>
-          {{#if perJur}}
-            <a href="/pdfEm" class="btn btn-primary" target="_blank">Descargar PDF</a>
+          {{#if activo}}
+            <p class="card-text">El formulario fue completado exitosamente. Gracias!</p>
+            {{#if perJur}}
+              <a href="/pdfEm" class="btn btn-primary" target="_blank">Descargar PDF</a>
+            {{else}}
+              <a href="/pdf" class="btn btn-primary" target="_blank">Descargar PDF</a>
+            {{/if}}
           {{else}}
-            <a href="/pdf" class="btn btn-primary" target="_blank">Descargar PDF</a>
+            <p class="card-text">El formulario fue completado exitosamente. Podrá descargar el formulario una vez se active su cuenta.
+              Gracias!</p>
           {{/if}}
         </div>
       </div>
