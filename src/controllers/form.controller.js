@@ -53,6 +53,7 @@ export const renderForm = async (req, res) => {
       const editar = true;
       const perJur = false;
       const activo = datos.sitIaavim;
+      const estadoIaavim = datos.sitIaavim ? 'ACTIVO' : 'INACTIVO';
       const calle = datos.domicilio[0].calle.toString();
       const formattedDNIDate = format(datos.dniFileDate, "dd/MM/yyyy");
       const formattedCVDate = format(datos.cvFileDate, "dd/MM/yyyy");
@@ -70,6 +71,7 @@ export const renderForm = async (req, res) => {
         perJur: perJur,
         formattedDNIDate: formattedDNIDate,
         formattedCVDate: formattedCVDate,
+        estadoIaavim: estadoIaavim,
       });
     }
   } catch (error) {
@@ -145,7 +147,6 @@ export const captureForm = async (req, res) => {
       return res.redirect("/logout");
     }
 
-    //---------------------------------------------------------------------------
     const obtCodigoRepa = await User.findOne({ usuario: Vusuario }).lean();
     let codigoRepa = obtCodigoRepa.codigoRepa
     const cvFileUrl = `${encodeURIComponent(
@@ -172,8 +173,6 @@ export const captureForm = async (req, res) => {
       /(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/,
       "$1-$2-$3T$4:$5:00Z"
     );
-
-    //---------------------------------------------------------------------------
 
     const newForm = new Form({
       tipoDoc: VtipoDoc,
@@ -270,6 +269,7 @@ export const captureEditForm = async (req, res) => {
     const obtCodigoRepa = await User.findOne({ usuario: Vusuario }).lean();
     const usuarioEncontrado = await Form.findOne({ usuario: Vusuario }).lean();
     let codigoRepa = obtCodigoRepa.codigoRepa
+    let activo = usuarioEncontrado.sitIaavim
     let cvFileUrl;
     let cvFilename;
     let cvFileDate;
@@ -359,7 +359,7 @@ export const captureEditForm = async (req, res) => {
         console.log(error);
         res.send(error);
       } else {
-        res.render("pantalla-ok");
+        res.render("pantalla-ok", {activo: activo});
       }
     });
   } catch (error) {
