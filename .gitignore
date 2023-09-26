@@ -29,3 +29,5 @@ key.pem
 cert.crt
 priv.key
 solicitud.csr
+cert1.pem
+privkey1.pem
