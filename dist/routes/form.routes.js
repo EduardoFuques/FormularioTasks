@@ -40,5 +40,4 @@ router.get("/buscador/PF", _buscador.renderBuscadorPersonas);
 router.post("/buscador/PF", _buscador.filtroBuscadorPersonas);
 router.get("/buscador/PJ", _buscador.renderBuscadorEmpresas);
 router.post("/buscador/PJ", _buscador.filtroBuscadorEmpresas);
-var _default = router;
-exports["default"] = _default;
+var _default = exports["default"] = router;

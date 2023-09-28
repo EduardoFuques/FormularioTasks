@@ -34,8 +34,6 @@ var options = {
   fileFilter: fileFilter(/pdf|doc|docx|odt/),
   dest: _path["default"].join(__dirname, "..", "files")
 };
-var cvUpload = (0, _multer["default"])(options).single("cvFile");
-exports.cvUpload = cvUpload;
+var cvUpload = exports.cvUpload = (0, _multer["default"])(options).single("cvFile");
 options.fileFilter = fileFilter(/pdf/);
-var dniUpload = (0, _multer["default"])(options).single("dniFile");
-exports.dniUpload = dniUpload;
+var dniUpload = exports.dniUpload = (0, _multer["default"])(options).single("dniFile");

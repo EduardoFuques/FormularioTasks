@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.mediosopc = exports.mediosUsuarioArr = exports.headers = exports.domiciliosOpc = exports.columnasPerJur = exports.columnasPerFis = exports.areasCompUsuarioArr = exports.areasCompOpc = exports.areaDesUsuarioArr = exports.areaDesOpc = void 0;
-var areasCompOpc = [{
+var areasCompOpc = exports.areasCompOpc = [{
   medio: "Actor/actriz con experiencia en realizaciones audiovisuales",
   indice: 0
 }, {
@@ -26,8 +26,7 @@ var areasCompOpc = [{
   medio: "Otros",
   indice: 6
 }];
-exports.areasCompOpc = areasCompOpc;
-var areaDesOpc = [{
+var areaDesOpc = exports.areaDesOpc = [{
   medio: "Productor/a",
   indice: 0
 }, {
@@ -160,8 +159,7 @@ var areaDesOpc = [{
   medio: "Otro",
   indice: 43
 }];
-exports.areaDesOpc = areaDesOpc;
-var mediosopc = [{
+var mediosopc = exports.mediosopc = [{
   medio: "TV",
   indice: 0
 }, {
@@ -174,8 +172,7 @@ var mediosopc = [{
   medio: "Otro Medio",
   indice: 3
 }];
-exports.mediosopc = mediosopc;
-var domiciliosOpc = [{
+var domiciliosOpc = exports.domiciliosOpc = [{
   localidad: "9 de Julio",
   opciones: {
     Departamento: "Eldorado",
@@ -701,10 +698,8 @@ var domiciliosOpc = [{
     indice: 74
   }
 }];
-exports.domiciliosOpc = domiciliosOpc;
-var headers = ["Código REPA", "Tipo de documento", "Número de documento", "Nombre", "Apellido", "CUIL", "Género", "Correo electrónico", "Situación AFIP", "Situación IAAViM", "Localidad", "Distrito", "Departamento", "Código Postal", "Calle", "Piso", "Número", "Departamento", "Teléfono fijo", "Teléfono móvil", "Móvil alternativo", "Medios", "Area Desempeño", "Area Complementaria"];
-exports.headers = headers;
-var columnasPerJur = [{
+var headers = exports.headers = ["Código REPA", "Tipo de documento", "Número de documento", "Nombre", "Apellido", "CUIL", "Género", "Correo electrónico", "Situación AFIP", "Situación IAAViM", "Localidad", "Distrito", "Departamento", "Código Postal", "Calle", "Piso", "Número", "Departamento", "Teléfono fijo", "Teléfono móvil", "Móvil alternativo", "Medios", "Area Desempeño", "Area Complementaria"];
+var columnasPerJur = exports.columnasPerJur = [{
   header: "Código Repa",
   key: "codigoRepa"
 }, {
@@ -715,19 +710,13 @@ var columnasPerJur = [{
   key: "nombreFantasia"
 }, {
   header: "CUIL",
-  key: "cuil"
+  key: "usuario"
 }, {
   header: "Nombre",
   key: "nombre"
 }, {
   header: "Apellido",
   key: "apellido"
-}, {
-  header: "Tipo Doc",
-  key: "tipoDoc"
-}, {
-  header: "Documento",
-  key: "usuario"
 }, {
   header: "Género",
   key: "sexo"
@@ -786,8 +775,7 @@ var columnasPerJur = [{
   header: "pdf ESTATUTO",
   key: "cvFileUrl"
 }];
-exports.columnasPerJur = columnasPerJur;
-var columnasPerFis = [{
+var columnasPerFis = exports.columnasPerFis = [{
   header: "Código Repa",
   key: "codigoRepa"
 }, {
@@ -1034,15 +1022,13 @@ var columnasPerFis = [{
   header: "pdf CV",
   key: "cvFileUrl"
 }];
-exports.columnasPerFis = columnasPerFis;
-var mediosUsuarioArr = {
+var mediosUsuarioArr = exports.mediosUsuarioArr = {
   TV: "",
   Web: "",
   Cine: "",
   'Otro Medio': ""
 };
-exports.mediosUsuarioArr = mediosUsuarioArr;
-var areaDesUsuarioArr = {
+var areaDesUsuarioArr = exports.areaDesUsuarioArr = {
   "Productor/a": "",
   "Productor Ejecutivo": "",
   "Director/a": "",
@@ -1088,8 +1074,7 @@ var areaDesUsuarioArr = {
   "Abogado/a especialización en comunicación audiovisuales": "",
   Otro: ""
 };
-exports.areaDesUsuarioArr = areaDesUsuarioArr;
-var areasCompUsuarioArr = {
+var areasCompUsuarioArr = exports.areasCompUsuarioArr = {
   "Actor/actriz con experiencia en realizaciones audiovisuales": "",
   "Locutor/a con experiencia en realizaciones audiovisuales": "",
   "Músico con experiencia en realizaciones audiovisuales": "",
@@ -1098,4 +1083,3 @@ var areasCompUsuarioArr = {
   "Bailarín/a con experiencia en audiovisuales": "",
   Otros: ""
 };
-exports.areasCompUsuarioArr = areasCompUsuarioArr;

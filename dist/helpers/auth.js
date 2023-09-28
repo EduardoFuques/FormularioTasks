@@ -12,5 +12,4 @@ helpers.isAuthenticated = function (req, res, next) {
   req.flash("error_msg", "No tiene permisos para acceder");
   res.redirect("/");
 };
-var _default = helpers;
-exports["default"] = _default;
+var _default = exports["default"] = helpers;

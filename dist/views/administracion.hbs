@@ -50,7 +50,7 @@
             </thead>
             <tbody>
               {{#each usersWithForms}}
-                <tr>
+                <tr class="{{#if (eq tipoUsuario 'Persona Jurídica')}} fila-pj {{/if}}">
                   <td class="flex-row align-items-center">{{this.codigoRepa}}</td>
                   <td class="flex-row align-items-center">{{this.nombre}}</td>
                   <td class="flex-row align-items-center">{{this.apellido}}</td>
@@ -276,3 +276,9 @@
   }
 
 </script>
+
+<style>
+  .fila-pj {
+    background-color: #ffdacb; /* Color verde */
+  }
+</style>

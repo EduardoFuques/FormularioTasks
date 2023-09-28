@@ -117,5 +117,4 @@ var formSchema = new _mongoose.Schema({
   timestamps: true,
   versionKey: false
 });
-var _default = (0, _mongoose.model)("Form", formSchema);
-exports["default"] = _default;
+var _default = exports["default"] = (0, _mongoose.model)("Form", formSchema);

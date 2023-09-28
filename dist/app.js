@@ -86,5 +86,4 @@ app.use(_user["default"]);
 // Archivos estáticos
 app.use(_express["default"]["static"](_path["default"].join(__dirname, "public")));
 app.use('/files', _express["default"]["static"](_path["default"].join(__dirname, 'files')));
-var _default = app;
-exports["default"] = _default;
+var _default = exports["default"] = app;

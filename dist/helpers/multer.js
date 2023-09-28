@@ -48,19 +48,17 @@ var options = {
   fileFilter: fileFilter(/pdf|doc|docx|odt|PDF|DOC|DOCX|ODT/),
   dest: _path["default"].join(__dirname, "..", "files")
 };
-var uploadFile = (0, _multer["default"])(options).fields([{
+var uploadFile = exports.uploadFile = (0, _multer["default"])(options).fields([{
   name: "cvFile",
   maxCount: 1
 }, {
   name: "dniFile",
   maxCount: 1
 }]);
-exports.uploadFile = uploadFile;
-var uploadFileEm = (0, _multer["default"])(options).fields([{
+var uploadFileEm = exports.uploadFileEm = (0, _multer["default"])(options).fields([{
   name: "estatutoFile",
   maxCount: 1
 }, {
   name: "dniFile",
   maxCount: 1
 }]);
-exports.uploadFileEm = uploadFileEm;

@@ -22,5 +22,4 @@ router.post("/password", _user.restablecerPassword);
 router.get("/reset-password/:token", _user.resetPasswordController);
 router.post("/reset-password/:token", _user.updatePasswordController);
 router.get("/carga", _cargaInicial.cargaInicial);
-var _default = router;
-exports["default"] = _default;
+var _default = exports["default"] = router;
