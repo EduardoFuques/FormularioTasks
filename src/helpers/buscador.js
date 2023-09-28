@@ -120,7 +120,6 @@ export const getEmpresasWithForms = async () => {
         delete userWithForms.usuario;
         delete userWithForms.password;
         delete userWithForms.rol;
-        delete userWithForms.codigoRepa;
         delete userWithForms.createdAt;
         delete userWithForms.updatedAt;
       }
@@ -130,6 +129,65 @@ export const getEmpresasWithForms = async () => {
     }).filter(Boolean);
 
     return usersWithForms;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getPJWithForms = async () => {
+  try {
+    const rawPJWithForms = await User.aggregate([
+      {
+        $lookup: {
+          from: "forms",
+          localField: "usuario",
+          foreignField: "usuario",
+          as: "form",
+        },
+      },
+      {
+        $match: {
+          rol: "perJur",
+        },
+      },
+    ]);
+    // Convierte cada documento en un objeto plano de JavaScript utilizando la función JSON.parse(JSON.stringify())
+    const PJWithForms = rawPJWithForms.map((doc) => {
+      const PJWithForms = JSON.parse(JSON.stringify(doc));
+
+      // Verifica si el usuario tiene un formulario
+      if (PJWithForms.form.length > 0) {
+        const localidadIndex = PJWithForms.form[0].domicilio[0].localidad;
+
+        // Verifica si el índice de la localidad es un número
+        if (!isNaN(localidadIndex)) {
+          PJWithForms.localidad =
+            domiciliosOpc[localidadIndex].localidad;
+        } 
+        PJWithForms.movil = PJWithForms.form[0].telefono[0].movil;
+        PJWithForms.sitIaavim = PJWithForms.form[0].sitIaavim;
+        PJWithForms.cvFileUrl = PJWithForms.form[0].cvFileUrl;
+        PJWithForms.dniFileUrl = PJWithForms.form[0].dniFileUrl;
+        PJWithForms.fCreacion = PJWithForms.form[0].createdAt;
+        PJWithForms.fUpdate = PJWithForms.form[0].updatedAt;
+        delete PJWithForms._id;
+        delete PJWithForms.tipoDoc;
+        delete PJWithForms.password;
+        delete PJWithForms.rol;
+        //delete userWithForms.codigoRepa;
+        delete PJWithForms.createdAt;
+        delete PJWithForms.updatedAt;
+        // Concatena nombre y apellido
+        PJWithForms.nombre = PJWithForms.form[0].apellido + ' ' + PJWithForms.form[0].nombre;
+        PJWithForms.apellido = PJWithForms.form[0].nombreFantasia
+
+      }
+      return PJWithForms.form.length > 0 ? PJWithForms : null;
+
+    }).filter(Boolean);
+
+    return PJWithForms;
   } catch (error) {
     console.error(error);
     throw error;

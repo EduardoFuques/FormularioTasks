@@ -9,59 +9,78 @@ import {
   mediosUsuarioArr,
   mediosopc,
 } from "../helpers/arrays";
-import { getUsersWithForms } from "../helpers/buscador";
+import { getUsersWithForms, getPJWithForms } from "../helpers/buscador";
 import Form from "../models/Formulario";
 import User from "../models/Usuarios";
 import ExcelJS from "exceljs";
 import validator from "validator";
 
 export const renderAdmin = async (req, res) => {
-  let usersWithForms = await getUsersWithForms();
-  usersWithForms.sort((a, b) => (a.fUpdate < b.fUpdate) ? 1 : -1);
-  usersWithForms.forEach((datitos) => {
-    const fechaActual = new Date();
-    const fechaUpdatedAt = new Date(datitos.fUpdate);
-    const fechaCreatedAt = new Date(datitos.fCreacion);
+  try {
+    // Obtener los datos
+    let usersWithForms = await getUsersWithForms();
+    let PJWithForms = await getPJWithForms();
 
-    let diasDesdeUpdated;
-    if (fechaUpdatedAt.getTime() === fechaCreatedAt.getTime()) {
-      diasDesdeUpdated = 0;
-    } else {
-      diasDesdeUpdated = Math.round(
-        (fechaActual - fechaUpdatedAt) / (1000 * 60 * 60 * 24)
-      );
-    }
+    // Añadir una propiedad 'tipoUsuario' para distinguir entre usuarios y personas jurídicas
+    usersWithForms = usersWithForms.map(user => ({ ...user, tipoUsuario: 'Usuario' }));
+    PJWithForms = PJWithForms.map(pj => ({ ...pj, tipoUsuario: 'Persona Jurídica' }));
 
-    let resultadoUpdated;
-    if (
-      diasDesdeUpdated === 0 &&
-      fechaUpdatedAt.getTime() !== fechaCreatedAt.getTime()
-    ) {
-      resultadoUpdated = "Hoy";
-    } else if (
-      diasDesdeUpdated === 0 &&
-      fechaUpdatedAt.getTime() === fechaCreatedAt.getTime()
-    ) {
-      const diasDesdeCreacion = Math.round(
-        (fechaActual - fechaCreatedAt) / (1000 * 60 * 60 * 24)
-      );
-      resultadoUpdated = `${diasDesdeCreacion} días`;
-    } else {
-      resultadoUpdated = `${diasDesdeUpdated} días`;
-    }
-    
-    const fechaCreatedISO = datitos.createdAt ? datitos.createdAt.toISOString() : '';
-    const fechaCreated = fechaCreatedISO.slice(0, 10);
-    datitos.createdAt = fechaCreated
-    datitos.updatedAt = resultadoUpdated
-  });
+    // Combinar ambos conjuntos de datos
+    const combinedData = [...usersWithForms, ...PJWithForms];
 
-  const admin = true;
-  res.render("administracion", {
-    admin: admin,
-    usersWithForms: usersWithForms,
-  });
-}; 
+    // Calcular días desde la última actualización y resultadoUpdated para todos los elementos
+    combinedData.forEach((datitos) => {
+      const fechaActual = new Date();
+      const fechaUpdatedAt = new Date(datitos.fUpdate);
+      const fechaCreatedAt = new Date(datitos.fCreacion);
+
+      let diasDesdeUpdated;
+      if (fechaUpdatedAt.getTime() === fechaCreatedAt.getTime()) {
+        diasDesdeUpdated = 0;
+      } else {
+        diasDesdeUpdated = Math.round(
+          (fechaActual - fechaUpdatedAt) / (1000 * 60 * 60 * 24)
+        );
+      }
+
+      let resultadoUpdated;
+      if (
+        diasDesdeUpdated === 0 &&
+        fechaUpdatedAt.getTime() !== fechaCreatedAt.getTime()
+      ) {
+        resultadoUpdated = "Hoy";
+      } else if (
+        diasDesdeUpdated === 0 &&
+        fechaUpdatedAt.getTime() === fechaCreatedAt.getTime()
+      ) {
+        const diasDesdeCreacion = Math.round(
+          (fechaActual - fechaCreatedAt) / (1000 * 60 * 60 * 24)
+        );
+        resultadoUpdated = `${diasDesdeCreacion} días`;
+      } else {
+        resultadoUpdated = `${diasDesdeUpdated} días`;
+      }
+
+      const fechaCreatedISO = datitos.createdAt ? datitos.createdAt.toISOString() : '';
+      const fechaCreated = fechaCreatedISO.slice(0, 10);
+      datitos.createdAt = fechaCreated
+      datitos.updatedAt = resultadoUpdated;
+    });
+
+    // Ordenar por fecha de actualización (fUpdate)
+    combinedData.sort((a, b) => (a.fUpdate < b.fUpdate) ? 1 : -1);
+
+    const admin = true;
+    res.render("administracion", {
+      admin: admin,
+      usersWithForms: combinedData,
+    });
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+    res.status(500).json({ error: 'Error al obtener los datos' });
+  }
+};
+
 
 export const filtroBuscadorAdmin = async (req, res) => {
   const query = req.body.q.toLowerCase();
