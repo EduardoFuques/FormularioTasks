@@ -386,7 +386,7 @@ var adminPF = exports.adminPF = /*#__PURE__*/function () {
               }
             });
             var areaDes = item.areaDes;
-            var areaDesUsuario = _arrays.areaDesUsuarioArr;
+            var areaDesUsuario = _objectSpread({}, _arrays.areaDesUsuarioArr); // Copia el objeto original para evitar la sobrescritura
             areaDes.forEach(function (areaIndice) {
               var areaObj = _arrays.areaDesOpc.find(function (obj) {
                 return obj.indice === parseInt(areaIndice);
@@ -395,8 +395,10 @@ var adminPF = exports.adminPF = /*#__PURE__*/function () {
                 areaDesUsuario[areaObj.medio] = areaObj.medio;
               }
             });
+            console.log(areaDes);
+            console.log(areaDesUsuario);
             var areaComp = item.areaComp;
-            var areaCompUsuario = _arrays.areasCompUsuarioArr;
+            var areaCompUsuario = _objectSpread({}, _arrays.areasCompUsuarioArr);
             areaComp.forEach(function (areaIndice) {
               var areaObj = _arrays.areasCompOpc.find(function (obj) {
                 return obj.indice === parseInt(areaIndice);
@@ -471,7 +473,7 @@ var adminPF = exports.adminPF = /*#__PURE__*/function () {
               cvFileUrl: item.cvFileUrl
             });
             return acc;
-          }, {}); //console.log(datitosPorUsuario)
+          }, {}); // console.log(datitosPorUsuario)
           workbook = new _exceljs["default"].Workbook();
           worksheet = workbook.addWorksheet("Personas Físicas"); // Define el encabezado de la tabla
           worksheet.columns = _arrays.columnasPerFis;

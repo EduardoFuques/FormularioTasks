@@ -286,7 +286,6 @@ export const adminPF = async (req, res) => {
     //   const fechaCreated = fechaCreatedISO.slice(0, 10);
     //   console.log(fechaCreated);
     // });
-
     const datitosPorUsuario = datitos.reduce((acc, item) => {
       const domicilio = item.domicilio[0];
       const telefono = item.telefono[0];
@@ -300,17 +299,17 @@ export const adminPF = async (req, res) => {
         }
       });
       const areaDes = item.areaDes;
-      const areaDesUsuario = areaDesUsuarioArr;
+      const areaDesUsuario = { ...areaDesUsuarioArr }; // Copia el objeto original para evitar la sobrescritura
       areaDes.forEach((areaIndice) => {
-        const areaObj = areaDesOpc.find(
-          (obj) => obj.indice === parseInt(areaIndice)
-        );
+        const areaObj = areaDesOpc.find((obj) => obj.indice === parseInt(areaIndice));
         if (areaObj) {
           areaDesUsuario[areaObj.medio] = areaObj.medio;
         }
       });
+      console.log(areaDes)
+      console.log(areaDesUsuario)
       const areaComp = item.areaComp;
-      const areaCompUsuario = areasCompUsuarioArr;
+      const areaCompUsuario = { ...areasCompUsuarioArr };
       areaComp.forEach((areaIndice) => {
         const areaObj = areasCompOpc.find(
           (obj) => obj.indice === parseInt(areaIndice)
@@ -388,15 +387,6 @@ export const adminPF = async (req, res) => {
         fijo: telefono.fijo || "",
         movil: telefono.movil || "",
         movilAlt: telefono.alternativo || "",
-        // medio1: medio1Obj !== undefined ? medio1Obj.medio : "",
-        // medio2: medio2Obj !== undefined ? medio2Obj.medio : "",
-        // medio3: medio3Obj !== undefined ? medio3Obj.medio : "",
-        // areaDes1: areaDes1Obj !== undefined ? areaDes1Obj.medio : "",
-        // areaDes2: areaDes2Obj !== undefined ? areaDes2Obj.medio : "",
-        // areaDes3: areaDes3Obj !== undefined ? areaDes3Obj.medio : "",
-        // areaComp1: areaComp1Obj !== undefined ? areaComp1Obj.medio : "",
-        // areaComp2: areaComp2Obj !== undefined ? areaComp2Obj.medio : "",
-        // areaComp3: areaComp3Obj !== undefined ? areaComp3Obj.medio : "",
         ...mediosUsuarioArrCopy, // Agregar los valores de mediosUsuario a las columnas correspondientes
         ...areaDesUsuario,
         ...areaCompUsuario,
@@ -407,7 +397,7 @@ export const adminPF = async (req, res) => {
       };
       return acc;
     }, {});
-    //console.log(datitosPorUsuario)
+    // console.log(datitosPorUsuario)
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Personas Físicas");
 
