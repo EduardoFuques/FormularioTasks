@@ -5,7 +5,8 @@
         <div class="col-sm-12">
           <div class="card text-bg-secondary mb-3 align-items-center">
             <div class="card-header">
-              <h3>Bienvenido a la página de administración</h3></div>
+              <h3>Bienvenido a la página de administración</h3>
+            </div>
           </div>
         </div>
       </div>
@@ -14,13 +15,7 @@
           <div class="row">
             <div class="col mr-1">
               <div class="form-group align-items-center mr-2">
-                <input
-                  type="text"
-                  class="form-control"
-                  style="background-color: #fff;"
-                  name="q"
-                  id="q"
-                />
+                <input type="text" class="form-control" style="background-color: #fff;" name="q" id="q" />
               </div>
             </div>
             <div class="col-1">
@@ -33,73 +28,79 @@
       </div>
       <div>
         {{#if usersWithForms.length}}
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Código Repa</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">DNI</th>
-                <th scope="col">Email</th>
-                <th></th>
-                <th scope="col">Situación IAAVIM</th>
-                <th scope="col">DNI</th>
-                <th scope="col">CV</th>
-                <th scope="col">Actualizado hace</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each usersWithForms}}
-                <tr class="{{#if (eq tipoUsuario 'Persona Jurídica')}} fila-pj {{/if}}">
-                  <td class="flex-row align-items-center">{{this.codigoRepa}}</td>
-                  <td class="flex-row align-items-center">{{this.nombre}}</td>
-                  <td class="flex-row align-items-center">{{this.apellido}}</td>
-                  <th class="flex-row align-items-center">{{this.form.[0].usuario}}</th>
-                  <td class="flex-row align-items-center" id="emailCell" data-userid="{{this.form.[0].usuario}}">{{this.email}}</td>
-                  <td class="flex-row align-items-center">
-                    <div class="d-flex">
-                      <a class="btn btn-secondary btn-sm d-flex justify-content-center" id="mailBtn" onclick="toggleEditEmail(event)">
-                        <i class="bi bi-pencil-fill" id="editIcon"></i>
-                        <i class="bi bi-check-square" id="checkIcon" style="display: none;"></i>
-                      </a>
-                    </div>
-                  </td>
-                  <td class="flex-row align-items-center">
-                    <div class="form-check form-switch d-flex justify-content-start">
-                      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault{{this.form.[0].usuario}}"{{#if this.form.[0].sitIaavim}} checked{{/if}} onchange="updateSitIaavim(this)" data-id="{{this.form.[0].usuario}}">
-                      <label class="form-check-label" for="flexSwitchCheckDefault{{this.form.[0].usuario}}">
-                        {{#if this.form.[0].sitIaavim}}
-                          ACTIVO
-                        {{else}}
-                          INACTIVO
-                        {{/if}}
-                      </label>
-                    </div>
-                  </td>
-                  <td class="flex-row align-items-center">
-                    <div class="d-flex">
-                      <a href={{this.dniFileUrl}} class="btn btn-secondary btn-sm d-flex justify-content-center" target="_blank">
-                        <i class="bi bi-file-earmark-pdf-fill"></i>
-                      </a>
-                    </div>
-                  </td>
-                  <td class="flex-row align-items-center">
-                    <div class="d-flex">
-                      <a href={{this.cvFileUrl}} class="btn btn-secondary btn-sm d-flex justify-content-center" target="_blank">
-                        <i class="bi bi-file-earmark-pdf-fill"></i>
-                      </a>
-                    </div>
-                  </td>
-                  <td class="flex-row align-items-center">{{this.updatedAt}}</td>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Código Repa</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">DNI</th>
+              <th scope="col">Email</th>
+              <th></th>
+              <th scope="col">Situación IAAVIM</th>
+              <th scope="col">DNI</th>
+              <th scope="col">CV</th>
+              <th scope="col">Actualizado hace</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each usersWithForms}}
+            <tr class="{{#if (eq tipoUsuario 'Persona Jurídica')}} fila-pj {{/if}}">
+              <td class="flex-row align-items-center">{{this.codigoRepa}}</td>
+              <td class="flex-row align-items-center">{{this.nombre}}</td>
+              <td class="flex-row align-items-center">{{this.apellido}}</td>
+              <th class="flex-row align-items-center">{{this.form.[0].usuario}}</th>
+              <td class="flex-row align-items-center" id="emailCell" data-userid="{{this.form.[0].usuario}}">
+                {{this.email}}</td>
+              <td class="flex-row align-items-center">
+                <div class="d-flex">
+                  <a class="btn btn-secondary btn-sm d-flex justify-content-center" id="mailBtn"
+                    onclick="toggleEditEmail(event)">
+                    <i class="bi bi-pencil-fill" id="editIcon"></i>
+                    <i class="bi bi-check-square" id="checkIcon" style="display: none;"></i>
+                  </a>
+                </div>
+              </td>
+              <td class="flex-row align-items-center">
+                <div class="form-check form-switch d-flex justify-content-start">
+                  <input class="form-check-input" type="checkbox" role="switch"
+                    id="flexSwitchCheckDefault{{this.form.[0].usuario}}" {{#if this.form.[0].sitIaavim}} checked{{/if}}
+                    onchange="updateSitIaavim(this)" data-id="{{this.form.[0].usuario}}">
+                  <label class="form-check-label" for="flexSwitchCheckDefault{{this.form.[0].usuario}}">
+                    {{#if this.form.[0].sitIaavim}}
+                    ACTIVO
+                    {{else}}
+                    INACTIVO
+                    {{/if}}
+                  </label>
+                </div>
+              </td>
+              <td class="flex-row align-items-center">
+                <div class="d-flex">
+                  <a href={{this.dniFileUrl}} class="btn btn-secondary btn-sm d-flex justify-content-center"
+                    target="_blank">
+                    <i class="bi bi-file-earmark-pdf-fill"></i>
+                  </a>
+                </div>
+              </td>
+              <td class="flex-row align-items-center">
+                <div class="d-flex">
+                  <a href={{this.cvFileUrl}} class="btn btn-secondary btn-sm d-flex justify-content-center"
+                    target="_blank">
+                    <i class="bi bi-file-earmark-pdf-fill"></i>
+                  </a>
+                </div>
+              </td>
+              <td class="flex-row align-items-center">{{this.updatedAt}}</td>
 
-                </tr>
-              {{/each}}
-            </tbody>
-          </table>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
         {{else}}
-          <p>No se encontraron usuarios</p>
+        <p>No se encontraron usuarios</p>
         {{/if}}
-       
+
       </div>
     </div>
   </div>
@@ -149,57 +150,50 @@
     var emailCell = document.getElementById("emailCell");
     var email = emailCell.innerText;
 
-    // Si no está en modo de edición, entra en modo de edición
     if (!isEditing) {
-      // Almacena el valor original del email
+      // Modo de edición
       originalEmail = email;
 
-      // Crea un elemento de entrada tipo texto y asigna el valor actual del email
       var input = document.createElement("input");
       input.type = "text";
       input.value = email;
 
-      // Borra el contenido actual de emailCell
       emailCell.innerHTML = "";
-
-      // Agrega el campo de entrada como un hijo de emailCell
       emailCell.appendChild(input);
-
-      // Establece el enfoque en el campo de entrada
       input.focus();
 
-      // Agrega un controlador de eventos para manejar la tecla Enter
-      input.addEventListener("keydown", function(event) {
-        if (event.keyCode === 13) {
-          event.preventDefault(); // Evita que se envíe el formulario o se recargue la página
-          toggleEditEmail(event); // Simula un clic en el botón de guardar cambios
-        }
-      });
+      input.addEventListener("keydown", handleKeyDown);
     } else {
-      // Si ya está en modo de edición, guarda el nuevo valor
+      // Modo de visualización
       var input = emailCell.querySelector("input");
       var newEmail = input.value;
 
-      // Compara el nuevo valor con el valor original
       if (newEmail === originalEmail) {
-        // El usuario no realizó cambios, se restaura el valor original
         emailCell.innerText = originalEmail;
       } else {
-        // El usuario realizó cambios, se guarda el nuevo valor
         emailCell.innerText = newEmail;
-        saveChanges(); // Llama a una función para guardar los cambios
+        saveChanges(); // Guarda los cambios
       }
+
+      input.removeEventListener("keydown", handleKeyDown);
     }
 
-    // Cambia el estado de edición
     isEditing = !isEditing;
+    toggleIcons();
+  }
 
-    // Obtén los elementos de los íconos
+  function handleKeyDown(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      toggleEditEmail(event);
+    }
+  }
+
+  function toggleIcons() {
     var editIcon = document.getElementById("editIcon");
     var checkIcon = document.getElementById("checkIcon");
-    var emailBtn = document.getElementById("mailBtn")
+    var emailBtn = document.getElementById("mailBtn");
 
-    // Muestra u oculta los íconos según el estado de edición
     if (isEditing) {
       editIcon.style.display = "none";
       checkIcon.style.display = "inline";
@@ -213,18 +207,17 @@
     }
   }
 
-  // Agrega un controlador de eventos para manejar el clic fuera del campo de entrada
-  document.addEventListener("click", function(event) {
+  document.addEventListener("click", function (event) {
     var emailCell = document.getElementById("emailCell");
     var input = emailCell.querySelector("input");
 
     if (isEditing && event.target !== input) {
-      // Si está en modo de edición y el clic no fue en el campo de entrada,
-      // se restaura el valor original y se sale del modo de edición
       emailCell.innerText = originalEmail;
       isEditing = false;
+      toggleIcons();
     }
   });
+
 
   async function saveChanges() {
     var emailCell = document.getElementById("emailCell");
@@ -254,10 +247,10 @@
     }
   }
 
-  window.onload = function() {
+  window.onload = function () {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', '/administracion');
-    xhr.onload = function() {
+    xhr.onload = function () {
       if (xhr.status === 200) {
         const response = JSON.parse(xhr.responseText);
         // Actualizar la tabla con los datos de búsqueda
@@ -268,7 +261,7 @@
     };
     xhr.send();
   };
-  document.body.onload = function() {
+  document.body.onload = function () {
     setearOpciones();
   }
   function setearOpciones() {
@@ -279,6 +272,7 @@
 
 <style>
   .fila-pj {
-    background-color: #ffdacb; /* Color verde */
+    background-color: #ffdacb;
+    /* Color verde */
   }
 </style>

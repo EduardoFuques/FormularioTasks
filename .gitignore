@@ -1,6 +1,7 @@
 # Dependencias de node
 node_modules
 node_modules
+core
 
 # Variables de entorno
 .env
