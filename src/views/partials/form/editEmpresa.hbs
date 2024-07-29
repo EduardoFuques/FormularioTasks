@@ -5,7 +5,9 @@
     <div class="row g-3">
       <div class="col-sm-12">
         <div class="card text-bg-secondary mb-3 align-items-center">
-          <div class="card-header"> <h3>Datos de la Empresa</h3></div>
+          <div class="card-header">
+            <h3>Datos de la Empresa</h3>
+          </div>
         </div>
       </div>
     </div>
@@ -13,12 +15,14 @@
     <div class="row g-3 mb-4">
       {{!-- Nombre Empresa --}}
       <div class="col-sm-6 was-validated form-floating">
-        <input type="text" name="nombreEmpresa" placeholder="nombreEmpresa" id="nombreEmpresa" class="form-control" disabled/>
+        <input type="text" name="nombreEmpresa" placeholder="nombreEmpresa" id="nombreEmpresa" class="form-control"
+          disabled />
         <label for="floatingInput">Nombre de la Empresa</label>
       </div>
       {{!-- marca o nombre de fantasia --}}
       <div class="col-sm was-validated form-floating">
-        <input name="nombreFantasia" type="text" class="form-control" id="nombreFantasia" value={{datos.nombreFantasia}} placeholder="nombreFantasia" aria-label="Number" required>
+        <input name="nombreFantasia" type="text" class="form-control" id="nombreFantasia" value={{datos.nombreFantasia}}
+          placeholder="nombreFantasia" aria-label="Number" required>
         <label for="floatingInput">Nombre de fantasía</label>
       </div>
     </div>
@@ -26,12 +30,14 @@
     <div class="row g-3 mb-4">
       {{!-- Razon social --}}
       <div class="col-sm-6 was-validated form-floating">
-        <input name="razonSocial" type="text" class="form-control" id="razonSocial" placeholder="razonSocial" aria-label="Street" value="{{datos.razonSocial}}" required>
+        <input name="razonSocial" type="text" class="form-control" id="razonSocial" placeholder="razonSocial"
+          aria-label="Street" value="{{datos.razonSocial}}" required>
         <label for="floatingInput">Razon Social</label>
       </div>
       {{!-- cuil --}}
       <div class="col-sm  was-validated form-floating">
-        <input name="cuil" type="text" class="form-control item" id="cuil" placeholder="Número cuit/cuil" value={{datos.usuario}} onkeyup="NumeroCuil(event, this)" maxlength="13" pattern="\d{2}-\d{8}-\d{1}" disabled >
+        <input name="cuil" type="text" class="form-control item" id="cuil" placeholder="Número cuit/cuil"
+          value={{datos.usuario}} onkeyup="NumeroCuil(event, this)" maxlength="13" pattern="\d{2}-\d{8}-\d{1}" disabled>
         <label for="floatingInput">Número cuit/cuil</label>
       </div>
       {{!-- Situación AFIP --}}
@@ -47,12 +53,14 @@
     <div class="row g-3 mb-4">
       {{!-- Apellido --}}
       <div class="col-sm-6 form-floating">
-        <input type="text" name="apellido" placeholder="Apellido" id="apellido" value={{datos.apellido}} class="form-control" required/>
+        <input type="text" name="apellido" placeholder="Apellido" id="apellido" value={{datos.apellido}}
+          class="form-control" required />
         <label for="floatingInput">Apellido del responsable legal</label>
       </div>
       {{!-- Nombre --}}
       <div class="col-sm form-floating">
-        <input type="text" name="nombres" placeholder="Nombres" id="nombres" value={{datos.nombre}} class="form-control" required/>
+        <input type="text" name="nombres" placeholder="Nombres" id="nombres" value={{datos.nombre}} class="form-control"
+          required />
         <label for="floatingInput">Nombres</label>
       </div>
     </div>
@@ -60,7 +68,8 @@
     <div class="row g-3 mb-4">
       {{!-- email --}}
       <div class="col-sm-4 form-floating">
-        <input name="email" type="email" class="form-control" id="email" value={{datos.email}} placeholder="e-mail: nombre@ejemplo.com" disabled>
+        <input name="email" type="email" class="form-control" id="email" value={{datos.email}}
+          placeholder="e-mail: nombre@ejemplo.com" disabled>
         <label for="floatingInput">e-mail</label>
       </div>
       {{!-- sexo --}}
@@ -72,31 +81,36 @@
       </div>
       {{!-- Código REPA --}}
       <div class="col-sm form-floating">
-        <input type="text" class="form-control" id="codRepa" placeholder="Código REPA" value={{codigoRepa}} aria-label="codRepa" disabled>
+        <input type="text" class="form-control" id="codRepa" placeholder="Código REPA" value={{codigoRepa}}
+          aria-label="codRepa" disabled>
         <label for="floatingInput">Código REPA</label>
       </div>
       {{!-- Situación Iaavim --}}
-      <div class="col-sm form-floating">
-        <input type="text" class="form-control" id="sitIaavim" value={{estadoIaavim}} placeholder="Situación IAAViM" aria-label="sitIaavim" disabled>
+      <div class="col-sm form-floating">{{!{{estadoIaavim}}
+        <input type="text" class="form-control" id="sitIaavim" value="ACTIVO" placeholder="Situación IAAViM"
+          aria-label="sitIaavim" disabled>
         <label for="floatingInput">Situación IAAViM</label>
       </div>
     </div>
-    
+
     {{!-- Fila 5 - Telefonos --}}
     <div class="row g-3 mb-4">
       {{!-- Telefono fijo --}}
       <div class="col-sm-4 form-floating">
-        <input name="telFijo" type="text" class="form-control" id="telFijo" placeholder="Teléfono Fijo" aria-label="Phone" onkeyup="this.value=NumerosTelefono(this.value)" value={{telefono.fijo}}>
+        <input name="telFijo" type="text" class="form-control" id="telFijo" placeholder="Teléfono Fijo"
+          aria-label="Phone" onkeyup="this.value=NumerosTelefono(this.value)" value={{telefono.fijo}}>
         <label for="floatingInput">Teléfono Fijo</label>
       </div>
       {{!-- Movil principal --}}
       <div class="col-sm-4  was-validated form-floating">
-        <input name="movilPpal" type="text" class="form-control" id="movilPpal" placeholder="Móvil" aria-label="Mobile" value={{telefono.movil}} onkeyup="this.value=NumerosTelefono(this.value)" required>
+        <input name="movilPpal" type="text" class="form-control" id="movilPpal" placeholder="Móvil" aria-label="Mobile"
+          value={{telefono.movil}} onkeyup="this.value=NumerosTelefono(this.value)" required>
         <label for="floatingInput">Teléfono Móvil</label>
       </div>
       {{!-- Movil Alternativo --}}
       <div class="col-sm form-floating">
-        <input name="movilAlt" type="text" class="form-control" id="movilAlt" placeholder="Móvil Alternativo" aria-label="SecondPhone" onkeyup="this.value=NumerosTelefono(this.value)" value={{telefono.alternativo}} >
+        <input name="movilAlt" type="text" class="form-control" id="movilAlt" placeholder="Móvil Alternativo"
+          aria-label="SecondPhone" onkeyup="this.value=NumerosTelefono(this.value)" value={{telefono.alternativo}}>
         <label for="floatingInput">Móvil Alternativo</label>
       </div>
     </div>
@@ -104,7 +118,9 @@
     <div class="row g-3">
       <div class="col-sm-12">
         <div class="card text-bg-secondary mb-3 align-items-center">
-          <div class="card-header"> <h3>Domicilio de la Empresa</h3></div>
+          <div class="card-header">
+            <h3>Domicilio de la Empresa</h3>
+          </div>
         </div>
       </div>
     </div>
@@ -129,7 +145,8 @@
       </div>
       {{!-- Codigo postal --}}
       <div class="col-sm  was-validated form-floating">
-        <input name="cp" type="text" class="form-control" minlength="4" value={{domicilio.cp}} id="cp" placeholder="C.P." aria-label="Zip" onkeyup="this.value=NumCP(this.value)" required>
+        <input name="cp" type="text" class="form-control" minlength="4" value={{domicilio.cp}} id="cp"
+          placeholder="C.P." aria-label="Zip" onkeyup="this.value=NumCP(this.value)" required>
         <label for="floatingInput">Código postal</label>
       </div>
     </div>
@@ -137,38 +154,44 @@
     <div class="row g-3 mb-4">
       {{!-- calle --}}
       <div class="col-sm-5 was-validated form-floating">
-        <input name="calle" type="text" class="form-control" id="calle" placeholder="Calle" aria-label="Street" value="{{calle}}" required>
+        <input name="calle" type="text" class="form-control" id="calle" placeholder="Calle" aria-label="Street"
+          value="{{calle}}" required>
         <label for="floatingInput">Calle</label>
       </div>
       {{!-- número --}}
       <div class="col-sm was-validated form-floating">
-        <input name="numero" type="text" class="form-control" id="numero" value={{domicilio.numero}} placeholder="Número" aria-label="Number" onkeyup="this.value=NumerosTelefono(this.value)" required>
+        <input name="numero" type="text" class="form-control" id="numero" value={{domicilio.numero}}
+          placeholder="Número" aria-label="Number" onkeyup="this.value=NumerosTelefono(this.value)" required>
         <label for="floatingInput">Número</label>
       </div>
       {{!-- piso --}}
       <div class="col-sm form-floating">
-        <input name="piso" type="text" class="form-control" id="piso" placeholder="Piso" aria-label="Floor" value={{domicilio.piso}}>
+        <input name="piso" type="text" class="form-control" id="piso" placeholder="Piso" aria-label="Floor"
+          value={{domicilio.piso}}>
         <label for="floatingInput">Piso</label>
       </div>
       {{!-- Depto --}}
       <div class="col-sm form-floating">
-        <input name="dpto" type="text" class="form-control" id="dpto" placeholder="Dpto" aria-label="Depto" value={{domicilio.depto}}>
+        <input name="dpto" type="text" class="form-control" id="dpto" placeholder="Dpto" aria-label="Depto"
+          value={{domicilio.depto}}>
         <label for="floatingInput">Dpto</label>
       </div>
     </div>
-    
+
 
 
 
     <pre>
-      
+
     </pre>
-    
+
     {{!-- Header carga Estatuto --}}
     <div class="row g-3">
       <div class="col-sm-12">
         <div class="card text-bg-secondary mb-3 align-items-center">
-          <div class="card-header"> <h3>Carga del Estatuto constitutivo de la empresa y DNI del Responsable</h3></div>
+          <div class="card-header">
+            <h3>Carga del Estatuto constitutivo de la empresa y DNI del Responsable</h3>
+          </div>
         </div>
       </div>
     </div>
@@ -176,19 +199,12 @@
     <div class="row g-3 mb-4">
       <div class="col-sm-8 was-validated">
         <small class="text-muted">Currículum Vitae</small>
-        <input
-          name="cvFile"
-          class="form-control"
-          type="file"
-          id="cvFile"
-          accept=".pdf,.doc,.docx,.odt,.PDF,.DOC,.DOCX,.ODT"
-          onchange="validarCV()"
-        />
+        <input name="cvFile" class="form-control" type="file" id="cvFile"
+          accept=".pdf,.doc,.docx,.odt,.PDF,.DOC,.DOCX,.ODT" onchange="validarCV()" />
       </div>
       <div class="col-sm-1 d-flex justify-content-center align-items-end">
         <a href={{datos.cvFileUrl}} class="btn btn-secondary" target="_blank"><i
-            class="bi bi-file-earmark-pdf-fill"
-          ></i></a>
+            class="bi bi-file-earmark-pdf-fill"></i></a>
       </div>
       <div class="col-sm-3 d-flex justify-content-center align-items-end">
         <span><b>Última actualización: {{formattedCVDate}}</b></span>
@@ -198,19 +214,12 @@
     <div class="row g-3 mb-4">
       <div class="col-sm-8 was-validated">
         <small class="text-muted">DNI frente y dorso</small>
-        <input
-          name="dniFile"
-          class="form-control"
-          type="file"
-          id="dniFile"
-          accept=".pdf,.doc,.docx,.odt,.PDF,.DOC,.DOCX,.ODT"
-          onchange="validarDNI()"
-        />
+        <input name="dniFile" class="form-control" type="file" id="dniFile"
+          accept=".pdf,.doc,.docx,.odt,.PDF,.DOC,.DOCX,.ODT" onchange="validarDNI()" />
       </div>
       <div class="col-sm-1 d-flex justify-content-center align-items-end">
         <a href={{datos.dniFileUrl}} class="btn btn-secondary" target="_blank"><i
-            class="bi bi-file-earmark-pdf-fill"
-          ></i></a>
+            class="bi bi-file-earmark-pdf-fill"></i></a>
       </div>
       <div class="col-sm-3 d-flex justify-content-center align-items-end">
         <span><b>Última actualización: {{formattedDNIDate}}</b></span>
@@ -220,43 +229,27 @@
     {{!-- Boton enviar formulario --}}
     <div class="row g-3 mb-4">
       <div class="col-sm-12 d-flex justify-content-between">
-        <button
-          class="btn btn-secondary"
-          type="submit"
-          data-bs-toggle="tooltip"
-          data-bs-placement="top"
-          id="enviarBtn"
+        <button class="btn btn-secondary" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" id="enviarBtn"
           data-bs-custom-class="custom-tooltip"
-          data-bs-title="Por favor chequee la información antes de enviar el formulario."
-        >
+          data-bs-title="Por favor chequee la información antes de enviar el formulario.">
           <i class="bi bi-send-check-fill me-2"></i>Guardar datos y descargar constancia
         </button>
-        <button
-          class="btn btn-secondary"
-          type="button"
-          data-bs-toggle="tooltip"
-          data-bs-placement="top"
-          id="mailBtn"
-          data-bs-custom-class="custom-tooltip"
-          data-bs-title="Solicitar al administrador un cambio de e-mail"
-          formnovalidate
-        >
+        <button class="btn btn-secondary" type="button" data-bs-toggle="tooltip" data-bs-placement="top" id="mailBtn"
+          data-bs-custom-class="custom-tooltip" data-bs-title="Solicitar al administrador un cambio de e-mail"
+          formnovalidate>
           <i class="bi bi-envelope-at-fill me-2"></i>Solicitar cambio de e-mail
         </button>
-        <button
-          class="btn btn-custom"
-          type="button"
-          data-bs-toggle="tooltip"
-          data-bs-placement="top"
-          id="cancelarBtn"
-          data-bs-custom-class="custom-tooltip"
-          data-bs-title="Si cancela el envío se descartan todos los cambios."
-        >
+        <button class="btn btn-custom" type="button" data-bs-toggle="tooltip" data-bs-placement="top" id="cancelarBtn"
+          data-bs-custom-class="custom-tooltip" data-bs-title="Si cancela el envío se descartan todos los cambios.">
           <i class="bi bi-x-circle-fill me-2"></i>Cancelar - No guardar cambios
         </button>
         <style>
-          .btn-custom { background-color: #b33; /* Cambia el valor por el color
-          deseado */ color: #ffffff; /* Cambia el valor por el color deseado */
+          .btn-custom {
+            background-color: #b33;
+            /* Cambia el valor por el color
+          deseado */
+            color: #ffffff;
+            /* Cambia el valor por el color deseado */
           }
         </style>
       </div>
@@ -264,641 +257,641 @@
   </form>
   <pre>
 
-  </pre> 
+  </pre>
 </div>
 
 <script>
   sexos = [
-  "Masculino",
-  "Femenino",
-  "Otro"]
-  sexos.forEach(function(situacion){
+    "Masculino",
+    "Femenino",
+    "Otro"]
+  sexos.forEach(function (situacion) {
     let newOption = document.createElement("option");
     newOption.text = situacion;
     newOption.value = situacion;
     slctSexo.appendChild(newOption)
   })
-  
-  function NumerosTelefono(string){//Solo numeros
+
+  function NumerosTelefono(string) {//Solo numeros
     var out = '';
     var filtro = '1234567890';//Caracteres validos
-	
+
     //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
-    for (var i=0; i<string.length; i++)
-       if (filtro.indexOf(string.charAt(i)) != -1) 
-             //Se añaden a la salida los caracteres validos
-	     out += string.charAt(i);
-	
+    for (var i = 0; i < string.length; i++)
+      if (filtro.indexOf(string.charAt(i)) != -1)
+        //Se añaden a la salida los caracteres validos
+        out += string.charAt(i);
+
     //Retornar valor filtrado
     return out;
   }
 
-  domicilios =[  {
-    "localidad": "9 de Julio",  
+  domicilios = [{
+    "localidad": "9 de Julio",
     "opciones": {
-    "Departamento": "Eldorado",
-    "Distrito": "NORTE",
-    "indice": 0
+      "Departamento": "Eldorado",
+      "Distrito": "NORTE",
+      "indice": 0
     }
   },
   {
-    "localidad": "25 de Mayo",  
+    "localidad": "25 de Mayo",
     "opciones": {
-    "Departamento": "25 de Mayo",
-    "Distrito": "URUGUAY",
-    "indice": 1
+      "Departamento": "25 de Mayo",
+      "Distrito": "URUGUAY",
+      "indice": 1
     }
   },
   {
-    "localidad": "Alba Posse",  
+    "localidad": "Alba Posse",
     "opciones": {
-    "Departamento": "25 de Mayo",
-    "Distrito": "URUGUAY",
-    "indice": 2
+      "Departamento": "25 de Mayo",
+      "Distrito": "URUGUAY",
+      "indice": 2
     }
   },
   {
-    "localidad": "Almafuerte",  
+    "localidad": "Almafuerte",
     "opciones": {
-    "Departamento": "Leandro N. Alem",
-    "Distrito": "URUGUAY",
-    "indice": 3
+      "Departamento": "Leandro N. Alem",
+      "Distrito": "URUGUAY",
+      "indice": 3
     }
   },
   {
-    "localidad": "Ameghino",  
+    "localidad": "Ameghino",
     "opciones": {
-    "Departamento": "San Javier",
-    "Distrito": "URUGUAY",
-    "indice": 4
+      "Departamento": "San Javier",
+      "Distrito": "URUGUAY",
+      "indice": 4
     }
   },
   {
-    "localidad": "Apóstoles",  
+    "localidad": "Apóstoles",
     "opciones": {
-    "Departamento": "Apóstoles",
-    "Distrito": "SUR",
-    "indice": 5
+      "Departamento": "Apóstoles",
+      "Distrito": "SUR",
+      "indice": 5
     }
   },
   {
-    "localidad": "Aristóbulo del Valle",  
+    "localidad": "Aristóbulo del Valle",
     "opciones": {
-    "Departamento": "Cainguás",
-    "Distrito": "URUGUAY",
-    "indice": 6
+      "Departamento": "Cainguás",
+      "Distrito": "URUGUAY",
+      "indice": 6
     }
   },
   {
-    "localidad": "Arroyo del Medio",  
+    "localidad": "Arroyo del Medio",
     "opciones": {
-    "Departamento": "Leandro N. Alem",
-    "Distrito": "URUGUAY",
-    "indice": 7
+      "Departamento": "Leandro N. Alem",
+      "Distrito": "URUGUAY",
+      "indice": 7
     }
   },
   {
-    "localidad": "Azara",  
+    "localidad": "Azara",
     "opciones": {
-    "Departamento": "Apóstoles",
-    "Distrito": "SUR",
-    "indice": 8
+      "Departamento": "Apóstoles",
+      "Distrito": "SUR",
+      "indice": 8
     }
   },
   {
-    "localidad": "Bernardo de Irigoyen",  
+    "localidad": "Bernardo de Irigoyen",
     "opciones": {
-    "Departamento": "General Manuel Belgrano",
-    "Distrito": "NORTE",
-    "indice": 9
+      "Departamento": "General Manuel Belgrano",
+      "Distrito": "NORTE",
+      "indice": 9
     }
   },
   {
-    "localidad": "Bonpland",  
+    "localidad": "Bonpland",
     "opciones": {
-    "Departamento": "Candelaria",
-    "Distrito": "SUR",
-    "indice": 10
+      "Departamento": "Candelaria",
+      "Distrito": "SUR",
+      "indice": 10
     }
   },
   {
-    "localidad": "Caa Yarí",  
+    "localidad": "Caa Yarí",
     "opciones": {
-    "Departamento": "Leandro N. Alem",
-    "Distrito": "URUGUAY",
-    "indice": 11
+      "Departamento": "Leandro N. Alem",
+      "Distrito": "URUGUAY",
+      "indice": 11
     }
   },
   {
-    "localidad": "Campo Grande",  
+    "localidad": "Campo Grande",
     "opciones": {
-    "Departamento": "Cainguás",
-    "Distrito": "URUGUAY",
-    "indice": 12
+      "Departamento": "Cainguás",
+      "Distrito": "URUGUAY",
+      "indice": 12
     }
   },
   {
-    "localidad": "Campo Ramón",  
+    "localidad": "Campo Ramón",
     "opciones": {
-    "Departamento": "Oberá",
-    "Distrito": "URUGUAY",
-    "indice": 13
+      "Departamento": "Oberá",
+      "Distrito": "URUGUAY",
+      "indice": 13
     }
   },
   {
-    "localidad": "Campo Viera",  
+    "localidad": "Campo Viera",
     "opciones": {
-    "Departamento": "Oberá",
-    "Distrito": "URUGUAY",
-    "indice": 14
+      "Departamento": "Oberá",
+      "Distrito": "URUGUAY",
+      "indice": 14
     }
   },
   {
-    "localidad": "Candelaria",  
+    "localidad": "Candelaria",
     "opciones": {
-    "Departamento": "Candelaria",
-    "Distrito": "SUR",
-    "indice": 15
+      "Departamento": "Candelaria",
+      "Distrito": "SUR",
+      "indice": 15
     }
   },
   {
-    "localidad": "Capioví",  
+    "localidad": "Capioví",
     "opciones": {
-    "Departamento": "Libertador General San Martín",
-    "Distrito": "PARANÁ",
-    "indice": 16
+      "Departamento": "Libertador General San Martín",
+      "Distrito": "PARANÁ",
+      "indice": 16
     }
   },
   {
-    "localidad": "Caraguatay",  
+    "localidad": "Caraguatay",
     "opciones": {
-    "Departamento": "Montecarlo",
-    "Distrito": "PARANÁ",
-    "indice": 17
+      "Departamento": "Montecarlo",
+      "Distrito": "PARANÁ",
+      "indice": 17
     }
   },
   {
-    "localidad": "Cerro Azul",  
+    "localidad": "Cerro Azul",
     "opciones": {
-    "Departamento": "Leandro N. Alem",
-    "Distrito": "URUGUAY",
-    "indice": 18
+      "Departamento": "Leandro N. Alem",
+      "Distrito": "URUGUAY",
+      "indice": 18
     }
   },
   {
-    "localidad": "Cerro Corá",  
+    "localidad": "Cerro Corá",
     "opciones": {
-    "Departamento": "Candelaria",
-    "Distrito": "SUR",
-    "indice": 19
+      "Departamento": "Candelaria",
+      "Distrito": "SUR",
+      "indice": 19
     }
   },
   {
-    "localidad": "Colonia Alberdi",  
+    "localidad": "Colonia Alberdi",
     "opciones": {
-    "Departamento": "Oberá",
-    "Distrito": "URUGUAY",
-    "indice": 20
+      "Departamento": "Oberá",
+      "Distrito": "URUGUAY",
+      "indice": 20
     }
   },
   {
-    "localidad": "Colonia Aurora",  
+    "localidad": "Colonia Aurora",
     "opciones": {
-    "Departamento": "25 de Mayo",
-    "Distrito": "URUGUAY",
-    "indice": 21
+      "Departamento": "25 de Mayo",
+      "Distrito": "URUGUAY",
+      "indice": 21
     }
   },
   {
-    "localidad": "Colonia Delicia",  
+    "localidad": "Colonia Delicia",
     "opciones": {
-    "Departamento": "Eldorado",
-    "Distrito": "NORTE",
-    "indice": 22
+      "Departamento": "Eldorado",
+      "Distrito": "NORTE",
+      "indice": 22
     }
   },
   {
-    "localidad": "Colonia Polana",  
+    "localidad": "Colonia Polana",
     "opciones": {
-    "Departamento": "San Ignacio",
-    "Distrito": "PARANÁ",
-    "indice": 23
+      "Departamento": "San Ignacio",
+      "Distrito": "PARANÁ",
+      "indice": 23
     }
   },
   {
-    "localidad": "Colonia Victoria",  
+    "localidad": "Colonia Victoria",
     "opciones": {
-    "Departamento": "Eldorado",
-    "Distrito": "NORTE",
-    "indice": 24
+      "Departamento": "Eldorado",
+      "Distrito": "NORTE",
+      "indice": 24
     }
   },
   {
-    "localidad": "Colonia Wanda",  
+    "localidad": "Colonia Wanda",
     "opciones": {
-    "Departamento": "Iguazú",
-    "Distrito": "NORTE",
-    "indice": 25
+      "Departamento": "Iguazú",
+      "Distrito": "NORTE",
+      "indice": 25
     }
   },
   {
-    "localidad": "Comandante A. Guacurary",  
+    "localidad": "Comandante A. Guacurary",
     "opciones": {
-    "Departamento": "General Manuel Belgrano",
-    "Distrito": "NORTE",
-    "indice": 26
+      "Departamento": "General Manuel Belgrano",
+      "Distrito": "NORTE",
+      "indice": 26
     }
   },
   {
-    "localidad": "Concepción de la Sierra",  
+    "localidad": "Concepción de la Sierra",
     "opciones": {
-    "Departamento": "Concepción",
-    "Distrito": "",
-    "indice": 27
+      "Departamento": "Concepción",
+      "Distrito": "",
+      "indice": 27
     }
   },
   {
-    "localidad": "Corpus",  
+    "localidad": "Corpus",
     "opciones": {
-    "Departamento": "San Ignacio",
-    "Distrito": "PARANÁ",
-    "indice": 28
+      "Departamento": "San Ignacio",
+      "Distrito": "PARANÁ",
+      "indice": 28
     }
   },
   {
-    "localidad": "Dos Arroyos",  
+    "localidad": "Dos Arroyos",
     "opciones": {
-    "Departamento": "Leandro N. Alem",
-    "Distrito": "URUGUAY",
-    "indice": 29
+      "Departamento": "Leandro N. Alem",
+      "Distrito": "URUGUAY",
+      "indice": 29
     }
   },
   {
-    "localidad": "Dos de Mayo",  
+    "localidad": "Dos de Mayo",
     "opciones": {
-    "Departamento": "Cainguás",
-    "Distrito": "URUGUAY",
-    "indice": 30
+      "Departamento": "Cainguás",
+      "Distrito": "URUGUAY",
+      "indice": 30
     }
   },
   {
-    "localidad": "El Alcázar",  
+    "localidad": "El Alcázar",
     "opciones": {
-    "Departamento": "Libertador General San Martín",
-    "Distrito": "PARANÁ",
-    "indice": 31
+      "Departamento": "Libertador General San Martín",
+      "Distrito": "PARANÁ",
+      "indice": 31
     }
   },
   {
-    "localidad": "El Soberbio",  
+    "localidad": "El Soberbio",
     "opciones": {
-    "Departamento": "Guaraní",
-    "Distrito": "URUGUAY",
-    "indice": 32
+      "Departamento": "Guaraní",
+      "Distrito": "URUGUAY",
+      "indice": 32
     }
   },
   {
-    "localidad": "Eldorado",  
+    "localidad": "Eldorado",
     "opciones": {
-    "Departamento": "Eldorado",
-    "Distrito": "NORTE",
-    "indice": 33
+      "Departamento": "Eldorado",
+      "Distrito": "NORTE",
+      "indice": 33
     }
   },
   {
-    "localidad": "Fachinal",  
+    "localidad": "Fachinal",
     "opciones": {
-    "Departamento": "Capital",
-    "Distrito": "SUR",
-    "indice": 34
+      "Departamento": "Capital",
+      "Distrito": "SUR",
+      "indice": 34
     }
   },
   {
-    "localidad": "Garuhapé",  
+    "localidad": "Garuhapé",
     "opciones": {
-    "Departamento": "Libertador General San Martín",
-    "Distrito": "PARANÁ",
-    "indice": 35
+      "Departamento": "Libertador General San Martín",
+      "Distrito": "PARANÁ",
+      "indice": 35
     }
   },
   {
-    "localidad": "Garupá",  
+    "localidad": "Garupá",
     "opciones": {
-    "Departamento": "Capital",
-    "Distrito": "SUR",
-    "indice": 36
+      "Departamento": "Capital",
+      "Distrito": "SUR",
+      "indice": 36
     }
   },
   {
-    "localidad": "General J. J. Urquiza",  
+    "localidad": "General J. J. Urquiza",
     "opciones": {
-    "Departamento": "San Ignacio",
-    "Distrito": "PARANÁ",
-    "indice": 37
+      "Departamento": "San Ignacio",
+      "Distrito": "PARANÁ",
+      "indice": 37
     }
   },
   {
-    "localidad": "Gobernador López",  
+    "localidad": "Gobernador López",
     "opciones": {
-    "Departamento": "Leandro N. Alem",
-    "Distrito": "URUGUAY",
-    "indice": 38
+      "Departamento": "Leandro N. Alem",
+      "Distrito": "URUGUAY",
+      "indice": 38
     }
   },
   {
-    "localidad": "Gobernador Roca",  
+    "localidad": "Gobernador Roca",
     "opciones": {
-    "Departamento": "San Ignacio",
-    "Distrito": "PARANÁ",
-    "indice": 39
+      "Departamento": "San Ignacio",
+      "Distrito": "PARANÁ",
+      "indice": 39
     }
   },
   {
-    "localidad": "Gral. Alvear",  
+    "localidad": "Gral. Alvear",
     "opciones": {
-    "Departamento": "Oberá",
-    "Distrito": "URUGUAY",
-    "indice": 40
+      "Departamento": "Oberá",
+      "Distrito": "URUGUAY",
+      "indice": 40
     }
   },
   {
-    "localidad": "Guaraní",  
+    "localidad": "Guaraní",
     "opciones": {
-    "Departamento": "Oberá",
-    "Distrito": "URUGUAY",
-    "indice": 41
+      "Departamento": "Oberá",
+      "Distrito": "URUGUAY",
+      "indice": 41
     }
   },
   {
-    "localidad": "Hipólito Irigoyen",  
+    "localidad": "Hipólito Irigoyen",
     "opciones": {
-    "Departamento": "San Ignacio",
-    "Distrito": "PARANÁ",
-    "indice": 42
+      "Departamento": "San Ignacio",
+      "Distrito": "PARANÁ",
+      "indice": 42
     }
   },
   {
-    "localidad": "Iguazú",  
+    "localidad": "Iguazú",
     "opciones": {
-    "Departamento": "Iguazú",
-    "Distrito": "NORTE",
-    "indice": 43
+      "Departamento": "Iguazú",
+      "Distrito": "NORTE",
+      "indice": 43
     }
   },
   {
-    "localidad": "Itacaruaré",  
+    "localidad": "Itacaruaré",
     "opciones": {
-    "Departamento": "San Javier",
-    "Distrito": "URUGUAY",
-    "indice": 44
+      "Departamento": "San Javier",
+      "Distrito": "URUGUAY",
+      "indice": 44
     }
   },
   {
-    "localidad": "Jardín América",  
+    "localidad": "Jardín América",
     "opciones": {
-    "Departamento": "San Ignacio",
-    "Distrito": "PARANÁ",
-    "indice": 45
+      "Departamento": "San Ignacio",
+      "Distrito": "PARANÁ",
+      "indice": 45
     }
   },
   {
-    "localidad": "Leandro N. Alem",  
+    "localidad": "Leandro N. Alem",
     "opciones": {
-    "Departamento": "Leandro N. Alem",
-    "Distrito": "URUGUAY",
-    "indice": 46
+      "Departamento": "Leandro N. Alem",
+      "Distrito": "URUGUAY",
+      "indice": 46
     }
   },
   {
-    "localidad": "Leoni",  
+    "localidad": "Leoni",
     "opciones": {
-    "Departamento": "Libertador General San Martín",
-    "Distrito": "PARANÁ",
-    "indice": 47
+      "Departamento": "Libertador General San Martín",
+      "Distrito": "PARANÁ",
+      "indice": 47
     }
   },
   {
-    "localidad": "Libertad",  
+    "localidad": "Libertad",
     "opciones": {
-    "Departamento": "Iguazú",
-    "Distrito": "NORTE",
-    "indice": 48
+      "Departamento": "Iguazú",
+      "Distrito": "NORTE",
+      "indice": 48
     }
   },
   {
-    "localidad": "Loreto",  
+    "localidad": "Loreto",
     "opciones": {
-    "Departamento": "Candelaria",
-    "Distrito": "SUR",
-    "indice": 49
+      "Departamento": "Candelaria",
+      "Distrito": "SUR",
+      "indice": 49
     }
   },
   {
-    "localidad": "Los Helechos",  
+    "localidad": "Los Helechos",
     "opciones": {
-    "Departamento": "Oberá",
-    "Distrito": "URUGUAY",
-    "indice": 50
+      "Departamento": "Oberá",
+      "Distrito": "URUGUAY",
+      "indice": 50
     }
   },
   {
-    "localidad": "Mártires",  
+    "localidad": "Mártires",
     "opciones": {
-    "Departamento": "Candelaria",
-    "Distrito": "SUR",
-    "indice": 51
+      "Departamento": "Candelaria",
+      "Distrito": "SUR",
+      "indice": 51
     }
   },
   {
-    "localidad": "Mojón Grande",  
+    "localidad": "Mojón Grande",
     "opciones": {
-    "Departamento": "San Javier",
-    "Distrito": "URUGUAY",
-    "indice": 52
+      "Departamento": "San Javier",
+      "Distrito": "URUGUAY",
+      "indice": 52
     }
   },
   {
-    "localidad": "Montecarlo",  
+    "localidad": "Montecarlo",
     "opciones": {
-    "Departamento": "Montecarlo",
-    "Distrito": "PARANÁ",
-    "indice": 53
+      "Departamento": "Montecarlo",
+      "Distrito": "PARANÁ",
+      "indice": 53
     }
   },
   {
-    "localidad": "Oberá",  
+    "localidad": "Oberá",
     "opciones": {
-    "Departamento": "Oberá",
-    "Distrito": "URUGUAY",
-    "indice": 54
+      "Departamento": "Oberá",
+      "Distrito": "URUGUAY",
+      "indice": 54
     }
   },
   {
-    "localidad": "Olegario V. Andrade",  
+    "localidad": "Olegario V. Andrade",
     "opciones": {
-    "Departamento": "Leandro N. Alem",
-    "Distrito": "URUGUAY",
-    "indice": 55
+      "Departamento": "Leandro N. Alem",
+      "Distrito": "URUGUAY",
+      "indice": 55
     }
   },
   {
-    "localidad": "Panambí",  
+    "localidad": "Panambí",
     "opciones": {
-    "Departamento": "Oberá",
-    "Distrito": "URUGUAY",
-    "indice": 56
+      "Departamento": "Oberá",
+      "Distrito": "URUGUAY",
+      "indice": 56
     }
   },
   {
-    "localidad": "Posadas",  
+    "localidad": "Posadas",
     "opciones": {
-    "Departamento": "Capital",
-    "Distrito": "SUR",
-    "indice": 57
+      "Departamento": "Capital",
+      "Distrito": "SUR",
+      "indice": 57
     }
   },
   {
-    "localidad": "Profundidad",  
+    "localidad": "Profundidad",
     "opciones": {
-    "Departamento": "Candelaria",
-    "Distrito": "SUR",
-    "indice": 58
+      "Departamento": "Candelaria",
+      "Distrito": "SUR",
+      "indice": 58
     }
   },
   {
-    "localidad": "Puerto Esperanza",  
+    "localidad": "Puerto Esperanza",
     "opciones": {
-    "Departamento": "Iguazú",
-    "Distrito": "NORTE",
-    "indice": 59
+      "Departamento": "Iguazú",
+      "Distrito": "NORTE",
+      "indice": 59
     }
   },
   {
-    "localidad": "Puerto Piray",  
+    "localidad": "Puerto Piray",
     "opciones": {
-    "Departamento": "Montecarlo",
-    "Distrito": "PARANÁ",
-    "indice": 60
+      "Departamento": "Montecarlo",
+      "Distrito": "PARANÁ",
+      "indice": 60
     }
   },
   {
-    "localidad": "Puerto Rico",  
+    "localidad": "Puerto Rico",
     "opciones": {
-    "Departamento": "Libertador General San Martín",
-    "Distrito": "PARANÁ",
-    "indice": 61
+      "Departamento": "Libertador General San Martín",
+      "Distrito": "PARANÁ",
+      "indice": 61
     }
   },
   {
-    "localidad": "Ruiz de Montoya",  
+    "localidad": "Ruiz de Montoya",
     "opciones": {
-    "Departamento": "Libertador General San Martín",
-    "Distrito": "PARANÁ",
-    "indice": 62
+      "Departamento": "Libertador General San Martín",
+      "Distrito": "PARANÁ",
+      "indice": 62
     }
   },
   {
-    "localidad": "San Antonio",  
+    "localidad": "San Antonio",
     "opciones": {
-    "Departamento": "General Manuel Belgrano",
-    "Distrito": "NORTE",
-    "indice": 63
+      "Departamento": "General Manuel Belgrano",
+      "Distrito": "NORTE",
+      "indice": 63
     }
   },
   {
-    "localidad": "San Ignacio",  
+    "localidad": "San Ignacio",
     "opciones": {
-    "Departamento": "San Ignacio",
-    "Distrito": "PARANÁ",
-    "indice": 64
+      "Departamento": "San Ignacio",
+      "Distrito": "PARANÁ",
+      "indice": 64
     }
   },
   {
-    "localidad": "San Javier",  
+    "localidad": "San Javier",
     "opciones": {
-    "Departamento": "San Javier",
-    "Distrito": "URUGUAY",
-    "indice": 65
+      "Departamento": "San Javier",
+      "Distrito": "URUGUAY",
+      "indice": 65
     }
   },
   {
-    "localidad": "San José",  
+    "localidad": "San José",
     "opciones": {
-    "Departamento": "Apóstoles",
-    "Distrito": "SUR",
-    "indice": 66
+      "Departamento": "Apóstoles",
+      "Distrito": "SUR",
+      "indice": 66
     }
   },
   {
-    "localidad": "San Martín",  
+    "localidad": "San Martín",
     "opciones": {
-    "Departamento": "Oberá",
-    "Distrito": "URUGUAY",
-    "indice": 67
+      "Departamento": "Oberá",
+      "Distrito": "URUGUAY",
+      "indice": 67
     }
   },
   {
-    "localidad": "San Pedro",  
+    "localidad": "San Pedro",
     "opciones": {
-    "Departamento": "San Pedro",
-    "Distrito": "NORTE",
-    "indice": 68
+      "Departamento": "San Pedro",
+      "Distrito": "NORTE",
+      "indice": 68
     }
   },
   {
-    "localidad": "San Vicente",  
+    "localidad": "San Vicente",
     "opciones": {
-    "Departamento": "Guaraní",
-    "Distrito": "URUGUAY",
-    "indice": 69
+      "Departamento": "Guaraní",
+      "Distrito": "URUGUAY",
+      "indice": 69
     }
   },
   {
-    "localidad": "Santa Ana",  
+    "localidad": "Santa Ana",
     "opciones": {
-    "Departamento": "Candelaria",
-    "Distrito": "SUR",
-    "indice": 70
+      "Departamento": "Candelaria",
+      "Distrito": "SUR",
+      "indice": 70
     }
   },
   {
-    "localidad": "Santa María",  
+    "localidad": "Santa María",
     "opciones": {
-    "Departamento": "Concepción",
-    "Distrito": "SUR",
-    "indice": 71
+      "Departamento": "Concepción",
+      "Distrito": "SUR",
+      "indice": 71
     }
   },
   {
-    "localidad": "Santiago de Liniers",  
+    "localidad": "Santiago de Liniers",
     "opciones": {
-    "Departamento": "Eldorado",
-    "Distrito": "NORTE",
-    "indice": 72
+      "Departamento": "Eldorado",
+      "Distrito": "NORTE",
+      "indice": 72
     }
   },
   {
-    "localidad": "Santo Pipo",  
+    "localidad": "Santo Pipo",
     "opciones": {
-    "Departamento": "San Ignacio",
-    "Distrito": "PARANÁ",
-    "indice": 73
+      "Departamento": "San Ignacio",
+      "Distrito": "PARANÁ",
+      "indice": 73
     }
   },
   {
-    "localidad": "Tres Capones",  
+    "localidad": "Tres Capones",
     "opciones": {
-    "Departamento": "Apóstoles",
-    "Distrito": "SUR",
-    "indice": 74
+      "Departamento": "Apóstoles",
+      "Distrito": "SUR",
+      "indice": 74
     }
   }]
-  domicilios.forEach(function(situacion){
+  domicilios.forEach(function (situacion) {
     let newOption = document.createElement("option");
     newOption.text = situacion.localidad;
     newOption.value = situacion.opciones.indice
     slctMunicipios.appendChild(newOption)
-  })  
+  })
 
   const selectMunicipios = document.querySelector('.slctMunicipios');
   selectMunicipios.addEventListener('change', (event) => {
@@ -909,45 +902,45 @@
     slctdistrito.textContent = `${domicilios[indice].opciones.Distrito}`;
   });
 
-  function NumCP(string){//solo letras y numeros
+  function NumCP(string) {//solo letras y numeros
     var out = '';
     //Se añaden las letras validas
     var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890';//Caracteres validos
-	
-    for (var i=0; i<string.length; i++)
-       if (filtro.indexOf(string.charAt(i)) != -1) 
-	     out += (string.charAt(i)).toUpperCase();
+
+    for (var i = 0; i < string.length; i++)
+      if (filtro.indexOf(string.charAt(i)) != -1)
+        out += (string.charAt(i)).toUpperCase();
 
     return out;
   }
 
-  function NumeroCuil(event, el){//Validar nombre	
+  function NumeroCuil(event, el) {//Validar nombre	
     //Obteniendo posicion del cursor 
     var val = el.value;//Valor de la caja de texto
-    
+
     var pos = val.slice(0, el.selectionStart).length;
-	
+
     var out = '';//Salida
     var filtro = '1234567890';
     var v = 0;//Contador de caracteres validos
-	
+
     //Filtar solo los numeros
-    for (var i=0; i<val.length; i++){
-       if (filtro.indexOf(val.charAt(i)) != -1){
-	     v++;
-	     out += val.charAt(i);		   
-	     //Agregando guiones
-	     if((v==2) || (v==10))
-	         out+='-';
-	   }
+    for (var i = 0; i < val.length; i++) {
+      if (filtro.indexOf(val.charAt(i)) != -1) {
+        v++;
+        out += val.charAt(i);
+        //Agregando guiones
+        if ((v == 2) || (v == 10))
+          out += '-';
+      }
     }
     //Reemplazando el valor
     el.value = out;
 
     //En caso de modificar un numero reposicionar el cursor
-    if(event.keyCode==8){//Tecla borrar precionada
-        el.selectionStart = pos;
-        el.selectionEnd = pos;
+    if (event.keyCode == 8) {//Tecla borrar precionada
+      el.selectionStart = pos;
+      el.selectionEnd = pos;
     }
   }
 
@@ -957,7 +950,7 @@
     "Monotributista",
     "Responsable Inscripto",
   ];
-  opcAFIP.forEach(function(situacion){
+  opcAFIP.forEach(function (situacion) {
     let newOption = document.createElement("option");
     newOption.text = situacion;
     newOption.value = situacion;
@@ -965,32 +958,32 @@
   })
 
   function validarDNI() {
-  // Obtener nombre de archivo
+    // Obtener nombre de archivo
     let archivo = document.getElementById('dniFile').value,
-  // Obtener extensión del archivo
-    extension = archivo.substring(archivo.lastIndexOf('.'),archivo.length);
-  // Si la extensión obtenida no está incluida en la lista de valores
-  // del atributo "accept", mostrar un error.
-    if(document.getElementById('dniFile').getAttribute('accept').split(',').indexOf(extension) < 0) {
+      // Obtener extensión del archivo
+      extension = archivo.substring(archivo.lastIndexOf('.'), archivo.length);
+    // Si la extensión obtenida no está incluida en la lista de valores
+    // del atributo "accept", mostrar un error.
+    if (document.getElementById('dniFile').getAttribute('accept').split(',').indexOf(extension) < 0) {
       alert('Archivo inválido. No se permite la extensión ' + extension);
       document.getElementById('dniFile').value = ""
     }
   }
 
   function validarEstatuto() {
-  // Obtener nombre de archivo
+    // Obtener nombre de archivo
     let archivo = document.getElementById('estatutoFile').value,
-  // Obtener extensión del archivo
-    extension = archivo.substring(archivo.lastIndexOf('.'),archivo.length);
-  // Si la extensión obtenida no está incluida en la lista de valores
-  // del atributo "accept", mostrar un error.
-    if(document.getElementById('estatutoFile').getAttribute('accept').split(',').indexOf(extension) < 0) {
+      // Obtener extensión del archivo
+      extension = archivo.substring(archivo.lastIndexOf('.'), archivo.length);
+    // Si la extensión obtenida no está incluida en la lista de valores
+    // del atributo "accept", mostrar un error.
+    if (document.getElementById('estatutoFile').getAttribute('accept').split(',').indexOf(extension) < 0) {
       alert('Archivo inválido. No se permite la extensión ' + extension);
       document.getElementById('estatutoFile').value = ""
     }
   }
 
-  document.body.onload = function() {
+  document.body.onload = function () {
     setearOpciones();
   }
 
@@ -1008,22 +1001,22 @@
   }
 
   const cancelarBtn = document.getElementById('cancelarBtn');
-  cancelarBtn.addEventListener('click', function() {
+  cancelarBtn.addEventListener('click', function () {
     // Realizar el logout redireccionando al usuario a la página de logout
     window.location.href = "/logout";
   });
 
   var mailBtn = document.getElementById('mailBtn');
-  mailBtn.addEventListener('click', function() {
+  mailBtn.addEventListener('click', function () {
     var apellido = document.getElementById('apellido').value;
     var nombres = document.getElementById('nombres').value;
     var usuario = document.getElementById('nro-dni').value;
-    
+
     var subject = encodeURIComponent('REPA: Solicitud de cambio de e-mail');
     var message = 'Hola, me gustaría solicitar un cambio de e-mail.\n\n' +
-                  'Nombre: ' + apellido + ', ' + nombres + '\n' +
-                  'DNI: ' + usuario;
-                  
+      'Nombre: ' + apellido + ', ' + nombres + '\n' +
+      'DNI: ' + usuario;
+
     var encodedMessage = encodeURIComponent(message);
     var mailtoLink = 'mailto:repa@iaavim.gob.ar?subject=' + subject + '&body=' + encodedMessage;
     window.location.href = mailtoLink;
