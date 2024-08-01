@@ -60,6 +60,7 @@ router.post(
   "/editEm",
   helpers.isAuthenticated,
   verifyRole("perJur"),
+  
   uploadFileEm,
   captureEditFormEm
 );

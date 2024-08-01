@@ -253,7 +253,7 @@ export const captureEditFormEm = async (req, res) => {
       dniFileUrl = usuarioEncontrado.dniFileUrl;
       dniFileDateISO = usuarioEncontrado.dniFileDate;
     }
-        
+    
     const editForm = {
       sexo: Vsexo, //ok
       nombre: Vnombre,
