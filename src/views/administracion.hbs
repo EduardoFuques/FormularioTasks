@@ -46,53 +46,41 @@
           <tbody>
             {{#each usersWithForms}}
             <tr class="{{#if (eq tipoUsuario 'Persona Jurídica')}} fila-pj {{/if}}">
-              <td class="flex-row align-items-center">{{this.codigoRepa}}</td>
-              <td class="flex-row align-items-center">{{this.nombre}}</td>
-              <td class="flex-row align-items-center">{{this.apellido}}</td>
-              <th class="flex-row align-items-center">{{this.form.[0].usuario}}</th>
-              <td class="flex-row align-items-center" id="emailCell" data-userid="{{this.form.[0].usuario}}">
-                {{this.email}}</td>
-              <td class="flex-row align-items-center">
-                <div class="d-flex">
-                  <a class="btn btn-secondary btn-sm d-flex justify-content-center" id="mailBtn"
-                    onclick="toggleEditEmail(event)">
-                    <i class="bi bi-pencil-fill" id="editIcon"></i>
-                    <i class="bi bi-check-square" id="checkIcon" style="display: none;"></i>
-                  </a>
-                </div>
+              <td>{{this.codigoRepa}}</td>
+              <td>{{this.nombre}}</td>
+              <td>{{this.apellido}}</td>
+              <td>{{this.form.[0].usuario}}</td>
+              <td id="emailCell-{{this.form.[0].usuario}}" data-userid="{{this.form.[0].usuario}}">
+                {{this.email}}
               </td>
-              <td class="flex-row align-items-center">
-                <div class="form-check form-switch d-flex justify-content-start">
+              <td>
+                <button class="btn btn-secondary btn-sm" id="mailBtn-{{this.form.[0].usuario}}"
+                  onclick="toggleEditEmail(event, {{this.form.[0].usuario}})">
+                  <i class="bi bi-pencil-fill" id="editIcon-{{this.form.[0].usuario}}"></i>
+                  <i class="bi bi-check-square" id="checkIcon-{{this.form.[0].usuario}}" style="display: none;"></i>
+                </button>
+              </td>
+              <td>
+                <div class="form-check form-switch">
                   <input class="form-check-input" type="checkbox" role="switch"
                     id="flexSwitchCheckDefault{{this.form.[0].usuario}}" {{#if this.form.[0].sitIaavim}} checked{{/if}}
                     onchange="updateSitIaavim(this)" data-id="{{this.form.[0].usuario}}">
                   <label class="form-check-label" for="flexSwitchCheckDefault{{this.form.[0].usuario}}">
-                    {{#if this.form.[0].sitIaavim}}
-                    ACTIVO
-                    {{else}}
-                    INACTIVO
-                    {{/if}}
+                    {{#if this.form.[0].sitIaavim}} ACTIVO {{else}} INACTIVO {{/if}}
                   </label>
                 </div>
               </td>
-              <td class="flex-row align-items-center">
-                <div class="d-flex">
-                  <a href={{this.dniFileUrl}} class="btn btn-secondary btn-sm d-flex justify-content-center"
-                    target="_blank">
-                    <i class="bi bi-file-earmark-pdf-fill"></i>
-                  </a>
-                </div>
+              <td>
+                <a href="{{this.dniFileUrl}}" class="btn btn-secondary btn-sm" target="_blank">
+                  <i class="bi bi-file-earmark-pdf-fill"></i>
+                </a>
               </td>
-              <td class="flex-row align-items-center">
-                <div class="d-flex">
-                  <a href={{this.cvFileUrl}} class="btn btn-secondary btn-sm d-flex justify-content-center"
-                    target="_blank">
-                    <i class="bi bi-file-earmark-pdf-fill"></i>
-                  </a>
-                </div>
+              <td>
+                <a href="{{this.cvFileUrl}}" class="btn btn-secondary btn-sm" target="_blank">
+                  <i class="bi bi-file-earmark-pdf-fill"></i>
+                </a>
               </td>
-              <td class="flex-row align-items-center">{{this.updatedAt}}</td>
-
+              <td>{{this.updatedAt}}</td>
             </tr>
             {{/each}}
           </tbody>
@@ -143,16 +131,18 @@
 
   var isEditing = false;
   var originalEmail = "";
+  var currentUserId = null;
 
-  function toggleEditEmail(event) {
+  function toggleEditEmail(event, userId) {
     event.stopPropagation(); // Detener la propagación del evento para evitar conflictos
 
-    var emailCell = document.getElementById("emailCell");
+    var emailCell = document.getElementById(`emailCell-${userId}`);
     var email = emailCell.innerText;
 
     if (!isEditing) {
       // Modo de edición
       originalEmail = email;
+      currentUserId = userId;
 
       var input = document.createElement("input");
       input.type = "text";
@@ -162,7 +152,7 @@
       emailCell.appendChild(input);
       input.focus();
 
-      input.addEventListener("keydown", handleKeyDown);
+      input.addEventListener("keydown", handleKeyDown.bind(null, userId));
     } else {
       // Modo de visualización
       var input = emailCell.querySelector("input");
@@ -172,27 +162,27 @@
         emailCell.innerText = originalEmail;
       } else {
         emailCell.innerText = newEmail;
-        saveChanges(); // Guarda los cambios
+        saveChanges(userId); // Guarda los cambios
       }
 
-      input.removeEventListener("keydown", handleKeyDown);
+      input.removeEventListener("keydown", handleKeyDown.bind(null, userId));
     }
 
     isEditing = !isEditing;
-    toggleIcons();
+    toggleIcons(userId);
   }
 
-  function handleKeyDown(event) {
-    if (event.keyCode === 13) {
+  function handleKeyDown(userId, event) {
+    if (event.keyCode === 13) { // Enter key
       event.preventDefault();
-      toggleEditEmail(event);
+      toggleEditEmail(event, userId);
     }
   }
 
-  function toggleIcons() {
-    var editIcon = document.getElementById("editIcon");
-    var checkIcon = document.getElementById("checkIcon");
-    var emailBtn = document.getElementById("mailBtn");
+  function toggleIcons(userId) {
+    var editIcon = document.getElementById(`editIcon-${userId}`);
+    var checkIcon = document.getElementById(`checkIcon-${userId}`);
+    var emailBtn = document.getElementById(`mailBtn-${userId}`);
 
     if (isEditing) {
       editIcon.style.display = "none";
@@ -208,19 +198,18 @@
   }
 
   document.addEventListener("click", function (event) {
-    var emailCell = document.getElementById("emailCell");
-    var input = emailCell.querySelector("input");
-
-    if (isEditing && event.target !== input) {
+    if (isEditing && event.target.closest(`#emailCell-${currentUserId}`) === null) {
+      var emailCell = document.getElementById(`emailCell-${currentUserId}`);
       emailCell.innerText = originalEmail;
       isEditing = false;
-      toggleIcons();
+      toggleIcons(currentUserId);
+      currentUserId = null; // Resetear el userId actual
     }
   });
 
 
-  async function saveChanges() {
-    var emailCell = document.getElementById("emailCell");
+  async function saveChanges(userId) {
+    var emailCell = document.getElementById(`emailCell-${userId}`);
     var newEmail = emailCell.textContent;
     var userId = emailCell.getAttribute("data-userid");
 
